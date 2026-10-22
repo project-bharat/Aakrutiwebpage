@@ -117,7 +117,7 @@ function refreshDailySummary_(ss, events) {
 
 function clean_(value, max) {
   return String(value == null ? '' : value)
-    .replace(/[\\u0000-\\u001F\\u007F]/g, '')
+    .replace(/[\u0000-\u001F\u007F]/g, '')
     .replace(/^\s+|\s+$/g, '')
     .slice(0, max);
 }
