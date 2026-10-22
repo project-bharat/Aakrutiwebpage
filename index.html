@@ -209,6 +209,55 @@ footer .text-gold{color:#ff8a8a!important;-webkit-text-fill-color:#ff8a8a!import
 footer .text-gray-500{color:#e0dfe7!important}
 .story-review .story-copy>p:last-child{color:#737383!important;font-size:11px;line-height:1.55}
 
+
+/* Compact, balanced catalogue cards across mobile and desktop */
+#product-grid{align-items:stretch;gap:1rem}
+#product-grid .product-card{border-radius:14px!important;min-width:0}
+#product-grid .product-card>.p-5{padding:.75rem!important}
+#product-grid .product-card .p-5>.flex-1>h3{
+ height:auto;min-height:0;margin:0;font-size:1.22rem;line-height:1.15;
+ display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
+}
+#product-grid .product-card .p-5>.flex-1>p.text-gray-400{
+ height:auto;min-height:0;margin-top:.3rem;margin-bottom:0;line-height:1.3;
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+#product-grid .specification-panel{
+ height:68px;margin-top:.55rem;border-radius:7px!important;
+}
+#product-grid .specification-panel .specification-heading{
+ height:21px;min-height:21px;padding:0 .55rem;font-size:8px;letter-spacing:.08em;
+}
+#product-grid .specification-panel .specification-details{
+ padding:.22rem .55rem .1rem;font-size:10px;line-height:1.25;
+ display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
+}
+#product-grid .specification-panel .specification-note{
+ min-height:17px;height:17px;padding:0 .55rem;font-size:8px;
+}
+#product-grid .product-card .p-5>.flex.items-center.gap-2.mt-4{
+ width:100%;max-width:190px;margin:.6rem 0 0 auto!important;
+ display:flex;justify-content:flex-end;gap:.4rem;
+}
+#product-grid .product-card .gold-button,
+#product-grid .product-card .outline-button{
+ flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+ white-space:nowrap;padding:.52rem .55rem;font-size:10px;line-height:1.1;
+}
+#product-grid .product-card .gold-button{width:112px}
+#product-grid .product-card .outline-button{width:65px}
+#filters{border-top:0!important;border-bottom:0!important;box-shadow:none!important}
+@media(max-width:639px){
+ #product-grid{gap:.7rem}
+ #product-grid .product-card>.p-5{padding:.65rem!important}
+ #product-grid .product-card .p-5>.flex-1>h3{font-size:1.05rem}
+ #product-grid .product-card .p-5>.flex-1>p.text-gray-400{font-size:10px;line-height:1.35}
+ #product-grid .product-card .gold-button{width:104px}
+ #product-grid .product-card .outline-button{width:58px}
+ #product-grid .product-card .p-5>.flex.items-center.gap-2.mt-4{max-width:100%;gap:.3rem}
+ #product-grid .product-card .gold-button,#product-grid .product-card .outline-button{font-size:9px;padding:.5rem .35rem}
+}
+
 </style>
 </head>
 <body class="antialiased">
@@ -261,7 +310,7 @@ footer .text-gray-500{color:#e0dfe7!important}
 
 <section id="catalogue" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28">
  <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-9"><div><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Curated collection</p><h2 class="font-serif text-4xl sm:text-5xl mt-2">Explore the catalogue</h2><p class="text-gray-400 text-sm mt-3 max-w-xl">Choose products to build your inquiry list. Items shown are design references; final specifications and prices are confirmed on enquiry.</p></div><div class="text-xs text-gray-400"><i class="fa-solid fa-circle-check text-gold mr-2"></i><span id="result-count">18</span> design references</div></div>
- <div id="filters" class="flex gap-2 overflow-x-auto pb-3 mb-7 border-y border-white/10 py-3" aria-label="Furniture category tabs"><button class="filter-btn active border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="All">All</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Sofas">Sofas</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Living">Living</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Bedroom">Bedroom</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Dining">Dining</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Storage">Storage</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Study & Office">Study &amp; Office</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Outdoor">Outdoor</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Decor & Furnishing">Decor &amp; Furnishing</button></div>
+ <div id="filters" class="flex gap-2 overflow-x-auto pb-1 mb-5 border-0 py-1" aria-label="Furniture category tabs"><button class="filter-btn active border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="All">All</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Sofas">Sofas</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Living">Living</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Bedroom">Bedroom</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Dining">Dining</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Storage">Storage</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Study & Office">Study &amp; Office</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Outdoor">Outdoor</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Decor & Furnishing">Decor &amp; Furnishing</button></div>
  <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
  <div class="mt-9 bg-charcoal border border-gold/20 rounded-xl p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"><div><h3 class="font-serif text-2xl">Have a specific design in mind?</h3><p class="text-gray-400 text-sm mt-1">Send a reference image or describe your dimensions and finish preferences.</p></div><a href="#contact" class="outline-button rounded-lg px-5 py-3 text-sm whitespace-nowrap"><i class="fa-solid fa-pen-ruler text-gold mr-2"></i>Discuss custom furniture</a></div>
 </section>
