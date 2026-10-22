@@ -103,9 +103,35 @@ function getSheet_(ss, name, headers) {
   if (!sheet) sheet = ss.insertSheet(name);
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(headers);
-    sheet.setFrozenRows(1);
-    sheet.getRange(1,1,1,headers.length).setFontWeight('bold');
+  } else {
+    const current = sheet.getRange(1,1,1,sheet.getLastColumn()).getValues()[0].map(String);
+    if (current.join('¦') !== headers.join('¦')) {
+      const oldValues = sheet.getDataRange().getValues();
+      const oldHeaders = oldValues[0].map(String);
+      const rows = oldValues.slice(1).map(oldRow => {
+        const obj = {};
+        oldHeaders.forEach((h,i) => obj[h] = oldRow[i]);
+        if (name === EVENT_SHEET) {
+          const time = obj['Event Time (UTC)'] || obj['Received At'] || new Date();
+          return [
+            time,
+            obj['Event'] || '',
+            obj['Anonymous Visitor ID'] || '',
+            obj['Page Path'] || '',
+            obj['Device'] || '',
+            obj['Campaign Source'] || obj['Referrer Host'] || 'direct',
+            obj['Furniture Category'] || obj['Product / Item'] || ''
+          ];
+        }
+        return headers.map(h => obj[h] || '');
+      });
+      sheet.clearContents();
+      sheet.getRange(1,1,1,headers.length).setValues([headers]);
+      if (rows.length) sheet.getRange(2,1,rows.length,headers.length).setValues(rows);
+    }
   }
+  sheet.setFrozenRows(1);
+  sheet.getRange(1,1,1,headers.length).setFontWeight('bold');
   return sheet;
 }
 
@@ -121,7 +147,7 @@ function refreshSummary_(ss, events) {
     const r=values[i];
     const time=r[0] instanceof Date ? r[0] : new Date(r[0]);
     if (isNaN(time.getTime())) continue;
-    const day=Utilities.formatDate(time, Session.getScriptTimeZone() || 'Asia/Kolkata', 'yyyy-MM-dd');
+    const day=Utilities.formatDate(time, 'Asia/Kolkata', 'yyyy-MM-dd');
     if(!days[day]) days[day]={visitors:{},views:0,categories:0,products:0,enquiries:0,cats:{},sources:{}};
     const d=days[day], ev=String(r[1]||''), id=String(r[2]||'');
     if(id) d.visitors[id]=true;
