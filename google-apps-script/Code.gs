@@ -62,7 +62,7 @@ function submitEnquiry_(p) {
   const details = clean_(p.details, 2000);
   const page = clean_(p.page, 120);
   const source = clean_(p.source, 100) || 'website';
-  if (!name || !phone || !interest || phone.replace(/\\D/g,'').length < 7) {
+  if (!name || !phone || !interest || phone.replace(/\D/g,'').length < 7) {
     return json_({ok:false,error:'invalid_enquiry'});
   }
   const lock = LockService.getScriptLock();
@@ -94,7 +94,7 @@ function submitEnquiry_(p) {
     'Traffic source: ' + source,
     '',
     'This enquiry is also saved in the Enquiries tab of Aakruti Website Analytics.'
-  ].join('\\n');
+  ].join('\n');
   try {
     MailApp.sendEmail({to:OWNER_EMAIL, subject:subject, body:body, replyTo:validEmail_(email)});
   } catch (mailError) {
