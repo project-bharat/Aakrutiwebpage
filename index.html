@@ -359,6 +359,14 @@ footer .text-gray-500{color:#e0dfe7!important}
  #product-grid .specification-panel .specification-note{font-size:8px!important}
 }
 
+
+/* Minimal header controls: icon-only cart and unboxed menu */
+.site-header .tray-button{padding:7px 8px!important;gap:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:var(--brand-slate)!important;box-shadow:none!important}
+.site-header .tray-button:hover{background:rgba(255,102,102,.09)!important}
+.site-header .tray-button .fa-bag-shopping{font-size:20px}
+.site-header .tray-button #cart-badge{display:inline-flex;align-items:center;justify-content:center;margin-left:3px;min-width:17px;height:17px;padding:0 4px;font-size:10px;line-height:1;border-radius:999px;background:var(--brand-primary)!important;color:#fff!important}
+.site-header .mobile-menu-button{width:34px!important;height:34px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:var(--brand-slate)!important}
+.site-header .mobile-menu-button:hover{background:rgba(255,102,102,.09)!important}
 </style>
 </head>
 <body class="antialiased">
@@ -649,30 +657,38 @@ document.querySelectorAll('[data-story-scroll]').forEach(btn=>btn.addEventListen
     if(filter) send('category_view',{category:String(filter.dataset.filter||'').trim()});
   });
   window.AakrutiAnalytics = {track:function(name,details){send(name,details);}};
-  // Log a product once when its card is first meaningfully visible.
-  const seenProducts = new WeakSet();
-  function observeProductCards(){
-    if(!('IntersectionObserver' in window)) return;
-    document.querySelectorAll('#product-grid article.product-card').forEach(function(card){
-      if(seenProducts.has(card)) return;
-      const title=card.querySelector('h3');
-      const category=card.querySelector('.product-gallery .absolute.top-3');
-      if(!title) return;
-      const observer=new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if(entry.isIntersecting && !seenProducts.has(card)){
-            seenProducts.add(card);
-            send('product_view',{category:category?category.textContent.trim():'',item:title.textContent.trim()});
-            observer.disconnect();
-          }
-        });
-      },{threshold:0.45});
-      observer.observe(card);
+  // Catalogue analytics records deliberate interactions, not passive product impressions.
+  const productGrid=document.getElementById('product-grid');
+  function trackCatalogueInteraction(card, action){
+    if(!card) return;
+    const title=card.querySelector('h3');
+    const category=card.querySelector('.product-gallery .absolute.top-3');
+    send('product_interaction',{
+      category:category?category.textContent.trim():'',
+      item:(title?title.textContent.trim():'')+' — '+action
     });
   }
-  observeProductCards();
-  const productGrid=document.getElementById('product-grid');
-  if(productGrid && 'MutationObserver' in window) new MutationObserver(observeProductCards).observe(productGrid,{childList:true,subtree:true});
+  if(productGrid){
+    productGrid.addEventListener('click',function(e){
+      const card=e.target.closest('article.product-card');
+      if(!card) return;
+      if(e.target.closest('[data-gallery-dot]')) trackCatalogueInteraction(card,'gallery image selected');
+      else if(e.target.closest('[data-gallery-prev]')) trackCatalogueInteraction(card,'previous image clicked');
+      else if(e.target.closest('[data-gallery-next]')) trackCatalogueInteraction(card,'next image clicked');
+    });
+    let swipeStart=new WeakMap();
+    productGrid.addEventListener('pointerdown',function(e){
+      const track=e.target.closest('[data-gallery-track]');
+      if(track) swipeStart.set(track,track.scrollLeft);
+    },{passive:true});
+    productGrid.addEventListener('pointerup',function(e){
+      const track=e.target.closest('[data-gallery-track]');
+      if(!track || !swipeStart.has(track)) return;
+      const start=swipeStart.get(track);
+      if(Math.abs(track.scrollLeft-start)>24) trackCatalogueInteraction(track.closest('article.product-card'),'gallery swiped');
+      swipeStart.delete(track);
+    },{passive:true});
+  }
 })();
 </script>
 
