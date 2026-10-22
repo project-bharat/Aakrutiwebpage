@@ -435,8 +435,8 @@ footer .text-gray-500{color:#e0dfe7!important}
   <article class="story-card"><img loading="lazy" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=85" alt="Organised contemporary home office with a desk and chair"><div class="story-copy"><span class="story-kicker">Reference review</span><h3 class="font-serif text-3xl mt-3">Work with purpose</h3><p class="story-subtext mt-3 leading-6">A practical desk, supportive seating and smart storage can create a focused workspace at home or in the office.</p><div class="border-t mt-5 pt-4 w-full"><p class="font-semibold">Home office reference</p><p class="text-sm story-subtext mt-1">Product reference · Client attribution not supplied</p><a href="#catalogue" class="outline-button rounded-lg px-4 py-2.5 mt-4 text-sm inline-flex items-center gap-2">Explore office furniture <i class="fa-solid fa-arrow-right"></i></a></div></div></article>
  </div>
  <div class="flex items-center justify-center gap-3 mt-5">
-  <button type="button" class="story-arrow" data-story-scroll="-1" aria-label="Scroll customer stories left"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQIxc9bx3FUU3Ko17Jtvb5TMntZCarscA2Ppo314ORri7xeKUQRF85EbbYZXROkytpMpua4XxVkx08xJvZRMScBt6al7c5yvzJiZDvHRBI6M1JaSHU4sVWVLP1MzS29aklAWYpnYBkiJq3eWFP_xDNSh0aDAHxXmoAUXL28zgbmCYKHi9Rbj43b2AcnnY/s320/1000054632.png" alt="" class="brand-arrow-icon rotate-[-90deg]"></button>
-  <button type="button" class="story-arrow" data-story-scroll="1" aria-label="Scroll customer stories right"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQIxc9bx3FUU3Ko17Jtvb5TMntZCarscA2Ppo314ORri7xeKUQRF85EbbYZXROkytpMpua4XxVkx08xJvZRMScBt6al7c5yvzJiZDvHRBI6M1JaSHU4sVWVLP1MzS29aklAWYpnYBkiJq3eWFP_xDNSh0aDAHxXmoAUXL28zgbmCYKHi9Rbj43b2AcnnY/s320/1000054632.png" alt="" class="brand-arrow-icon rotate-90"></button>
+  <button type="button" class="story-arrow" data-story-scroll="-1" aria-label="Scroll customer stories left"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgg3egRgXPYmno1qK1np5rPIborPm6j2gzwShZrgf4uNQnDq3skA8y-o7D79ANJiWDBwyswuylU2F78b_GFJCfcngGmdLP4Ok4q9IFV75XxmUk41ZM_E_ONwyh2VdcOcXjjMrq-DA3mGUNI4tSqnwUIyen5akKkDoEAl92RagTjJU8Bf_Pqgh5MLjJ3FN8/s320/1000054631.png" alt="" class="brand-arrow-icon rotate-[-90deg]"></button>
+  <button type="button" class="story-arrow" data-story-scroll="1" aria-label="Scroll customer stories right"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgg3egRgXPYmno1qK1np5rPIborPm6j2gzwShZrgf4uNQnDq3skA8y-o7D79ANJiWDBwyswuylU2F78b_GFJCfcngGmdLP4Ok4q9IFV75XxmUk41ZM_E_ONwyh2VdcOcXjjMrq-DA3mGUNI4tSqnwUIyen5akKkDoEAl92RagTjJU8Bf_Pqgh5MLjJ3FN8/s320/1000054631.png" alt="" class="brand-arrow-icon rotate-90"></button>
  </div>
 </section>
 
@@ -520,7 +520,7 @@ function renderCart(){
  const items=products.filter(p=>cart[p.id]);
  document.getElementById('tray-items').innerHTML=items.length?items.map(p=>'<div class="flex gap-3 p-3 rounded-xl bg-charcoal border border-white/10"><img src="https://images.unsplash.com/'+p.image+'?auto=format&fit=crop&w=200&q=70" alt="" class="w-20 h-20 object-cover rounded-lg"><div class="flex-1 min-w-0"><h3 class="font-medium text-sm">'+moneySafe(p.name)+'</h3><p class="text-xs text-gray-500 mt-1">'+p.category+'</p><div class="flex items-center justify-between mt-3"><div class="flex items-center gap-3"><button onclick="changeQty(\''+p.id+'\',-1)" class="w-7 h-7 rounded border border-white/15" aria-label="Decrease quantity">−</button><span class="text-sm">'+cart[p.id]+'</span><button onclick="changeQty(\''+p.id+'\',1)" class="w-7 h-7 rounded border border-white/15" aria-label="Increase quantity">+</button></div><button onclick="removeItem(\''+p.id+'\')" class="text-xs text-gray-400 hover:text-red-300"><i class="fa-regular fa-trash-can mr-1"></i>Remove</button></div></div></div>').join(''):'<div class="text-gray-400 text-sm py-10 text-center"><i class="fa-solid fa-basket-shopping text-3xl text-gold mb-4 block"></i>Your tray is empty.<br>Add products from the catalogue to begin.</div>';
 }
-function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();const b=document.getElementById('cart-badge');b.classList.add('scale-125');setTimeout(()=>b.classList.remove('scale-125'),180)}
+function addToCart(id){const p=products.find(x=>x.id===id);if(p&&window.AakrutiAnalytics)window.AakrutiAnalytics.track('add_to_cart',{category:p.category,item:p.name});cart[id]=(cart[id]||0)+1;renderCart();const b=document.getElementById('cart-badge');b.classList.add('scale-125');setTimeout(()=>b.classList.remove('scale-125'),180)}
 function changeQty(id,delta){cart[id]=(cart[id]||0)+delta;if(cart[id]<=0)delete cart[id];renderCart()}
 function removeItem(id){delete cart[id];renderCart()}
 function openTray(){document.getElementById('tray-overlay').classList.remove('hidden');document.getElementById('tray-overlay').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';renderCart()}
@@ -536,7 +536,7 @@ function cartMessage(){
 }
 function sendWhatsApp(){const msg=cartMessage();if(!msg)return;window.open('https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(msg),'_blank','noopener')}
 function sendEmail(){const msg=cartMessage();if(!msg)return;window.location.href='mailto:'+BUSINESS_EMAIL+'?subject='+encodeURIComponent('Furniture enquiry — Aakruti Enterprises')+'&body='+encodeURIComponent(msg)}
-function quickEnquire(id){cart[id]=(cart[id]||0)+1;renderCart();openTray()}
+function quickEnquire(id){const p=products.find(x=>x.id===id);if(p&&window.AakrutiAnalytics)window.AakrutiAnalytics.track('enquire_click',{category:p.category,item:p.name});cart[id]=(cart[id]||0)+1;renderCart();openTray()}
 function contactMessage(d){return 'New enquiry for Aakruti Enterprises\\n\\nName: '+d.get('name')+'\\nPhone: '+d.get('phone')+'\\nEmail: '+(d.get('email')||'Not provided')+'\\nEnquiry: '+d.get('interest')+'\\nProject details: '+(d.get('details')||'Not provided')}
 function emailContact(){const f=document.getElementById('contact-form');if(!f.reportValidity())return;const d=new FormData(f);window.location.href='mailto:'+BUSINESS_EMAIL+'?subject='+encodeURIComponent('New enquiry for Aakruti — '+d.get('name'))+'&body='+encodeURIComponent(contactMessage(d))}
 function whatsAppContact(){const f=document.getElementById('contact-form');if(!f.reportValidity())return;const d=new FormData(f);window.open('https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(contactMessage(d)),'_blank','noopener')}
@@ -647,15 +647,33 @@ document.querySelectorAll('[data-story-scroll]').forEach(btn=>btn.addEventListen
   document.addEventListener('click',function(e){
     if (localStorage.getItem(CONSENT_KEY) !== 'accepted') return;
     const filter=e.target.closest('#filters button[data-filter]');
-    if(filter) send('category_view',{category:filter.dataset.filter});
-    const product=e.target.closest('#product-grid button[aria-label], #product-grid button');
-    if(product && (product.textContent.toLowerCase().includes('enquire') || product.textContent.toLowerCase().includes('cart') || product.getAttribute('aria-label')?.toLowerCase().includes('enquire'))){
-      const card=product.closest('article');
-      const title=card && card.querySelector('h3');
-      send('product_interaction',{item:title ? title.textContent.trim() : ''});
-    }
+    if(filter) send('category_view',{category:String(filter.dataset.filter||'').trim()});
   });
   window.AakrutiAnalytics = {track:function(name,details){send(name,details);}};
+  // Log a product once when its card is first meaningfully visible.
+  const seenProducts = new WeakSet();
+  function observeProductCards(){
+    if(!('IntersectionObserver' in window)) return;
+    document.querySelectorAll('#product-grid article.product-card').forEach(function(card){
+      if(seenProducts.has(card)) return;
+      const title=card.querySelector('h3');
+      const category=card.querySelector('.product-gallery .absolute.top-3');
+      if(!title) return;
+      const observer=new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting && !seenProducts.has(card)){
+            seenProducts.add(card);
+            send('product_view',{category:category?category.textContent.trim():'',item:title.textContent.trim()});
+            observer.disconnect();
+          }
+        });
+      },{threshold:0.45});
+      observer.observe(card);
+    });
+  }
+  observeProductCards();
+  const productGrid=document.getElementById('product-grid');
+  if(productGrid && 'MutationObserver' in window) new MutationObserver(observeProductCards).observe(productGrid,{childList:true,subtree:true});
 })();
 </script>
 
