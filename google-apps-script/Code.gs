@@ -69,7 +69,7 @@ function submitEnquiry_(p) {
   lock.waitLock(10000);
   let ss;
   try {
-    ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    ss = getSpreadsheet_();
     const sheet = getSheet_(ss, ENQUIRY_SHEET, ENQUIRY_HEADERS);
     sheet.appendRow([new Date(), safeCell_(name), safeCell_(phone), safeCell_(email),
       safeCell_(interest), safeCell_(details), safeCell_(page), safeCell_(source)]);
@@ -95,8 +95,14 @@ function submitEnquiry_(p) {
     '',
     'This enquiry is also saved in the Enquiries tab of Aakruti Website Analytics.'
   ].join('\\n');
-  MailApp.sendEmail({to:OWNER_EMAIL, subject:subject, body:body, replyTo:validEmail_(email)});
-  return json_({ok:true});
+  try {
+    MailApp.sendEmail({to:OWNER_EMAIL, subject:subject, body:body, replyTo:validEmail_(email)});
+  } catch (mailError) {
+    console.error('Enquiry saved, but owner notification email failed: ' + mailError);
+    // The enquiry is already stored. Return an explicit mail failure for server-side diagnostics.
+    return json_({ok:true, saved:true, emailSent:false, emailError:String(mailError).slice(0,300)});
+  }
+  return json_({ok:true, saved:true, emailSent:true});
 }
 
 function getSheet_(ss, name, headers) {
