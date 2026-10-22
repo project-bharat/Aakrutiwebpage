@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#F28C28">
+<meta name="theme-color" content="#ff6666">
 <title>Aakruti Enterprises | Bespoke Furniture & Luxury Interiors, Pune</title>
 <meta name="description" content="Explore bespoke residential, office and hospitality furniture from Aakruti Enterprises, Hinjewadi, Pune. Request a custom quote directly from the catalogue.">
 <meta property="og:title" content="Aakruti Enterprises | Furniture & Luxury Interiors">
@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script>
-tailwind.config={theme:{extend:{colors:{obsidian:'#0B0B0E',charcoal:'#141419',surface:'#1C1C24',gold:{light:'#FFB45E',DEFAULT:'#F28C28',dark:'#C65A12'}},fontFamily:{serif:['Cormorant Garamond','serif'],sans:['Plus Jakarta Sans','sans-serif']}}}};
+tailwind.config={theme:{extend:{colors:{obsidian:'#cbbeb5',charcoal:'#cbbeb5',surface:'#cbbeb5',gold:{light:'#ff6666',DEFAULT:'#ff6666',dark:'#525266'}},fontFamily:{serif:['Cormorant Garamond','serif'],sans:['Plus Jakarta Sans','sans-serif']}}}};
 </script>
 <style>
 :root{color-scheme:dark}body{background:#0b0b0e;color:#f3f4f6;font-family:'Plus Jakarta Sans',sans-serif}::selection{background:#F28C28;color:#0b0b0e}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:#0b0b0e}::-webkit-scrollbar-thumb{background:#393744;border-radius:9px}.gold-text{background:linear-gradient(125deg,#FFE0B8,#F28C28 60%,#C65A12);-webkit-background-clip:text;background-clip:text;color:transparent}.hero{background:linear-gradient(90deg,rgba(11,11,14,.97) 0%,rgba(11,11,14,.82) 56%,rgba(11,11,14,.48) 100%),linear-gradient(0deg,#0b0b0e 0%,transparent 40%),url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2200&q=85') center/cover}.product-card{background:#141419;border:1px solid rgba(255,255,255,.09);transition:transform .25s,border-color .25s,box-shadow .25s}.product-card:hover{transform:translateY(-4px);border-color:rgba(212,175,55,.5);box-shadow:0 16px 40px #0005}.filter-btn.active{background:#F28C28;color:#0b0b0e;border-color:#F28C28}.gold-button{background:#F28C28;color:#0b0b0e;transition:background .2s}.gold-button:hover{background:#FFB45E}.outline-button{border:1px solid rgba(212,175,55,.5);transition:background .2s}.outline-button:hover{background:rgba(212,175,55,.1)}.field{width:100%;background:#101015;border:1px solid #34333d;border-radius:.5rem;padding:.75rem .85rem;color:#f3f4f6;outline:none}.field:focus{border-color:#F28C28}.field::placeholder{color:#777783}.reveal{animation:rise .45s ease both}@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
@@ -35,6 +35,46 @@ tailwind.config={theme:{extend:{colors:{obsidian:'#0B0B0E',charcoal:'#141419',su
 .mobile-nav a:hover,.mobile-nav a:focus-visible{background:#F28C2815;border-color:#F28C2870;color:#FFB45E}
 @media(max-width:420px){.mobile-nav{grid-template-columns:repeat(3,minmax(0,1fr))}.site-header .max-w-7xl{gap:8px}}
 @media(min-width:1024px) and (max-width:1190px){.desktop-nav a{padding:9px 7px;font-size:11px}}
+
+/* Aakruti brand refresh: warm stone, coral, slate */
+:root{color-scheme:light;--brand-primary:#ff6666;--brand-neutral:#cbbeb5;--brand-slate:#525266;--brand-white:#fff}
+html{scroll-behavior:smooth}
+body{background:var(--brand-neutral)!important;color:var(--brand-slate)!important}
+::selection{background:var(--brand-primary)!important;color:#fff!important}
+::-webkit-scrollbar-track{background:var(--brand-neutral)!important}
+::-webkit-scrollbar-thumb{background:var(--brand-slate)!important}
+.bg-obsidian,.bg-charcoal,.bg-surface{background-color:var(--brand-neutral)!important}
+.site-header{background:rgba(203,190,181,.96)!important;border-color:rgba(82,82,102,.22)!important;box-shadow:0 8px 24px rgba(82,82,102,.08)}
+.site-header a,.site-header button{color:var(--brand-slate)}
+.site-header .gold-text{background:none!important;color:var(--brand-slate)!important;-webkit-text-fill-color:var(--brand-slate)!important}
+.site-header .text-gold,.text-gold{color:var(--brand-primary)!important}
+.desktop-nav{color:var(--brand-slate)!important}
+.desktop-nav a,.mobile-nav a{color:var(--brand-slate)!important}
+.desktop-nav a:hover,.desktop-nav a:focus-visible,.desktop-nav .nav-featured,.mobile-nav a:hover,.mobile-nav a:focus-visible{color:#fff!important;background:var(--brand-primary)!important;border-color:var(--brand-primary)!important}
+.mobile-menu-button{border-color:rgba(82,82,102,.35)!important;color:var(--brand-primary)!important}
+.mobile-nav{border-color:rgba(82,82,102,.2)!important}
+.tray-button{background:var(--brand-primary)!important;border-color:var(--brand-primary)!important;color:#fff!important}
+.cart-badge{background:var(--brand-slate)!important;color:#fff!important}
+.gold-text{background:none!important;color:var(--brand-slate)!important;-webkit-text-fill-color:var(--brand-slate)!important}
+.gold-button,.gold-button:hover{background:var(--brand-primary)!important;border-color:var(--brand-primary)!important;color:#fff!important}
+.outline-button{border:1px solid var(--brand-slate)!important;color:var(--brand-slate)!important;background:transparent!important}
+.outline-button:hover{background:var(--brand-slate)!important;color:#fff!important}
+.text-gray-100,.text-gray-200,.text-gray-300,.text-gray-400,.text-gray-500{color:var(--brand-slate)!important}
+.border-white\/10,.border-white\/5,.border-white\/20{border-color:rgba(82,82,102,.2)!important}
+.bg-black\/30{background:rgba(82,82,102,.12)!important}
+.hero{border-color:rgba(82,82,102,.2)!important}
+.hero .inline-flex.border{border-color:rgba(255,102,102,.55)!important;background:rgba(255,255,255,.28)!important;color:var(--brand-slate)!important}
+.hero .gold-text{color:var(--brand-primary)!important;-webkit-text-fill-color:var(--brand-primary)!important}
+section:not(.hero){border-color:rgba(82,82,102,.18)!important}
+.product-card,.service-card,.value-card,.process-card,.testimonial-card,.category-card,.review-card,.catalogue-card{background:rgba(255,255,255,.28)!important;border-color:rgba(82,82,102,.2)!important;color:var(--brand-slate)!important;box-shadow:0 12px 32px rgba(82,82,102,.08)}
+input,select,textarea{background:rgba(255,255,255,.48)!important;color:var(--brand-slate)!important;border-color:rgba(82,82,102,.3)!important}
+input::placeholder,textarea::placeholder{color:rgba(82,82,102,.72)!important}
+footer{background:var(--brand-slate)!important;color:#fff!important}
+footer a,footer p,footer span,footer h2,footer h3{color:#fff!important}
+footer .gold-text{color:#fff!important;-webkit-text-fill-color:#fff!important}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--brand-primary)!important;outline-offset:3px}
+@media(max-width:767px){.hero{min-height:560px!important}.site-header{backdrop-filter:blur(14px)}}
+
 </style>
 </head>
 <body class="antialiased">
