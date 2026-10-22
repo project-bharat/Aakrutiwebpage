@@ -115,10 +115,25 @@ const products=[
 ];
 const cart={};
 const moneySafe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function productSpecs(p){
+ const map={
+  Living:'Configuration • Upholstery • Frame finish',
+  Bedroom:'Bed size • Storage option • Finish',
+  Dining:'Seating capacity • Table size • Finish',
+  Office:'Desk size • Storage • Cable management',
+  Storage:'Dimensions • Shelves • Door / handle finish',
+  Shelving:'Width & height • Shelf count • Mounting',
+  Prayer:'Overall size • Storage • Carving / finish',
+  Outdoor:'Seating style • Material • Weather suitability',
+  Decor:'Dimensions • Storage • Finish'
+ };
+ return map[p.category]||'Size • Material • Finish';
+}
 function renderProducts(filter='All'){
  const list=products.filter(p=>filter==='All'||(filter==='Sofas'?p.id.startsWith('sofa-'):filter==='Study & Office'?['Office','Shelving'].includes(p.category):filter==='Outdoor'?p.category==='Outdoor':filter==='Decor & Furnishing'?['Decor','Prayer'].includes(p.category):filter==='Living'?p.category==='Living'&&!p.id.startsWith('sofa-'):p.category===filter));
  document.getElementById('result-count').textContent=list.length;
- document.getElementById('product-grid').innerHTML=list.map((p,i)=>'<article class="product-card rounded-xl overflow-hidden reveal" style="animation-delay:'+i*35+'ms"><div class="relative overflow-hidden bg-surface"><img loading="lazy" src="https://images.unsplash.com/'+p.image+'?auto=format&fit=crop&w=800&q=80" alt="'+moneySafe(p.name)+'" class="w-full aspect-[4/3] object-cover hover:scale-105 transition duration-500" onerror="this.onerror=null;this.src=\'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80\'"><span class="absolute top-3 left-3 bg-obsidian/85 border border-white/10 rounded-full px-3 py-1 text-[10px] uppercase tracking-wider">'+p.category+'</span></div><div class="p-4"><h3 class="font-serif text-2xl">'+moneySafe(p.name)+'</h3><p class="text-gray-400 text-xs leading-5 mt-1 min-h-10">'+moneySafe(p.desc)+'</p><div class="flex items-center gap-2 mt-4"><button onclick="addToCart(\''+p.id+'\')" class="gold-button rounded-lg px-3 py-2.5 text-xs font-bold flex-1"><i class="fa-solid fa-plus mr-1.5"></i>Add to order list</button><button onclick="quickEnquire(\''+p.id+'\')" class="outline-button rounded-lg w-10 h-10 text-gold" aria-label="Enquire about '+moneySafe(p.name)+'"><i class="fa-regular fa-message"></i></button></div></div></article>').join('');
+ document.getElementById('product-grid').innerHTML=list.map((p,i)=>'<article class="product-card rounded-2xl overflow-hidden reveal flex flex-col" style="animation-delay:'+i*35+'ms"><div class="relative overflow-hidden bg-surface"><img loading="lazy" src="https://images.unsplash.com/'+p.image+'?auto=format&fit=crop&w=900&q=85" alt="'+moneySafe(p.name)+'" class="w-full aspect-[4/3] object-cover hover:scale-105 transition duration-500" onerror="this.onerror=null;this.src=\'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80\'"><span class="absolute top-3 left-3 bg-obsidian/85 border border-white/10 rounded-full px-3 py-1 text-[10px] uppercase tracking-wider">'+moneySafe(p.category)+'</span><button onclick="quickEnquire(\''+p.id+'\')" class="absolute right-3 top-3 bg-obsidian/85 border border-white/15 rounded-full w-9 h-9 text-gold" aria-label="Quick enquire about '+moneySafe(p.name)+'"><i class="fa-regular fa-message"></i></button></div><div class="p-5 flex flex-col flex-1"><div class="flex-1"><h3 class="font-serif text-2xl leading-tight">'+moneySafe(p.name)+'</h3><p class="text-gray-400 text-xs leading-5 mt-2">'+moneySafe(p.desc)+'</p><div class="mt-4 rounded-lg bg-obsidian/70 border border-white/5 p-3"><p class="text-[10px] uppercase tracking-[.16em] text-gold mb-1.5">Specifications to choose</p><p class="text-xs text-gray-300 leading-5">'+moneySafe(productSpecs(p))+'</p><p class="text-[10px] text-gray-500 mt-1">Final options confirmed on enquiry</p></div></div><div class="flex items-center gap-2 mt-4"><button onclick="addToCart(\''+p.id+'\')" class="gold-button rounded-lg px-3 py-3 text-xs font-bold flex-1"><i class="fa-solid fa-cart-plus mr-1.5"></i>Add to Cart</button><button onclick="quickEnquire(\''+p.id+'\')" class="outline-button rounded-lg px-3 py-3 text-xs" aria-label="Enquire about '+moneySafe(p.name)+'">Enquire</button></div></div></article>').join('');
+ if(!list.length)document.getElementById('product-grid').innerHTML='<div class="col-span-full text-center border border-white/10 rounded-xl p-10 text-gray-400">This collection is being curated. Contact us to discuss a custom requirement.</div>';
 }
 function renderCart(){
  const count=Object.values(cart).reduce((s,n)=>s+n,0);
