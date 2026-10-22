@@ -555,5 +555,94 @@ renderProducts();renderCart();
 document.querySelectorAll('[data-story-scroll]').forEach(btn=>btn.addEventListener('click',()=>{const track=document.getElementById('story-track');const card=track.querySelector('.story-card');if(!card)return;const gap=parseFloat(getComputedStyle(track).columnGap)||16;track.scrollBy({left:Number(btn.dataset.storyScroll)*(card.getBoundingClientRect().width+gap),behavior:'smooth'});}));
 
 </script>
+
+<!-- Privacy-first visitor analytics: optional, only enabled after consent and endpoint setup. -->
+<style>
+#ak-cookie-consent{position:fixed;z-index:10000;left:16px;right:16px;bottom:16px;max-width:760px;margin:auto;padding:20px;background:#fff;color:#525266;border:1px solid rgba(82,82,102,.2);box-shadow:0 18px 55px rgba(35,29,42,.2);font-family:'Plus Jakarta Sans',sans-serif}
+#ak-cookie-consent[hidden]{display:none}
+#ak-cookie-consent h2{font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.15;margin:0 0 8px}
+#ak-cookie-consent p{font-size:13px;line-height:1.6;margin:0 0 14px}
+#ak-cookie-consent a{color:#b53e49;text-decoration:underline}
+.ak-consent-actions{display:flex;flex-wrap:wrap;gap:8px}
+.ak-consent-actions button{padding:10px 15px;font-size:12px;font-weight:700;border:1px solid #525266;background:#fff;color:#525266}
+.ak-consent-actions .ak-accept{background:#ff6666;border-color:#ff6666;color:#fff}
+@media(max-width:480px){#ak-cookie-consent{left:10px;right:10px;bottom:10px;padding:16px}.ak-consent-actions button{flex:1}}
+</style>
+<section id="ak-cookie-consent" role="dialog" aria-labelledby="ak-consent-title" aria-describedby="ak-consent-copy" hidden>
+  <h2 id="ak-consent-title">Your privacy choices</h2>
+  <p id="ak-consent-copy">Aakruti uses essential browser storage to remember this choice. If you agree, we also collect limited, anonymous website usage events—such as pages and furniture categories viewed—to improve the website. We do not use this feature to collect your name, phone, email, precise location, or age. You can reject optional analytics and still use the website. <a href="./privacy.html">Read the privacy notice</a>.</p>
+  <div class="ak-consent-actions">
+    <button type="button" id="ak-consent-reject">Reject optional analytics</button>
+    <button type="button" id="ak-consent-accept" class="ak-accept">Accept analytics</button>
+  </div>
+</section>
+<script>
+(function(){
+  'use strict';
+  const ENDPOINT = 'PASTE_YOUR_DEPLOYED_APPS_SCRIPT_WEB_APP_URL_HERE';
+  const CONSENT_KEY = 'aakruti_analytics_consent_v1';
+  const VISITOR_KEY = 'aakruti_analytics_visitor_v1';
+  const panel = document.getElementById('ak-cookie-consent');
+  const saved = localStorage.getItem(CONSENT_KEY);
+  if (!saved) panel.hidden = false;
+
+  function visitorId(){
+    let id = localStorage.getItem(VISITOR_KEY);
+    if (!id) {
+      id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() :
+        'v-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,12);
+      localStorage.setItem(VISITOR_KEY,id);
+    }
+    return id;
+  }
+  function configured(){
+    return ENDPOINT.startsWith('https://script.google.com/macros/s/') && ENDPOINT.endsWith('/exec');
+  }
+  function send(eventName, details){
+    if (localStorage.getItem(CONSENT_KEY) !== 'accepted' || !configured()) return;
+    const payload = {
+      event: String(eventName).slice(0,60),
+      visitorId: visitorId(),
+      page: location.pathname.slice(0,180),
+      referrerHost: (function(){try{return document.referrer ? new URL(document.referrer).hostname.slice(0,120) : '';}catch(e){return '';}})(),
+      device: matchMedia('(max-width: 767px)').matches ? 'mobile' : (matchMedia('(min-width: 1024px)').matches ? 'desktop' : 'tablet'),
+      screen: Math.min(screen.width || 0, 10000) + 'x' + Math.min(screen.height || 0, 10000),
+      language: (navigator.language || '').slice(0,20),
+      campaign: (new URLSearchParams(location.search).get('utm_source') || '').slice(0,100),
+      category: details && details.category ? String(details.category).slice(0,80) : '',
+      item: details && details.item ? String(details.item).slice(0,100) : '',
+      pageTitle: document.title.slice(0,140),
+      occurredAt: new Date().toISOString()
+    };
+    try {
+      fetch(ENDPOINT, {method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload),keepalive:true}).catch(function(){});
+    } catch(e) {}
+  }
+  document.getElementById('ak-consent-accept').addEventListener('click',function(){
+    localStorage.setItem(CONSENT_KEY,'accepted'); panel.hidden=true; send('consent_granted');
+    send('page_view');
+  });
+  document.getElementById('ak-consent-reject').addEventListener('click',function(){
+    localStorage.setItem(CONSENT_KEY,'rejected');
+    localStorage.removeItem(VISITOR_KEY);
+    panel.hidden=true;
+  });
+  if (saved === 'accepted') send('page_view');
+  document.addEventListener('click',function(e){
+    if (localStorage.getItem(CONSENT_KEY) !== 'accepted') return;
+    const filter=e.target.closest('#filters button[data-filter]');
+    if(filter) send('category_view',{category:filter.dataset.filter});
+    const product=e.target.closest('#product-grid button[aria-label], #product-grid button');
+    if(product && (product.textContent.toLowerCase().includes('enquire') || product.textContent.toLowerCase().includes('cart') || product.getAttribute('aria-label')?.toLowerCase().includes('enquire'))){
+      const card=product.closest('article');
+      const title=card && card.querySelector('h3');
+      send('product_interaction',{item:title ? title.textContent.trim() : ''});
+    }
+    if(e.target.closest('#contact-form button[type="submit"]')) send('enquiry_submit_click');
+  });
+  window.AakrutiAnalytics = {track:function(name,details){send(name,details);}};
+})();
+</script>
+
 </body>
 </html>
