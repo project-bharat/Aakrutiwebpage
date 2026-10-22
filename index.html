@@ -613,13 +613,16 @@ function renderProducts(filter='All'){
  };
  const matches=categoryMap[filter]||((p)=>p.category===filter);
  const list=products.filter(p=>matches(p));
- document.getElementById('result-count').textContent=list.length;
- document.getElementById('product-grid').innerHTML=list.map((p,i)=>{
+ const resultCount=document.getElementById('result-count');
+ if(resultCount)resultCount.textContent=list.length;
+ const productGrid=document.getElementById('product-grid');
+ if(!productGrid){console.error('Catalogue container #product-grid is missing.');return;}
+ productGrid.innerHTML=list.map((p,i)=>{
  const imgs=productGalleryImages(p);
  const gallery='<div class="product-gallery relative overflow-hidden bg-surface" data-gallery><div class="gallery-track" data-gallery-track>'+imgs.map((image,j)=>'<img loading="'+(j===0?'eager':'lazy')+'" src="https://images.unsplash.com/'+image+'?auto=format&fit=crop&w=900&q=85" alt="'+moneySafe(p.name)+' — view '+(j+1)+'" draggable="false" onerror="this.onerror=null;this.src=\'https://images.unsplash.com/'+p.image+'?auto=format&fit=crop&w=900&q=80\'">').join('')+'</div><span class="absolute top-3 left-3 bg-obsidian/85 border border-white/10 rounded-full px-3 py-1 text-[10px] uppercase tracking-wider z-10">'+moneySafe(p.category)+'</span><button onclick="quickEnquire(\''+p.id+'\')" class="absolute right-3 top-3 bg-obsidian/85 border border-white/15 rounded-full w-9 h-9 text-gold z-10" aria-label="Quick enquire about '+moneySafe(p.name)+'"><i class="fa-regular fa-message"></i></button><button type="button" class="gallery-arrow prev" data-gallery-prev aria-label="Previous image"><i class="fa-solid fa-chevron-left"></i></button><button type="button" class="gallery-arrow next" data-gallery-next aria-label="Next image"><i class="fa-solid fa-chevron-right"></i></button><div class="gallery-dots" role="group" aria-label="Product image views">'+imgs.map((_,j)=>'<button type="button" class="gallery-dot '+(j===0?'active':'')+'" data-gallery-dot="'+j+'" aria-label="Show image '+(j+1)+' of '+moneySafe(p.name)+'" aria-pressed="'+(j===0?'true':'false')+'"></button>').join('')+'</div><span class="gallery-count" data-gallery-count>1 / '+imgs.length+'</span></div>';
  return '<article class="product-card rounded-2xl overflow-hidden reveal flex flex-col" style="animation-delay:'+i*35+'ms">'+gallery+'<div class="p-5 flex flex-col flex-1"><div class="flex-1"><h3 class="font-serif text-2xl leading-tight">'+moneySafe(p.name)+'</h3><p class="text-gray-400 text-xs leading-5 mt-2">'+moneySafe(p.desc)+'</p><div class="specification-panel"><p class="specification-heading">Specifications to choose</p><p class="specification-details">'+moneySafe(productSpecs(p))+'</p><p class="specification-note">Final options confirmed on enquiry</p></div></div><div class="flex items-center gap-2 mt-4"><button onclick="addToCart(\''+p.id+'\')" class="gold-button rounded-lg px-3 py-3 text-xs font-bold flex-1"><i class="fa-solid fa-cart-plus mr-1.5"></i>Add to Cart</button><button onclick="quickEnquire(\''+p.id+'\')" class="outline-button rounded-lg px-3 py-3 text-xs" aria-label="Enquire about '+moneySafe(p.name)+'">Enquire</button></div></div></article>';
  }).join('');
- if(!list.length)document.getElementById('product-grid').innerHTML='<div class="col-span-full text-center border border-white/10 rounded-xl p-10 text-gray-400">This collection is being curated. Contact us to discuss a custom requirement.</div>';
+ if(!list.length)productGrid.innerHTML='<div class="col-span-full text-center border border-white/10 rounded-xl p-10 text-gray-400">This collection is being curated. Contact us to discuss a custom requirement.</div>';
 }
 function renderCart(){
  const count=Object.values(cart).reduce((s,n)=>s+n,0);
@@ -696,7 +699,7 @@ document.querySelectorAll('[data-story-scroll]').forEach(btn=>btn.addEventListen
 
 </script>
 
-<!-- Catalogue recovery: keep category filters working independently of the main click handler. -->
+<!-- Catalogue category-filter recovery -->
 <script>
 (function(){
   'use strict';
@@ -708,20 +711,16 @@ document.querySelectorAll('[data-story-scroll]').forEach(btn=>btn.addEventListen
     filters.querySelectorAll('button[data-filter]').forEach(function(item){
       const active=item===button;
       item.classList.toggle('active',active);
-      item.setAttribute('aria-pressed',active?'true':'false');
+      item.setAttribute('aria-pressed',String(active));
     });
     try{
-      if(typeof renderProducts==='function') renderProducts(button.getAttribute('data-filter')||'All');
+      if(typeof renderProducts==='function')renderProducts(button.dataset.filter||'All');
       grid.style.setProperty('display','grid','important');
       grid.style.setProperty('visibility','visible','important');
       grid.style.setProperty('min-height','120px');
-      grid.querySelectorAll('article.product-card').forEach(function(card){
-        card.style.display='flex';
-        card.style.visibility='visible';
-      });
     }catch(error){
-      console.error('Catalogue filter error:',error);
-      grid.innerHTML='<p class="col-span-full rounded-xl border p-6 text-center">The catalogue could not load. Please refresh the page or contact Aakruti Enterprises.</p>';
+      console.error('Catalogue rendering failed:',error);
+      grid.innerHTML='<p class="col-span-full rounded-xl border p-6 text-center">Products could not be rendered. Please refresh and try again.</p>';
     }
   }
   filters.addEventListener('click',function(event){
@@ -735,10 +734,7 @@ document.querySelectorAll('[data-story-scroll]').forEach(btn=>btn.addEventListen
     button.type='button';
     button.style.pointerEvents='auto';
     button.style.touchAction='manipulation';
-    button.setAttribute('aria-pressed',button.classList.contains('active')?'true':'false');
   });
-  grid.style.setProperty('display','grid','important');
-  grid.style.setProperty('visibility','visible','important');
   if(typeof renderProducts==='function')activate(filters.querySelector('button[data-filter="All"]'));
 })();
 </script>
