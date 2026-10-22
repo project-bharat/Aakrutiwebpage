@@ -75,6 +75,36 @@ footer .gold-text{color:#fff!important;-webkit-text-fill-color:#fff!important}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--brand-primary)!important;outline-offset:3px}
 @media(max-width:767px){.hero{min-height:560px!important}.site-header{backdrop-filter:blur(14px)}}
 
+
+/* Contrast and refined underline navigation */
+:root{--brand-neutral:#f7f4f1}
+body{background:var(--brand-neutral)!important;color:var(--brand-slate)!important}
+.site-header{background:rgba(247,244,241,.97)!important}
+.bg-obsidian,.bg-charcoal,.bg-surface{background-color:#f7f4f1!important}
+.product-card,.service-card,.value-card,.process-card,.testimonial-card,.category-card,.review-card,.catalogue-card{background:#fff!important;color:#525266!important}
+.desktop-nav a{
+  border-radius:0!important;background:transparent!important;border:0!important;
+  padding:12px 11px 13px!important;color:var(--brand-slate)!important;
+  isolation:isolate;overflow:hidden;transition:color .22s ease;
+}
+.desktop-nav a::before{
+  content:'';position:absolute;z-index:-1;left:0;right:0;bottom:0;height:0;
+  opacity:0;background:linear-gradient(to top,rgba(255,102,102,.24),rgba(255,102,102,.09) 45%,transparent);
+  transition:height .25s ease,opacity .25s ease;
+}
+.desktop-nav a::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:linear-gradient(90deg,#ff6666,#ffaaa0);transform:scaleX(0);
+  transform-origin:center;transition:transform .25s ease;
+}
+.desktop-nav a:hover,.desktop-nav a:focus-visible,.desktop-nav a.nav-featured{
+  color:var(--brand-primary)!important;background:transparent!important;border-color:transparent!important;
+}
+.desktop-nav a:hover::before,.desktop-nav a:focus-visible::before,.desktop-nav a.nav-featured::before{height:100%;opacity:1}
+.desktop-nav a:hover::after,.desktop-nav a:focus-visible::after,.desktop-nav a.nav-featured::after{transform:scaleX(1)}
+.mobile-nav a{border-radius:0!important;border:0!important;border-bottom:2px solid transparent!important;background:transparent!important}
+.mobile-nav a:hover,.mobile-nav a:focus-visible,.mobile-nav a.nav-featured{color:var(--brand-primary)!important;border-bottom-color:var(--brand-primary)!important;background:linear-gradient(to top,rgba(255,102,102,.16),transparent 75%)!important}
+
 </style>
 </head>
 <body class="antialiased">
