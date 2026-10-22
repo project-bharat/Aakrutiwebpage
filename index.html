@@ -654,8 +654,6 @@ document.querySelectorAll('[data-story-scroll]').forEach(btn=>btn.addEventListen
       const title=card && card.querySelector('h3');
       send('product_interaction',{item:title ? title.textContent.trim() : ''});
     }
-    const categoryButton=e.target.closest('#filters button[data-filter]');
-    if(categoryButton) send('category_view',{category:categoryButton.dataset.filter});
   });
   window.AakrutiAnalytics = {track:function(name,details){send(name,details);}};
 })();
