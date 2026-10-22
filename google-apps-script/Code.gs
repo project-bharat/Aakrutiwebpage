@@ -60,28 +60,42 @@ function submitEnquiry_(p) {
   const email = clean_(p.email, 160);
   const interest = clean_(p.interest, 100);
   const details = clean_(p.details, 2000);
+  const product = clean_(p.product, 160);
   const page = clean_(p.page, 120);
   const source = clean_(p.source, 100) || 'website';
   if (!name || !phone || !interest || phone.replace(/\D/g,'').length < 7) {
     return json_({ok:false,error:'invalid_enquiry'});
   }
-  const lock = LockService.getScriptLock();
-  lock.waitLock(10000);
-  let ss;
-  try {
-    ss = getSpreadsheet_();
-    const sheet = getSheet_(ss, ENQUIRY_SHEET, ENQUIRY_HEADERS);
-    sheet.appendRow([new Date(), safeCell_(name), safeCell_(phone), safeCell_(email),
-      safeCell_(interest), safeCell_(details), safeCell_(page), safeCell_(source)]);
-    const eventSheet = getSheet_(ss, EVENT_SHEET, EVENT_HEADERS);
-    const visitorId = clean_(p.visitorId, 80);
-    eventSheet.appendRow([new Date(), 'enquiry_submit',
-      /^[a-zA-Z0-9-]{8,80}$/.test(visitorId) ? visitorId : '',
-      safeCell_(page), '', safeCell_(source), safeCell_([interest, clean_(p.product,100)].filter(Boolean).join(' / '))]);
-    refreshSummary_(ss, eventSheet);
-  } finally { lock.releaseLock(); }
 
-  const subject = 'New enquiry for Aakruti';
+  // Attempt to save the enquiry, but do not let a spreadsheet problem suppress
+  // the owner's email notification.
+  let saved = false;
+  let saveError = '';
+  try {
+    const lock = LockService.getScriptLock();
+    lock.waitLock(10000);
+    try {
+      const ss = getSpreadsheet_();
+      const sheet = getSheet_(ss, ENQUIRY_SHEET, ENQUIRY_HEADERS);
+      sheet.appendRow([new Date(), safeCell_(name), safeCell_(phone), safeCell_(email),
+        safeCell_(interest), safeCell_(details), safeCell_(page), safeCell_(source)]);
+      const eventSheet = getSheet_(ss, EVENT_SHEET, EVENT_HEADERS);
+      const visitorId = clean_(p.visitorId, 80);
+      eventSheet.appendRow([new Date(), 'enquiry_submit',
+        /^[a-zA-Z0-9-]{8,80}$/.test(visitorId) ? visitorId : '',
+        safeCell_(page), '', safeCell_(source),
+        safeCell_([interest, product].filter(Boolean).join(' / '))]);
+      refreshSummary_(ss, eventSheet);
+      saved = true;
+    } finally {
+      lock.releaseLock();
+    }
+  } catch (sheetError) {
+    saveError = String(sheetError).slice(0, 300);
+    console.error('Enquiry email will still be attempted; spreadsheet save failed: ' + sheetError);
+  }
+
+  const subject = 'New website enquiry — Aakruti';
   const body = [
     'A new enquiry has been submitted through the Aakruti website.',
     '',
@@ -89,20 +103,23 @@ function submitEnquiry_(p) {
     'Phone: ' + phone,
     'Email: ' + (email || 'Not provided'),
     'Enquiry: ' + interest,
+    'Product: ' + (product || 'Not specified'),
     'Project details: ' + (details || 'Not provided'),
     'Page: ' + (page || 'Website'),
     'Traffic source: ' + source,
     '',
-    'This enquiry is also saved in the Enquiries tab of Aakruti Website Analytics.'
+    'Spreadsheet saved: ' + (saved ? 'Yes' : 'No'),
+    saved ? 'Open the Aakruti Website Analytics workbook and its Enquiries tab.' : 'Spreadsheet error: ' + saveError
   ].join('\n');
   try {
-    MailApp.sendEmail({to:OWNER_EMAIL, subject:subject, body:body, replyTo:validEmail_(email)});
+    const mail = {to: OWNER_EMAIL, subject: subject, body: body};
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) mail.replyTo = email;
+    MailApp.sendEmail(mail);
   } catch (mailError) {
-    console.error('Enquiry saved, but owner notification email failed: ' + mailError);
-    // The enquiry is already stored. Return an explicit mail failure for server-side diagnostics.
-    return json_({ok:true, saved:true, emailSent:false, emailError:String(mailError).slice(0,300)});
+    console.error('Owner notification email failed: ' + mailError);
+    return json_({ok:false, saved:saved, emailSent:false, emailError:String(mailError).slice(0,300), saveError:saveError});
   }
-  return json_({ok:true, saved:true, emailSent:true});
+  return json_({ok:true, saved:saved, emailSent:true, saveError:saveError});
 }
 
 function getSheet_(ss, name, headers) {
