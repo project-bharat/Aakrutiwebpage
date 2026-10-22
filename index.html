@@ -86,8 +86,8 @@ tailwind.config={theme:{extend:{colors:{obsidian:'#cbbeb5',charcoal:'#cbbeb5',su
 .desktop-nav a.nav-featured:after{content:'';position:absolute;left:12px;right:12px;bottom:4px;height:1px;background:#F28C28}
 .tray-button{border:1px solid #F28C2870;color:#f3f4f6;background:#F28C280a;transition:background .2s,border-color .2s}
 .tray-button:hover{background:#F28C281a;border-color:#F28C28}
-.cart-badge{background:#F28C28;color:#0b0b0e;font-weight:700;font-size:11px;min-width:19px;padding:2px 6px;border-radius:999px;text-align:center}
-.mobile-menu-button{width:40px;height:40px;border:1px solid #ffffff20;border-radius:50%;color:#FFB45E;display:inline-flex;align-items:center;justify-content:center}
+.cart-badge{background:#ff6666;color:#fff;font-weight:700;font-size:11px;min-width:19px;padding:2px 6px;border-radius:999px;text-align:center}.cart-badge[hidden]{display:none!important}
+.mobile-menu-button{width:40px;height:40px;border:0;border-radius:50%;background:transparent;color:#ff6666;display:inline-flex;align-items:center;justify-content:center;transition:background .2s,color .2s}.mobile-menu-button:hover,.mobile-menu-button:focus-visible{background:rgba(255,102,102,.12);color:#d94c55}
 .mobile-nav{padding:8px 16px 16px;border-top:1px solid #ffffff0d;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
 .mobile-nav[hidden]{display:none}
 .mobile-nav a{font-size:11px;text-align:center;padding:10px 4px;border:1px solid #ffffff10;border-radius:999px;color:#dedce4}
@@ -112,7 +112,7 @@ body{background:var(--brand-neutral)!important;color:var(--brand-slate)!importan
 .desktop-nav a:hover,.desktop-nav a:focus-visible,.desktop-nav .nav-featured,.mobile-nav a:hover,.mobile-nav a:focus-visible{color:#fff!important;background:var(--brand-primary)!important;border-color:var(--brand-primary)!important}
 .mobile-menu-button{border-color:rgba(82,82,102,.35)!important;color:var(--brand-primary)!important}
 .mobile-nav{border-color:rgba(82,82,102,.2)!important}
-.tray-button{background:var(--brand-primary)!important;border-color:var(--brand-primary)!important;color:#fff!important}
+.tray-button{background:transparent!important;border:0!important;color:var(--brand-primary)!important}.tray-button:hover{background:rgba(255,102,102,.12)!important}.cart-badge{background:var(--brand-primary)!important;color:#fff!important}
 .cart-badge{background:var(--brand-slate)!important;color:#fff!important}
 .gold-text{background:none!important;color:var(--brand-slate)!important;-webkit-text-fill-color:var(--brand-slate)!important}
 .gold-button,.gold-button:hover{background:var(--brand-primary)!important;border-color:var(--brand-primary)!important;color:#fff!important}
@@ -377,7 +377,7 @@ footer .text-gray-500{color:#e0dfe7!important}
  <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-[72px] flex items-center justify-between gap-4">
   <a href="#home" class="flex items-center gap-2 shrink-0 group" aria-label="Aakruti Enterprises home"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgg3egRgXPYmno1qK1np5rPIborPm6j2gzwShZrgf4uNQnDq3skA8y-o7D79ANJiWDBwyswuylU2F78b_GFJCfcngGmdLP4Ok4q9IFV75XxmUk41ZM_E_ONwyh2VdcOcXjjMrq-DA3mGUNI4tSqnwUIyen5akKkDoEAl92RagTjJU8Bf_Pqgh5MLjJ3FN8/s320/1000054631.png" alt="" class="h-9 w-9 sm:h-10 sm:w-10 shrink-0 object-contain group-hover:opacity-90 transition-opacity"><span class="flex h-9 sm:h-10 flex-col justify-center leading-none uppercase font-sans"><span class="text-[15px] sm:text-base font-semibold tracking-[.16em] text-stone-900">AAKRUTI</span><span class="mt-0.5 text-[9px] sm:text-[10px] font-semibold tracking-[.18em] text-gold">ENTERPRISES</span></span></a>
   <nav class="desktop-nav hidden lg:flex items-center gap-1 text-xs xl:text-sm text-gray-300" aria-label="Main navigation"><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#catalogue" class="nav-featured">Catalogue</a><a href="#values">Values</a><a href="#process">Process</a><a href="#testimonials">Reviews</a><a href="#contact">Contact</a></nav>
-  <div class="flex items-center gap-2 shrink-0"><button onclick="openTray()" class="tray-button rounded-full px-3 sm:px-4 py-2.5 flex items-center gap-2 text-xs sm:text-sm" aria-label="Open order tray"><i class="fa-solid fa-bag-shopping"></i><span class="hidden sm:inline">Order tray</span><span id="cart-badge" class="cart-badge">0</span></button><button type="button" id="mobile-nav-toggle" class="mobile-menu-button lg:hidden" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation menu"><i class="fa-solid fa-bars"></i></button></div>
+  <div class="flex items-center gap-2 shrink-0"><button onclick="openTray()" class="tray-button rounded-full px-3 sm:px-4 py-2.5 flex items-center gap-2 text-xs sm:text-sm" aria-label="Open order tray"><i class="fa-solid fa-bag-shopping"></i><span class="hidden sm:inline">Order tray</span><span id="cart-badge" class="cart-badge" hidden>0</span></button><button type="button" id="mobile-nav-toggle" class="mobile-menu-button lg:hidden" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation menu"><i class="fa-solid fa-bars"></i></button></div>
  </div>
  <nav id="mobile-nav" class="mobile-nav lg:hidden" aria-label="Mobile navigation" hidden><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#catalogue">Catalogue</a><a href="#values">Values</a><a href="#process">Process</a><a href="#testimonials">Reviews</a><a href="#contact">Contact</a></nav>
 </header>
@@ -524,7 +524,9 @@ function renderProducts(filter='All'){
 }
 function renderCart(){
  const count=Object.values(cart).reduce((s,n)=>s+n,0);
- document.getElementById('cart-badge').textContent=count;
+ const badge=document.getElementById('cart-badge');
+ badge.textContent=count;
+ badge.hidden=count===0;
  const items=products.filter(p=>cart[p.id]);
  document.getElementById('tray-items').innerHTML=items.length?items.map(p=>'<div class="flex gap-3 p-3 rounded-xl bg-charcoal border border-white/10"><img src="https://images.unsplash.com/'+p.image+'?auto=format&fit=crop&w=200&q=70" alt="" class="w-20 h-20 object-cover rounded-lg"><div class="flex-1 min-w-0"><h3 class="font-medium text-sm">'+moneySafe(p.name)+'</h3><p class="text-xs text-gray-500 mt-1">'+p.category+'</p><div class="flex items-center justify-between mt-3"><div class="flex items-center gap-3"><button onclick="changeQty(\''+p.id+'\',-1)" class="w-7 h-7 rounded border border-white/15" aria-label="Decrease quantity">−</button><span class="text-sm">'+cart[p.id]+'</span><button onclick="changeQty(\''+p.id+'\',1)" class="w-7 h-7 rounded border border-white/15" aria-label="Increase quantity">+</button></div><button onclick="removeItem(\''+p.id+'\')" class="text-xs text-gray-400 hover:text-red-300"><i class="fa-regular fa-trash-can mr-1"></i>Remove</button></div></div></div>').join(''):'<div class="text-gray-400 text-sm py-10 text-center"><i class="fa-solid fa-basket-shopping text-3xl text-gold mb-4 block"></i>Your tray is empty.<br>Add products from the catalogue to begin.</div>';
 }
@@ -677,6 +679,30 @@ document.querySelectorAll('[data-story-scroll]').forEach(btn=>btn.addEventListen
       else if(e.target.closest('[data-gallery-prev]')) trackCatalogueInteraction(card,'previous image clicked');
       else if(e.target.closest('[data-gallery-next]')) trackCatalogueInteraction(card,'next image clicked');
     });
+    // Record meaningful product dwell once the card stays mostly visible for five seconds.
+    if('IntersectionObserver' in window){
+      const timers=new WeakMap(), viewed=new WeakSet();
+      const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+        const card=entry.target;
+        if(entry.isIntersecting && entry.intersectionRatio>=0.6 && !viewed.has(card)){
+          if(timers.has(card)) return;
+          timers.set(card,setTimeout(()=>{
+            if(card.isConnected && !viewed.has(card)){viewed.add(card);trackCatalogueInteraction(card,'product viewed for 5+ seconds');}
+            timers.delete(card);
+          },5000));
+        }else if(timers.has(card)){clearTimeout(timers.get(card));timers.delete(card);}
+      }),{threshold:[0,0.6,1]});
+      const observeCards=()=>productGrid.querySelectorAll('article.product-card').forEach(card=>observer.observe(card));
+      observeCards();
+      new MutationObserver(observeCards).observe(productGrid,{childList:true});
+    }
+    const lastIndex=new WeakMap();
+    productGrid.addEventListener('scroll',function(e){
+      const track=e.target;if(!track.matches('[data-gallery-track]'))return;
+      const index=Math.round(track.scrollLeft/Math.max(1,track.clientWidth));
+      if(lastIndex.has(track)&&lastIndex.get(track)!==index)trackCatalogueInteraction(track.closest('article.product-card'),'gallery image scrolled to '+(index+1));
+      lastIndex.set(track,index);
+    },true);
     let swipeStart=new WeakMap();
     productGrid.addEventListener('pointerdown',function(e){
       const track=e.target.closest('[data-gallery-track]');
