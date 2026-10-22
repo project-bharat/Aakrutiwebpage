@@ -2,7 +2,7 @@
  * Aakruti website analytics + enquiry receiver.
  * Configure SPREADSHEET_ID, then deploy as a Google Apps Script Web App.
  */
-const SPREADSHEET_ID = 'PASTE_GOOGLE_SHEET_ID_HERE';
+const SPREADSHEET_ID = ''; // Optional: set an existing spreadsheet ID. Leave blank to create a workbook automatically.
 const OWNER_EMAIL = 'budgetbharatpro@gmail.com';
 const EVENT_SHEET = 'Visitor Events';
 const SUMMARY_SHEET = 'Daily Summary';
@@ -17,17 +17,17 @@ const ENQUIRY_HEADERS = [
 ];
 
 function doGet() {
-  return json_({service:'Aakruti website endpoint', status:isConfigured_()?'ready':'setup_required'});
+  const id = getSpreadsheetId_();
+  return json_({service:'Aakruti website endpoint', status:id?'ready':'initializing', spreadsheetConfigured:!!id});
 }
 
 function doPost(e) {
   try {
-    if (!isConfigured_()) return json_({ok:false,error:'spreadsheet_not_configured'});
     if (!e || !e.postData || !e.postData.contents) return json_({ok:false,error:'empty_request'});
     const p = JSON.parse(e.postData.contents);
     const eventName = clean_(p.event, 60);
     if (eventName === 'enquiry_submit') return submitEnquiry_(p);
-    const allowed = new Set(['page_view','consent_granted','category_view','product_interaction']);
+    const allowed = new Set(['page_view','consent_granted','category_view','product_interaction','product_view','add_to_cart','enquire_click']);
     if (!allowed.has(eventName)) return json_({ok:false,error:'event_not_allowed'});
     const visitorId = clean_(p.visitorId, 80);
     if (!/^[a-zA-Z0-9-]{8,80}$/.test(visitorId)) return json_({ok:false,error:'invalid_visitor_id'});
@@ -35,13 +35,14 @@ function doPost(e) {
     const source = clean_(p.campaign, 100) || 'direct';
     const category = clean_(p.category, 80);
     const item = clean_(p.item, 100);
+    const categoryProduct = [category, item].filter(Boolean).join(' / ').slice(0,180);
     const page = clean_(p.page, 120);
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
     try {
-      const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+      const ss = getSpreadsheet_();
       const sheet = getSheet_(ss, EVENT_SHEET, EVENT_HEADERS);
-      sheet.appendRow([new Date(), eventName, visitorId, page, device, source, category || item]);
+      sheet.appendRow([new Date(), eventName, visitorId, page, device, source, safeCell_(categoryProduct)]);
       refreshSummary_(ss, sheet);
     } finally { lock.releaseLock(); }
     return json_({ok:true});
@@ -76,7 +77,7 @@ function submitEnquiry_(p) {
     const visitorId = clean_(p.visitorId, 80);
     eventSheet.appendRow([new Date(), 'enquiry_submit',
       /^[a-zA-Z0-9-]{8,80}$/.test(visitorId) ? visitorId : '',
-      safeCell_(page), '', safeCell_(source), safeCell_(interest)]);
+      safeCell_(page), '', safeCell_(source), safeCell_([interest, clean_(p.product,100)].filter(Boolean).join(' / '))]);
     refreshSummary_(ss, eventSheet);
   } finally { lock.releaseLock(); }
 
@@ -153,9 +154,9 @@ function refreshSummary_(ss, events) {
     if(id) d.visitors[id]=true;
     if(ev==='page_view') d.views++;
     if(ev==='category_view') d.categories++;
-    if(ev==='product_interaction') d.products++;
+    if(['product_interaction','product_view','add_to_cart','enquire_click'].includes(ev)) d.products++;
     if(ev==='enquiry_submit') d.enquiries++;
-    const cat=String(r[6]||''); if(cat && (ev==='category_view'||ev==='product_interaction')) d.cats[cat]=(d.cats[cat]||0)+1;
+    const cat=String(r[6]||''); if(cat && (ev==='category_view'||ev==='product_interaction'||ev==='product_view'||ev==='add_to_cart'||ev==='enquire_click')) d.cats[cat]=(d.cats[cat]||0)+1;
     const source=String(r[5]||''); if(source) d.sources[source]=(d.sources[source]||0)+1;
   }
   summary.clearContents();
@@ -168,18 +169,33 @@ function refreshSummary_(ss, events) {
   summary.getRange(1,1,1,headers.length).setFontWeight('bold');
 }
 
-function isConfigured_() {
-  return !!SPREADSHEET_ID && SPREADSHEET_ID.indexOf('PASTE_') !== 0;
+function getSpreadsheetId_() {
+  const configured = String(SPREADSHEET_ID || '').trim();
+  if (configured) return configured;
+  return PropertiesService.getScriptProperties().getProperty('AAKRUTI_SPREADSHEET_ID') || '';
+}
+function getSpreadsheet_() {
+  let id = getSpreadsheetId_();
+  if (id) return SpreadsheetApp.openById(id);
+  // First live request provisions the workbook and remembers it for future requests.
+  const ss = SpreadsheetApp.create('Aakruti Website Analytics');
+  PropertiesService.getScriptProperties().setProperty('AAKRUTI_SPREADSHEET_ID', ss.getId());
+  MailApp.sendEmail({
+    to: OWNER_EMAIL,
+    subject: 'Aakruti website analytics sheet created',
+    body: 'The website analytics workbook was created automatically. Open it here:\n' + ss.getUrl() + '\n\nVisitor Events, Daily Summary and Enquiries tabs will be created as events arrive.'
+  });
+  return ss;
 }
 function clean_(value, max) {
-  return String(value == null ? '' : value).replace(/[\\u0000-\\u001F\\u007F]/g,'').trim().slice(0,max);
+  return String(value == null ? '' : value).replace(/[\u0000-\u001F\u007F]/g,'').trim().slice(0,max);
 }
 function safeCell_(value) {
   const s=String(value == null ? '' : value);
-  return /^[=+@\\-]/.test(s) ? "'" + s : s;
+  return /^[=+@-]/.test(s) ? "'" + s : s;
 }
 function validEmail_(email) {
-  return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) ? email : OWNER_EMAIL;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : OWNER_EMAIL;
 }
 function json_(data) {
   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
