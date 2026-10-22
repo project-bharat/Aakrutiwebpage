@@ -145,20 +145,25 @@ body{background:var(--brand-neutral)!important;color:var(--brand-slate)!importan
 
 /* Final contrast polish */
 #values article h3{
- display:inline-block;padding:.24rem .6rem;border-radius:4px;
- color:#ff6666!important;background:rgba(255,102,102,.16);
- border:1px solid rgba(255,102,102,.38);
- text-shadow:0 1px 2px #0008;
+ display:block;padding:0;border:0;border-radius:0;background:transparent;
+ color:#fff!important;text-shadow:0 1px 3px #000b;
 }
-#values article .text-gold{color:#ff8a8a!important}
+#values article .text-gold{
+ display:inline-flex;align-items:center;justify-content:center;
+ width:38px;height:38px;border-radius:999px;
+ color:#fff!important;background:#525266!important;
+ border:1px solid rgba(255,255,255,.85);
+ box-shadow:0 2px 8px #0005;font-weight:700;letter-spacing:.08em;
+ text-shadow:none;
+}
 #product-grid .specification-panel{
- margin-top:1rem;padding:0!important;background:transparent!important;
- border:0!important;border-radius:0!important;overflow:hidden;
+ margin-top:1rem;padding:0!important;background:#525266!important;
+ border:1px solid #525266!important;border-radius:12px!important;overflow:hidden;
 }
 #product-grid .specification-panel .specification-heading{
- display:block;padding:.65rem .8rem;background:#ff6666;color:#fff!important;
+ display:block;padding:.65rem .8rem;background:#525266;color:#fff!important;
  font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
- border:1px solid #ff6666;
+ border:0;
 }
 #product-grid .specification-panel .specification-details{
  padding:.75rem .8rem .45rem;border-top:2px solid #ff6666;
@@ -166,6 +171,11 @@ body{background:var(--brand-neutral)!important;color:var(--brand-slate)!importan
 }
 #product-grid .specification-panel .specification-note{
  padding:0 .8rem .7rem;background:#f0ebe7;color:#737383!important;font-size:10px;
+}
+.cart-badge{
+ display:inline-flex;align-items:center;justify-content:center;
+ width:24px;height:24px;min-width:24px;padding:0;border-radius:50%;
+ background:#525266!important;color:#fff!important;font-size:11px;line-height:1;
 }
 footer.bg-charcoal,footer{background:#525266!important;color:#fff!important;border-color:rgba(255,255,255,.18)!important}
 footer.bg-charcoal p,footer.bg-charcoal span,footer.bg-charcoal a,footer p,footer span,footer a{color:#fff!important}
