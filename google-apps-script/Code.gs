@@ -180,11 +180,15 @@ function getSpreadsheet_() {
   // First live request provisions the workbook and remembers it for future requests.
   const ss = SpreadsheetApp.create('Aakruti Website Analytics');
   PropertiesService.getScriptProperties().setProperty('AAKRUTI_SPREADSHEET_ID', ss.getId());
-  MailApp.sendEmail({
-    to: OWNER_EMAIL,
-    subject: 'Aakruti website analytics sheet created',
-    body: 'The website analytics workbook was created automatically. Open it here:\n' + ss.getUrl() + '\n\nVisitor Events, Daily Summary and Enquiries tabs will be created as events arrive.'
-  });
+  try {
+    MailApp.sendEmail({
+      to: OWNER_EMAIL,
+      subject: 'Aakruti website analytics sheet created',
+      body: 'The website analytics workbook was created automatically. Open it here:\n' + ss.getUrl() + '\n\nVisitor Events, Daily Summary and Enquiries tabs will be created as events arrive.'
+    });
+  } catch (mailError) {
+    console.error('Workbook created; notification email failed: ' + mailError);
+  }
   return ss;
 }
 function clean_(value, max) {
