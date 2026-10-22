@@ -367,6 +367,15 @@ footer .text-gray-500{color:#e0dfe7!important}
 .site-header .tray-button #cart-badge{display:inline-flex;align-items:center;justify-content:center;margin-left:3px;min-width:17px;height:17px;padding:0 4px;font-size:10px;line-height:1;border-radius:999px;background:var(--brand-primary)!important;color:#fff!important}
 .site-header .mobile-menu-button{width:34px!important;height:34px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:var(--brand-slate)!important}
 .site-header .mobile-menu-button:hover{background:rgba(255,102,102,.09)!important}
+
+/* Compact, consistently aligned header actions */
+.header-actions{gap:4px!important}
+.header-actions .tray-button{width:40px;height:40px;min-width:40px;padding:0!important;display:inline-flex;align-items:center;justify-content:center;position:relative;gap:0!important}
+.header-actions .tray-button>i{font-size:16px;line-height:1}
+.header-actions .mobile-menu-button{width:40px;height:40px;min-width:40px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+.header-actions .mobile-menu-button i{font-size:18px;line-height:1}
+.header-actions .cart-badge{position:absolute;top:-3px;right:-3px;min-width:17px;height:17px;padding:1px 4px;font-size:10px;line-height:15px}
+@media(max-width:420px){.header-actions{gap:2px!important}.header-actions .tray-button,.header-actions .mobile-menu-button{width:36px;height:36px;min-width:36px}}
 </style>
 </head>
 <body class="antialiased">
@@ -377,7 +386,7 @@ footer .text-gray-500{color:#e0dfe7!important}
  <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-[72px] flex items-center justify-between gap-4">
   <a href="#home" class="flex items-center gap-2 shrink-0 group" aria-label="Aakruti Enterprises home"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgg3egRgXPYmno1qK1np5rPIborPm6j2gzwShZrgf4uNQnDq3skA8y-o7D79ANJiWDBwyswuylU2F78b_GFJCfcngGmdLP4Ok4q9IFV75XxmUk41ZM_E_ONwyh2VdcOcXjjMrq-DA3mGUNI4tSqnwUIyen5akKkDoEAl92RagTjJU8Bf_Pqgh5MLjJ3FN8/s320/1000054631.png" alt="" class="h-9 w-9 sm:h-10 sm:w-10 shrink-0 object-contain group-hover:opacity-90 transition-opacity"><span class="flex h-9 sm:h-10 flex-col justify-center leading-none uppercase font-sans"><span class="text-[15px] sm:text-base font-semibold tracking-[.16em] text-stone-900">AAKRUTI</span><span class="mt-0.5 text-[9px] sm:text-[10px] font-semibold tracking-[.18em] text-gold">ENTERPRISES</span></span></a>
   <nav class="desktop-nav hidden lg:flex items-center gap-1 text-xs xl:text-sm text-gray-300" aria-label="Main navigation"><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#catalogue" class="nav-featured">Catalogue</a><a href="#values">Values</a><a href="#process">Process</a><a href="#testimonials">Reviews</a><a href="#contact">Contact</a></nav>
-  <div class="flex items-center gap-2 shrink-0"><button onclick="openTray()" class="tray-button rounded-full px-3 sm:px-4 py-2.5 flex items-center gap-2 text-xs sm:text-sm" aria-label="Open order tray"><i class="fa-solid fa-bag-shopping"></i><span class="hidden sm:inline">Order tray</span><span id="cart-badge" class="cart-badge" hidden>0</span></button><button type="button" id="mobile-nav-toggle" class="mobile-menu-button lg:hidden" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation menu"><i class="fa-solid fa-bars"></i></button></div>
+  <div class="header-actions flex items-center gap-1 shrink-0"><button onclick="openTray()" class="tray-button rounded-full p-0 flex items-center justify-center" aria-label="Open order tray"><i class="fa-solid fa-bag-shopping"></i><span class="hidden sm:inline">Order tray</span><span id="cart-badge" class="cart-badge" hidden>0</span></button><button type="button" id="mobile-nav-toggle" class="mobile-menu-button lg:hidden" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation menu"><i class="fa-solid fa-bars"></i></button></div>
  </div>
  <nav id="mobile-nav" class="mobile-nav lg:hidden" aria-label="Mobile navigation" hidden><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#catalogue">Catalogue</a><a href="#values">Values</a><a href="#process">Process</a><a href="#testimonials">Reviews</a><a href="#contact">Contact</a></nav>
 </header>
