@@ -105,6 +105,43 @@ body{background:var(--brand-neutral)!important;color:var(--brand-slate)!importan
 .mobile-nav a{border-radius:0!important;border:0!important;border-bottom:2px solid transparent!important;background:transparent!important}
 .mobile-nav a:hover,.mobile-nav a:focus-visible,.mobile-nav a.nav-featured{color:var(--brand-primary)!important;border-bottom-color:var(--brand-primary)!important;background:linear-gradient(to top,rgba(255,102,102,.16),transparent 75%)!important}
 
+
+/* Readability refinements for dark image sections and light surfaces */
+:root{--brand-neutral:#f7f4f1;--brand-subtext:#d9d6e0}
+.hero h1,.hero h1 *,.hero .inline-flex,.hero .inline-flex *{color:#fff!important}
+.hero h1 .gold-text{color:#ff6666!important;-webkit-text-fill-color:#ff6666!important}
+.hero>div p,.hero .text-gray-300,.hero .text-gray-400{color:#f0edf2!important}
+.hero .inline-flex.border{color:#fff!important;background:rgba(20,19,25,.72)!important;border-color:rgba(255,102,102,.8)!important}
+#values article h3,#values article .text-gray-200,#values article .text-gold{color:#fff!important}
+#values article p{color:#f0edf2!important;text-shadow:0 1px 3px #000b}
+#catalogue .text-gray-400,#catalogue .text-gray-500{color:#777786!important}
+#product-grid .text-gray-400,#product-grid .text-gray-500{color:#747482!important}
+#product-grid .text-gray-300{color:#525266!important}
+#product-grid .text-gold{color:#d94c55!important}
+#product-grid .bg-obsidian\/70{background:#eeeaE6!important}
+.filter-btn{border-radius:0!important;border-color:rgba(82,82,102,.24)!important;color:#525266!important;background:transparent!important;transition:color .2s,background .2s,border-color .2s}
+.filter-btn:hover{background:linear-gradient(to top,rgba(255,102,102,.2),rgba(255,102,102,.04))!important;border-color:#ff6666!important;color:#b53e49!important}
+.filter-btn.active{background:#ff6666!important;color:#fff!important;border-color:#ff6666!important;border-radius:0!important;box-shadow:none!important}
+.desktop-nav a.nav-featured::before{height:0!important;opacity:0!important}
+.desktop-nav a.nav-featured::after{transform:scaleX(1)!important}
+.desktop-nav a:hover::before,.desktop-nav a:focus-visible::before{height:100%;opacity:1}
+.desktop-nav a:hover::after,.desktop-nav a:focus-visible::after{transform:scaleX(1)}
+.desktop-nav a.nav-featured:hover::before,.desktop-nav a.nav-featured:focus-visible::before{height:100%;opacity:1}
+.desktop-nav a.nav-featured:hover::after,.desktop-nav a.nav-featured:focus-visible::after{transform:scaleX(1)}
+.story-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);grid-auto-columns:calc((100% - 2rem)/3);gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;padding:2px 2px 14px;scrollbar-width:thin;scrollbar-color:#ff6666 #eee8e3}
+.story-track::-webkit-scrollbar{height:6px}.story-track::-webkit-scrollbar-track{background:#eee8e3}.story-track::-webkit-scrollbar-thumb{background:#ff6666;border-radius:6px}
+.story-card{scroll-snap-align:start;min-width:0;overflow:hidden;border:1px solid rgba(82,82,102,.18);border-radius:14px;background:#fff;color:#525266;display:flex;flex-direction:column;box-shadow:0 10px 28px rgba(82,82,102,.07)}
+.story-card>img{width:100%;height:210px;object-fit:cover}
+.story-copy{padding:1.25rem;display:flex;flex-direction:column;align-items:flex-start;flex:1}
+.story-kicker{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#d94c55}
+.story-subtext{color:#737383}
+.story-review{grid-column:span 1}
+.story-review blockquote{font-size:1.15rem}
+.story-arrow{width:42px;height:42px;border:1px solid rgba(82,82,102,.3);color:#525266;background:#fff;display:inline-flex;align-items:center;justify-content:center;transition:background .2s,color .2s,border-color .2s}
+.story-arrow:hover{background:#ff6666;color:#fff;border-color:#ff6666}
+@media(max-width:1023px){.story-track{grid-auto-columns:calc((100% - 1rem)/2)}}
+@media(max-width:639px){.story-track{grid-auto-columns:88%}.story-card>img{height:190px}.story-review blockquote{font-size:1.05rem}}
+
 </style>
 </head>
 <body class="antialiased">
@@ -166,11 +203,24 @@ body{background:var(--brand-neutral)!important;color:var(--brand-slate)!importan
 </section>
 
 <section id="testimonials" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24">
- <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-10"><div><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Customer stories</p><h2 class="font-serif text-4xl sm:text-6xl mt-3">Their Words, <em class="gold-text font-normal">Our Pride</em></h2><p class="text-gray-400 mt-3">Happy Words of our Happy Customers</p></div><span class="text-gold text-sm"><i class="fa-solid fa-quote-left mr-2"></i>Made for living</span></div>
- <article class="grid md:grid-cols-[.9fr_1.1fr] overflow-hidden rounded-2xl border border-white/10 bg-charcoal">
-  <div class="min-h-[280px] md:min-h-[420px]"><img loading="lazy" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85" alt="Warm contemporary bedroom with a wooden bed" class="w-full h-full object-cover"></div>
-  <div class="p-6 sm:p-10 lg:p-12 flex flex-col justify-center"><div class="text-gold tracking-widest text-sm mb-5" aria-label="5 out of 5 stars">★★★★★</div><blockquote class="font-serif text-2xl sm:text-3xl leading-relaxed">“Me and my husband wanted to refurbish our bedroom. So, I visited your site and explored the double beds category. I ordered this bed that has been delivered at my doorstep within given ETA. Your installation team assembled it perfectly in my bedroom. It is an impressive piece of furniture; I love it. Thank you guys.”</blockquote><div class="border-t border-white/10 mt-7 pt-5 flex flex-col sm:flex-row sm:items-end justify-between gap-4"><div><p class="font-semibold">Balakumar</p><p class="text-sm text-gray-400 mt-1">Bangalore</p><p class="text-xs text-gray-500 mt-2">May 30, 2026</p></div><a href="https://www.woodenstreet.com/product/walken-bed-with-storage-honey-finish" target="_blank" rel="noopener noreferrer" class="outline-button rounded-lg px-4 py-3 text-sm inline-flex items-center justify-center gap-2">View Product <i class="fa-solid fa-arrow-up-right-from-square text-gold"></i></a></div><p class="text-[10px] text-gray-500 mt-5">Reference testimonial and product link supplied for design inspiration; confirm permission and attribution before presenting this as an Aakruti customer review.</p></div>
- </article>
+ <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-8">
+  <div><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Customer stories</p><h2 class="font-serif text-4xl sm:text-6xl mt-3">Spaces, <em class="gold-text font-normal">Well Lived</em></h2><p class="text-gray-400 mt-3">A customer review and curated furniture ideas to explore.</p></div>
+  <div class="flex items-center gap-3">
+   <span class="text-xs text-gray-400 mr-1">Swipe to explore</span>
+   <button type="button" class="story-arrow" data-story-scroll="-1" aria-label="Scroll customer stories left"><i class="fa-solid fa-arrow-left"></i></button>
+   <button type="button" class="story-arrow" data-story-scroll="1" aria-label="Scroll customer stories right"><i class="fa-solid fa-arrow-right"></i></button>
+  </div>
+ </div>
+ <div id="story-track" class="story-track" aria-label="Customer stories and furniture inspiration" tabindex="0">
+  <article class="story-card story-review">
+   <img loading="lazy" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=85" alt="Warm contemporary bedroom with a wooden bed">
+   <div class="story-copy"><span class="story-kicker">Reference review</span><div class="text-gold tracking-widest text-sm my-3" aria-label="5 out of 5 stars">★★★★★</div><blockquote class="font-serif text-xl leading-relaxed">“Me and my husband wanted to refurbish our bedroom. So, I visited your site and explored the double beds category. I ordered this bed that has been delivered at my doorstep within given ETA. Your installation team assembled it perfectly in my bedroom. It is an impressive piece of furniture; I love it. Thank you guys.”</blockquote><div class="border-t border-white/15 mt-5 pt-4"><p class="font-semibold">Balakumar</p><p class="text-sm story-subtext mt-1">Bangalore · May 30, 2026</p><a href="https://www.woodenstreet.com/product/walken-bed-with-storage-honey-finish" target="_blank" rel="noopener noreferrer" class="outline-button rounded-lg px-4 py-2.5 mt-4 text-sm inline-flex items-center gap-2">View referenced product <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div><p class="text-xs story-subtext mt-4">Reference testimonial and product link supplied for design inspiration; confirm permission and attribution before presenting this as an Aakruti customer review.</p></div>
+  </article>
+  <article class="story-card"><img loading="lazy" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=85" alt="Contemporary living room with a sofa and soft neutral palette"><div class="story-copy"><span class="story-kicker">Design inspiration 01</span><h3 class="font-serif text-3xl mt-3">Living, made inviting</h3><p class="story-subtext mt-3 leading-6">Layer a comfortable sofa with considered tables, soft textures and practical surfaces to make the living room work for everyday life.</p></div></article>
+  <article class="story-card"><img loading="lazy" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=85" alt="Calm contemporary bedroom interior"><div class="story-copy"><span class="story-kicker">Design inspiration 02</span><h3 class="font-serif text-3xl mt-3">A calmer bedroom</h3><p class="story-subtext mt-3 leading-6">Bring together a well-proportioned bed, useful storage and warm finishes for a restful, uncluttered space.</p></div></article>
+  <article class="story-card"><img loading="lazy" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=85" alt="Dining space with contemporary furniture and natural light"><div class="story-copy"><span class="story-kicker">Design inspiration 03</span><h3 class="font-serif text-3xl mt-3">Gather around</h3><p class="story-subtext mt-3 leading-6">Choose dining furniture around your room size and routine, balancing comfortable seating with enough space to move.</p></div></article>
+  <article class="story-card"><img loading="lazy" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=85" alt="Organised contemporary home office with a desk and chair"><div class="story-copy"><span class="story-kicker">Design inspiration 04</span><h3 class="font-serif text-3xl mt-3">Work with purpose</h3><p class="story-subtext mt-3 leading-6">A practical desk, supportive seating and smart storage can help create a focused workspace at home or in the office.</p></div></article>
+ </div>
 </section>
 
 <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24 grid lg:grid-cols-2 gap-12">
@@ -282,6 +332,9 @@ document.querySelectorAll('#filters button[data-filter]').forEach(btn=>btn.setAt
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTray()});
 document.getElementById('year').textContent=new Date().getFullYear();
 renderProducts();renderCart();
+
+document.querySelectorAll('[data-story-scroll]').forEach(btn=>btn.addEventListener('click',()=>{const track=document.getElementById('story-track');const card=track.querySelector('.story-card');if(!card)return;const gap=parseFloat(getComputedStyle(track).columnGap)||16;track.scrollBy({left:Number(btn.dataset.storyScroll)*(card.getBoundingClientRect().width+gap),behavior:'smooth'});}));
+
 </script>
 </body>
 </html>
