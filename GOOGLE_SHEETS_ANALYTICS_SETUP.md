@@ -1,55 +1,55 @@
-# Aakruti Website Visitor Analytics — Setup
+# Aakruti Website Analytics and Enquiries — Setup
 
-The website code is committed, but analytics will remain inactive until you deploy the Apps Script and paste its Web App URL into `index.html`. The consent banner works independently. Visitors who reject analytics are not tracked.
+## What the website collects
 
-## 1. Create the Google Sheet
+Optional analytics starts only after a visitor accepts it. Rejecting analytics still allows the visitor to submit an enquiry.
 
-1. Sign in to the Google account that should own the analytics.
-2. Open https://sheets.new and name the spreadsheet **Aakruti Website Analytics**.
-3. Copy the spreadsheet ID from its URL. It is the text between `/d/` and `/edit` in a URL like `https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit`.
-4. Keep the sheet private to your team. Do not publish it to the web.
+**Visitor Events** keeps only business-useful fields: timestamp, event, anonymous visitor ID (only for visitors who accepted analytics), page path, broad device category, traffic source, and category/product. It no longer intentionally collects screen size, browser language, page title, full referrer URL, IP address, age, gender, income, or precise location.
 
-The Apps Script creates two tabs automatically when the first consented event arrives:
-- **Visitor Events** — one row per event, with an anonymous visitor ID, time, page, device category, screen size, language, referrer hostname, campaign source, category and item interaction.
-- **Daily Summary** — daily page views, unique anonymous visitors, repeat events, category views, product interactions, enquiry-button clicks, and top categories/referrers.
+**Daily Summary** shows date (IST), unique anonymous visitors, page views, category views, product interactions, enquiry submissions, top categories/products, and traffic sources.
 
-No name, email, phone number, exact location, age, gender, income, IP address or full referrer URL is intentionally collected by this feature. A click on an enquiry button is only an event count; it does not read the contact form fields.
+**Enquiries** stores submitted name, phone, optional email, enquiry type, project details, page and traffic source. The Apps Script emails each submission to **budgetbharatpro@gmail.com** with subject **New enquiry for Aakruti**.
 
-## 2. Create the Apps Script endpoint
+## 1. Configure the Google Sheet
 
-1. In the Sheet, open **Extensions → Apps Script**.
-2. Replace the editor contents with the complete code from [Code.gs](./Code.gs) in this repository.
-3. In the first few lines of Code.gs, replace `PASTE_GOOGLE_SHEET_ID_HERE` with the spreadsheet ID from step 1. Keep the ID inside the quotes.
-4. Click **Save** and name the project **Aakruti Website Analytics**.
-5. Choose **Deploy → New deployment**.
-6. Click the gear beside “Select type” and choose **Web app**.
-7. Set **Execute as** to **Me**.
-8. Set **Who has access** to **Anyone** so the public website can send events. This makes the endpoint public; the code only accepts a small allowlist of anonymous analytics events, but it is not an authenticated private API. Do not use this endpoint for contact details or sensitive data.
-9. Click **Deploy**, review and approve Google's authorization prompts, then copy the Web app URL ending in `/exec`. Do not share editor access or credentials.
+1. Open the Google Sheet used for the current visitor analytics.
+2. Copy its spreadsheet ID from the URL (between `/d/` and `/edit`).
+3. Open **Extensions → Apps Script**.
+4. Replace the editor's server code with the complete [Code.gs](./google-apps-script/Code.gs) from this repository.
+5. In Code.gs, replace `PASTE_GOOGLE_SHEET_ID_HERE` in the first lines with your actual spreadsheet ID, keeping the quotes.
+6. Save the script.
 
-If your Google Workspace administrator does not allow “Anyone” access, deployment may be blocked; use an account/policy that supports a public web app or a managed analytics service instead.
+The script migrates the old Visitor Events columns to the shorter business-focused layout the next time an event arrives. Old screen-size/language columns are removed during this migration. Daily Summary is rebuilt in the new concise format. A new Enquiries tab is created when the first form is submitted.
 
-## 3. Connect the website
+## 2. Redeploy the existing Web App
 
-1. Open `index.html` in this repository on GitHub and click Edit.
-2. Find `PASTE_YOUR_DEPLOYED_APPS_SCRIPT_WEB_APP_URL_HERE`.
-3. Replace only that placeholder with your deployed `https://script.google.com/macros/s/.../exec` URL, keeping the URL inside the existing single quotes.
-4. Commit the change to `main`. GitHub Pages will redeploy the site.
+Because the website already uses a deployed Apps Script URL, keep that deployment URL:
 
-The code intentionally sends nothing until the endpoint is configured and a visitor accepts optional analytics. It uses `no-cors`, so the browser cannot read the response; this is expected for this lightweight endpoint.
+1. In Apps Script, click **Deploy → Manage deployments**.
+2. Select the existing Web app deployment and click Edit (pencil).
+3. Under Version, choose **New version**.
+4. Click **Deploy** and complete any authorization prompts.
+5. Confirm that access remains **Anyone** if the website is to submit directly. If your Google account or Workspace policy disallows this, use a supported deployment/account rather than exposing another endpoint.
+
+The script runs as the deploying account. Google may ask for spreadsheet and email permissions so it can write rows and send notification emails. The spreadsheet itself should remain private to your team.
+
+## 3. Website changes already committed
+
+- Removed the external WoodenStreet product link/button.
+- Added **Submit Enquiry**, alongside **WhatsApp** and **Mail**, to the Request a callback / quote form.
+- WhatsApp opens **+91 72188 38122**.
+- Mail opens a draft addressed to **budgetbharatpro@gmail.com**.
+- Submit Enquiry posts the filled form to the Apps Script endpoint, saves it in Enquiries and emails the owner.
+- Enquiry submissions are recorded as `enquiry_submit` events and counted in Daily Summary.
 
 ## 4. Test
 
-1. Open the live website in a private/incognito window.
-2. Click **Reject optional analytics**. Browse categories and products. No analytics rows should be added.
-3. Clear that site's local storage or open a fresh private window, reload, and click **Accept analytics**.
-4. Open a category such as Living or Bedroom and interact with a product. Check **Visitor Events** for `consent_granted`, `page_view`, `category_view`, or `product_interaction`.
-5. Check **Daily Summary** for aggregated totals. A page reload after consent should add a page-view row.
+1. Deploy the updated Apps Script as described above.
+2. Open the live website and submit a test enquiry with your own test details.
+3. Check the **Enquiries** tab and the owner inbox at budgetbharatpro@gmail.com.
+4. Check **Visitor Events** for `enquiry_submit` and **Daily Summary → Enquiry Submissions** for the count.
+5. Test WhatsApp and Mail separately.
 
-## 5. Important limitations
+The browser uses a lightweight cross-origin request mode, so it cannot display a definitive server response. Verify the first test in the sheet and inbox before relying on live submissions. Apps Script quotas apply. As the endpoint is public, the script includes basic input limits and a honeypot but is not an authenticated anti-spam service; review submissions periodically.
 
-- This is basic, consent-based usage analytics, not a full demographic profiling system. It cannot reliably determine a visitor's age, gender, income or identity, and does not try to infer those attributes.
-- The anonymous browser ID is stored in local storage only after consent. Clearing site data or switching browsers can make the same person appear as a new visitor.
-- The current setup records only `utm_source` as a campaign label and stores the referring hostname, not a full URL.
-- Apps Script quotas and Google Sheets row limits apply. For high traffic, use a dedicated analytics platform or database.
-- Provide an accurate privacy notice and review applicable privacy obligations for your business and audience. Do not use this dataset to make sensitive inferences.
+The website does not infer personal demographics. The enquiry form collects only the details visitors choose to submit for a business response. Review the privacy notice and your applicable data-retention/privacy obligations.
