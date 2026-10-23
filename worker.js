@@ -17,14 +17,15 @@ export default {
 
     // Only the API path reaches this handler; all website pages and assets
     // remain the original static files served by Cloudflare.
-    if (url.pathname !== "/api/analytics") {
+    const isAnalytics = url.pathname === "/api/analytics";
+    const isAdminLogin = url.pathname === "/api/admin-login";
+    if (!isAnalytics && !isAdminLogin) {
       return json({ ok: false, error: "Not found." }, 404);
     }
 
-    if (request.method === "GET") {
+    if (request.method === "GET" && isAnalytics) {
       return json({ ok: true, service: "aakruti-analytics-proxy" });
     }
-
     if (request.method !== "POST") {
       return json({ ok: false, error: "Method not allowed." }, 405);
     }
@@ -72,7 +73,17 @@ export default {
         return json({ ok: false, error: "The submission service returned an error." }, 502);
       }
 
-      return json({ ok: true });
+      if (isAdminLogin) {
+        const responseText = await upstream.text();
+        let responseBody;
+        try {
+          responseBody = JSON.parse(responseText);
+        } catch {
+          return json({ ok: false, error: "Authentication service returned an invalid response." }, 502);
+        }
+        return json(responseBody, upstream.status);
+      }
+      return json({ ok: upstream.ok });
     } catch {
       return json({ ok: false, error: "The submission service is temporarily unavailable." }, 502);
     }
