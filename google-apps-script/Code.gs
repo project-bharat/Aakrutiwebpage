@@ -81,9 +81,10 @@ function submitEnquiry_(p) {
         safeCell_(interest), safeCell_(details), safeCell_(page), safeCell_(source)]);
       const eventSheet = getSheet_(ss, EVENT_SHEET, EVENT_HEADERS);
       const visitorId = clean_(p.visitorId, 80);
+      const device = clean_(p.device, 12);
       eventSheet.appendRow([new Date(), 'enquiry_submit',
         /^[a-zA-Z0-9-]{8,80}$/.test(visitorId) ? visitorId : '',
-        safeCell_(page), '', safeCell_(source),
+        safeCell_(page), safeCell_(device), safeCell_(source),
         safeCell_([interest, product].filter(Boolean).join(' / '))]);
       refreshSummary_(ss, eventSheet);
       saved = true;
