@@ -1,0 +1,16 @@
+# Repository metadata and CI
+.git
+.github
+
+# Server-side source and configuration must not be published as website files
+worker.js
+wrangler.jsonc
+.assetsignore
+functions
+google-apps-script
+
+# Internal documentation and archived HTML snapshots
+README.md
+CLOUDFLARE_MIGRATION.md
+GOOGLE_SHEETS_ANALYTICS_SETUP.md
+site-archives
