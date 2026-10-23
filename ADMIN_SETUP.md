@@ -18,7 +18,7 @@ This feature is intentionally deployed by pull request first. Do not merge into 
    - `ADMIN_PASSWORD`: choose a strong, unique password (at least 16 characters). Do not reuse email or social account passwords.
    - `SESSION_SECRET`: a random secret with at least 32 random bytes. Generate one locally with `openssl rand -base64 48`; paste it as an encrypted secret.
    - Preserve the existing encrypted `ANALYTICS_ENDPOINT` secret.
-5. Ensure the production build command is blank and deploy command is `npx wrangler deploy`. The Worker needs the D1/R2 resources above.
+5. Replace the D1 ID placeholder in `wrangler.jsonc` before deploying. Ensure the production build command is blank and deploy command is `npx wrangler deploy`. The Worker needs the D1/R2 resources above.
 6. Apply the migration from a trusted local terminal after installing Wrangler and logging in:
    `npx wrangler d1 migrations apply aakruti-content --remote`
    The Wrangler configuration must contain the actual D1 ID first.
@@ -27,6 +27,6 @@ This feature is intentionally deployed by pull request first. Do not merge into 
 ## Current scope and important notes
 - Existing product catalogue is currently illustrative demo content. Do not present the current Unsplash furniture imagery as verified Aakruti stock. Add verified product information and licensed photographs before publishing.
 - D1/R2 resources and secrets cannot be created by a GitHub code commit. Someone with Cloudflare account access must create them and apply the migration.
-- The homepage editor stores fields in D1. Public-page content wiring must be enabled in the site's public integration code before expecting edits to change the homepage.
+- The public page now reads published products, approved reviews and supported homepage/contact fields from `GET /api/catalogue`. The seeded catalogue uses the site's current illustrative Unsplash images; replace them with approved brand photography.
 - The existing Google Apps Script analytics/enquiry integration remains in the repo. This admin API adds D1 enquiry storage; avoid switching the live enquiry form until the API has been tested and owner has confirmed notification handling.
 - Add Cloudflare rate limiting on `/api/admin/login` before public launch. For a stronger production deployment, use Cloudflare Turnstile on login and enquiry forms.
