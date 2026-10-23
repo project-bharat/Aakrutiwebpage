@@ -25,6 +25,7 @@ function doPost(e) {
   try {
     if (!e || !e.postData || !e.postData.contents) return json_({ok:false,error:'empty_request'});
     const p = JSON.parse(e.postData.contents);
+    if (p.action === 'admin_login') return authenticateAdmin_(p);
     const eventName = clean_(p.event, 60);
     if (eventName === 'enquiry_submit') return submitEnquiry_(p);
     const allowed = new Set(['page_view','consent_granted','category_view','product_interaction','product_view','add_to_cart','enquire_click']);
@@ -227,4 +228,46 @@ function validEmail_(email) {
 }
 function json_(data) {
   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+}
+
+
+/**
+ * Validates owner-studio credentials against the private "Admin Users" tab.
+ * Required columns: Admin ID | Password | Active. Keep this spreadsheet private.
+ * Add one row per admin and set Active to TRUE.
+ */
+function authenticateAdmin_(p) {
+  const adminId = clean_(p.adminId, 100);
+  const password = String(p.password == null ? '' : p.password).slice(0, 200);
+  if (!adminId || !password) return json_({ok:false,error:'invalid_credentials'});
+  try {
+    const ss = getSpreadsheet_();
+    const sheet = ss.getSheetByName('Admin Users');
+    if (!sheet || sheet.getLastRow() < 2) {
+      return json_({ok:false,error:'admin_not_configured'});
+    }
+    const values = sheet.getDataRange().getDisplayValues();
+    const headers = values[0].map(v => String(v).trim());
+    const idCol = headers.indexOf('Admin ID');
+    const passwordCol = headers.indexOf('Password');
+    const activeCol = headers.indexOf('Active');
+    if (idCol < 0 || passwordCol < 0 || activeCol < 0) {
+      return json_({ok:false,error:'admin_not_configured'});
+    }
+    const wantedId = adminId.toLowerCase();
+    for (let i = 1; i < values.length; i++) {
+      const row = values[i];
+      if (String(row[idCol] || '').trim().toLowerCase() !== wantedId) continue;
+      const active = String(row[activeCol] || '').trim().toLowerCase();
+      const storedPassword = String(row[passwordCol] || '');
+      if (active === 'true' && storedPassword && storedPassword === password) {
+        return json_({ok:true});
+      }
+      break;
+    }
+    return json_({ok:false,error:'invalid_credentials'});
+  } catch (err) {
+    console.error('Admin authentication failed: ' + String(err).slice(0, 200));
+    return json_({ok:false,error:'authentication_unavailable'});
+  }
 }
