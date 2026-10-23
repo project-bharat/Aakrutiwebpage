@@ -8,6 +8,7 @@ wrangler.jsonc
 .assetsignore
 functions
 google-apps-script
+admin-demo.html
 
 # Internal documentation and archived HTML snapshots
 README.md
