@@ -1,27 +1,28 @@
-# Aakruti Cloudflare migration
+# Aakruti Cloudflare Workers deployment
 
-This branch prepares the website for Cloudflare Pages with a Pages Function acting as the server-side proxy for analytics and enquiry submissions.
+This repository keeps the existing static website unchanged while Cloudflare Workers serves the same HTML and public assets and handles the /api/analytics backend route.
 
-## What changed
+## Architecture
 
-- The browser no longer contains the Google Apps Script endpoint URL.
-- Both analytics events and the contact-form submission post to the same-origin path `/api/analytics`.
-- `functions/api/analytics.js` forwards POST bodies to a configured Google Apps Script web-app endpoint.
-- The current GitHub Pages site and `main` branch are unchanged.
+- index.html, privacy.html, images, and other website assets are served as static assets by the aakrutiwebpage Worker.
+- worker.js handles GET /api/analytics as a health check and POST /api/analytics as the server-side proxy for analytics and enquiry submissions.
+- ANALYTICS_ENDPOINT must be configured as an encrypted Worker secret. Its Google Apps Script /exec URL must never be committed to the repository or placed in frontend code.
+- .assetsignore excludes server source, migration documents, archives, and repository metadata from the public static asset upload.
+- GitHub Pages remains independent and can stay enabled.
 
 ## Cloudflare setup
 
-1. In Cloudflare Dashboard, open **Workers & Pages → Create application → Pages → Connect to Git**.
-2. Connect `project-bharat/Aakrutiwebpage` and choose `feat/cloudflare-pages-workers-migration` for a preview deployment first. This is a static HTML site; leave the build command empty and set the build output directory to `/` if prompted. If Cloudflare requires a build output folder, use a folder containing the root `index.html`; do not use the repository root as a framework build output without checking the build log.
-3. In the Pages project, open **Settings → Variables and Secrets** (or **Settings → Functions → Environment variables**, depending on dashboard layout) and add `ANALYTICS_ENDPOINT` as an encrypted secret. Set its value to the existing Google Apps Script web-app `/exec` URL. Do not put that URL in source code or commit it as a repository variable.
-4. Redeploy the preview after adding the secret.
-5. Verify `/api/analytics` returns a health response, submit a test enquiry, and confirm the existing Apps Script receives it. Check analytics only after accepting the site's analytics consent.
-6. Test product filters, cart, WhatsApp/email handoff, contact form, cookie consent, mobile navigation, and product gallery.
-7. Only after those checks pass, choose a production branch and configure the final public URL/custom domain. Update canonical and social metadata to the final URL before switching production.
+1. Open the existing Cloudflare Worker aakrutiwebpage, connected to project-bharat/Aakrutiwebpage.
+2. Set the production branch to main. Keep the production deploy command as npx wrangler deploy.
+3. The repository now includes wrangler.jsonc with the static-assets binding, /api/* Worker-first routing, and preview configuration. The site files are served from the repository root, while .assetsignore keeps backend source and internal docs out of the public asset bundle.
+4. In Worker settings, add ANALYTICS_ENDPOINT as an encrypted secret. Use the existing Google Apps Script web-app /exec URL as the value. Never paste the URL into GitHub source files.
+5. Deploy main, then test GET /api/analytics (expected JSON health response), an enquiry submission, and analytics after consent is granted.
+6. For a client review without changing production, use the Worker preview deployment. The Wrangler configuration includes previews: {} to enable previews. Test the preview URL before sharing it.
+7. Verify the visual site against GitHub Pages: desktop and mobile layout, navigation, product filters, cart, WhatsApp/email handoff, enquiry form, consent controls, and product gallery.
 
-## Important limitations
+## Security and limitations
 
-- A Cloudflare account and its GitHub authorization are required to create and deploy the Pages project. This repository change does not itself deploy the site.
-- The function protects the Apps Script endpoint from being exposed in browser code, but it is not an authentication system. Add rate limiting or Turnstile if the public endpoint is abused.
-- WhatsApp number, business email, product catalogue, HTML, CSS, and frontend JavaScript are public by design and remain visible to visitors.
-- Keep the existing GitHub Pages deployment enabled until Cloudflare preview and production are verified.
+- The server-side proxy keeps the Apps Script endpoint URL out of browser HTML and JavaScript. It validates the destination host and limits request size.
+- The frontend HTML, CSS, images, product data, and JavaScript required to render and operate the website are still public and inspectable in any browser. Hosting on Cloudflare cannot hide client-side code. Only backend logic and secrets executed on the Worker can be kept server-side.
+- The public proxy is not an authentication system. Add Cloudflare rate limiting or Turnstile if abuse becomes an issue.
+- Keep GitHub Pages enabled until the Cloudflare deployment and backend tests pass.
