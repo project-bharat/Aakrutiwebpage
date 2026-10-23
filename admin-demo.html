@@ -6,22 +6,27 @@
 .top{gap:10px}.top .actions{margin-left:auto;justify-content:flex-end;flex-shrink:0}
 .nav{display:flex;align-items:center;gap:9px;min-width:0}
 .nav-icon{width:18px;height:18px;display:inline-grid;place-items:center;flex:0 0 18px;font-size:16px}
-.head{align-items:flex-start;margin-bottom:14px}.head .head-title{display:flex;align-items:center;gap:10px;min-width:0}.head .head-help{position:relative;display:inline-grid;place-items:center;width:25px;height:25px;flex:0 0 25px;border:1px solid #d8c9bd;border-radius:7px;background:#fff;color:#8c6250;font:700 13px system-ui;cursor:help}
-.head .head-help .help-tip{display:none;position:absolute;z-index:20;right:0;top:calc(100% + 8px);width:min(280px,75vw);padding:12px 14px;border-radius:9px;background:#413b49;color:white;font:12px/1.55 system-ui;letter-spacing:0;text-transform:none;box-shadow:0 8px 28px #211d2730;white-space:normal}
-.head .head-help:hover .help-tip,.head .head-help:focus .help-tip{display:block}
+.head{align-items:center;margin-bottom:14px}.head .head-title{display:flex;align-items:center;gap:9px;min-width:0}.head .head-help{position:relative;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;flex:0 0 22px;border:0;border-radius:0;background:transparent;color:#8c6250;font:inherit;cursor:help;padding:0;line-height:1}
+.head .head-help>i{display:block;line-height:1;font-size:16px}
+.head .head-help .help-tip{display:none;position:fixed;z-index:1000;left:50%;top:50%;transform:translate(-50%,-50%);width:min(340px,calc(100vw - 32px));max-width:calc(100vw - 32px);padding:16px 18px;border-radius:12px;background:#413b49;color:white;font:13px/1.6 system-ui;letter-spacing:0;text-transform:none;box-shadow:0 12px 40px #211d2760;white-space:normal;text-align:left}
+.head .head-help:hover .help-tip,.head .head-help:focus .help-tip,.head .head-help:focus-within .help-tip{display:block}
 .head .muted{display:none}
+#appShell{min-height:100vh;display:flex;flex-direction:column}
+#appShell>.layout{flex:1;min-height:0}
+#appShell>.footer{margin-top:20px;flex-shrink:0}
+.top .actions .btn i{display:inline-flex;align-items:center;justify-content:center;line-height:1;vertical-align:middle}
 .dev-footer{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;text-align:center}
 .dev-footer img{width:78px;max-height:27px;object-fit:contain}
 .dev-contact{display:inline-grid;place-items:center;width:32px;height:32px;border:1px solid #ffffff35;border-radius:8px;color:white;text-decoration:none;font-size:17px;transition:background .15s}
 .dev-contact:hover,.dev-contact:focus-visible{background:#ffffff20}
 @media(max-width:760px){
  .top{padding:10px 12px;align-items:center}.brand-logo{width:clamp(112px,38vw,165px)}
- .top .actions{gap:6px}.top .actions .btn{width:34px;height:34px;padding:0;display:inline-grid;place-items:center;font-size:0;line-height:1;white-space:nowrap;border-radius:8px}
+ .top .actions{gap:6px}.top .actions .btn{width:34px;height:34px;padding:0;display:inline-flex;align-items:center;justify-content:center;font-size:0;line-height:1;white-space:nowrap;border-radius:8px}
  .top .actions [data-action="reset"] i,.top .actions [data-action="logout"] i{font-size:16px}
  .layout{min-height:0}aside{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;padding:7px 4px;border-right:0;border-bottom:1px solid #e9e1dc}
  .nav{display:flex;flex-direction:column;justify-content:center;gap:3px;width:100%;min-width:0;margin:0;padding:6px 2px;border-radius:8px;font-size:10px;line-height:1.15;text-align:center;white-space:normal;overflow-wrap:anywhere}
  .nav-icon{width:18px;height:18px;flex-basis:18px;font-size:16px}
- main{padding:14px 12px}.head{margin-bottom:11px}.head h1{font-size:23px}.head .eyebrow{font-size:9px;letter-spacing:.12em}
+ main{padding:14px 12px}.head{margin-bottom:11px}.head .eyebrow{font-size:9px;letter-spacing:.12em}
  .stats{gap:8px;margin-bottom:12px}.stat,.panel{padding:12px;border-radius:10px;margin-bottom:10px}.stat strong{font-size:23px}
  .dev-footer{gap:8px}.dev-footer .dev-credit-label{width:100%;font-size:9px}.dev-footer img{width:68px}
 }
@@ -44,7 +49,7 @@ function save(){try{localStorage.setItem("aakruti-owner-demo",JSON.stringify(dat
 function esc(x){return String(x==null?"":x).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function money(x){return "₹"+Number(x||0).toLocaleString("en-IN")}
 function toast(s){document.getElementById("toast").innerHTML='<div class="toast">'+esc(s)+'</div>';setTimeout(function(){document.getElementById("toast").innerHTML=""},2200)}
-function head(k,t,s,button){const tips={"YOUR BUSINESS AT A GLANCE":"Overview: Review catalogue totals, pending reviews and new enquiries. Use the tabs to manage each area.","CATALOGUE":"Products: Add or edit product details, prices, publication status and featured items. Export a JSON backup before making major changes.","SOCIAL PROOF":"Reviews: Review customer feedback and approve or hide reviews before they appear publicly.","WEBSITE EDITOR":"Homepage: Update the hero headline, supporting text, call-to-action and contact details. Save changes and check the public website separately.","CUSTOMER INBOX":"Enquiries: Review customer requests and update their follow-up status."};return '<div class="head"><div><div class="eyebrow">'+esc(k)+'</div><div class="head-title"><h1>'+esc(t)+'</h1><button class="head-help" type="button" aria-label="Instructions for '+esc(t)+'" title="Instructions"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span class="help-tip" role="tooltip">'+esc(tips[k]||"Use this section to review and manage the selected content. Changes in this demo are stored in this browser only.")+'</span></button></div></div>'+(button||"")+'</div>'}
+function head(k,t,s,button){const tips={"YOUR BUSINESS AT A GLANCE":"Overview: Review catalogue totals, pending reviews and new enquiries. Use the tabs to manage each area.","CATALOGUE":"Products: Add or edit product details, prices, publication status and featured items. Export a JSON backup before making major changes.","SOCIAL PROOF":"Reviews: Review customer feedback and approve or hide reviews before they appear publicly.","WEBSITE EDITOR":"Homepage: Update the hero headline, supporting text, call-to-action and contact details. Save changes and check the public website separately.","CUSTOMER INBOX":"Enquiries: Review customer requests and update their follow-up status."};return '<div class="head"><div class="head-title"><div class="eyebrow">'+esc(k)+'</div><button class="head-help" type="button" aria-label="Instructions for '+esc(k)+'" title="Instructions"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span class="help-tip" role="tooltip">'+esc(tips[k]||"Use this section to review and manage the selected content. Changes in this demo are stored in this browser only.")+'</span></button></div>'+(button||"")+'</div>'}
 function stat(a,b,c){return '<div class="stat"><label>'+a+'</label><strong>'+b+'</strong><span class="muted">'+c+'</span></div>'}
 function rows(){return data.products.map(function(p){return '<tr><td><div class="product"><div class="thumb"><i class="fa-solid fa-couch" aria-hidden="true"></i></div><div><b>'+esc(p.name)+'</b><small>'+esc(p.category)+'</small></div></div></td><td>'+money(p.price)+'</td><td><span class="tag '+(p.status==="Draft"?"draft":"")+'">'+p.status+'</span></td><td>'+(p.featured?"Yes":"—")+'</td><td><div class="actions"><button class="btn small" data-action="edit" data-id="'+p.id+'">Edit</button><button class="btn small" data-action="toggle" data-id="'+p.id+'">'+(p.status==="Published"?"Unpublish":"Publish")+'</button></div></td></tr>'}).join("")}
 function render(){
