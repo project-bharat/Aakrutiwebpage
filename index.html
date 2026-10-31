@@ -523,7 +523,7 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
 
 <section id="catalogue" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28">
  <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-9"><div><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Curated collection</p><h2 class="font-serif text-4xl sm:text-5xl mt-2">Explore the catalogue</h2><p class="text-gray-400 text-sm mt-3 max-w-xl">Choose products to build your inquiry list. Items shown are design references; final specifications and prices are confirmed on enquiry.</p></div><div class="text-xs text-gray-400"><i class="fa-solid fa-circle-check text-gold mr-2"></i>100+ designs to explore</div></div>
- <div id="filters" class="flex gap-2 overflow-x-auto pb-1 mb-5 border-0 py-1" aria-label="Furniture category tabs"><button class="filter-btn active border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="All">All</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Sofas">Sofas</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Living">Living</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Bedroom">Bedroom</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Dining">Dining</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Storage">Storage</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Study & Office">Study &amp; Office</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Outdoor">Outdoor</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Decor & Furnishing">Decor &amp; Furnishing</button></div>
+ <div id="filters" class="flex gap-2 overflow-x-auto pb-1 mb-5 border-0 py-1" aria-label="Furniture category tabs"><button class="filter-btn active border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="All">All confirmed categories</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Beds & Wardrobes">Beds &amp; Wardrobes</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Coffee & Centre Tables">Coffee &amp; Centre Tables</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Side Tables">Side Tables</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="TV Units">TV Units</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Study & Office">Study &amp; Office</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Outdoor">Outdoor</button></div>
  <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
  <div class="mt-9 bg-charcoal border border-gold/20 rounded-xl p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"><div><h3 class="font-serif text-2xl">Have a specific design in mind?</h3><p class="text-gray-400 text-sm mt-1">Send a reference image or describe your dimensions and finish preferences.</p></div><a href="#contact" class="outline-button rounded-lg px-5 py-3 text-sm whitespace-nowrap"><i class="fa-solid fa-pen-ruler text-gold mr-2"></i>Discuss custom furniture</a></div>
 </section>
@@ -632,15 +632,16 @@ function productSpecs(p){
 }
 function renderProducts(filter='All'){
  const categoryMap={
-  'All':()=>true,
-  'Sofas':p=>p.id.toLowerCase().startsWith('sofa-')||/sofa|couch|settee/i.test(p.name),
-  'Living':p=>p.category==='Living'&&!p.id.toLowerCase().startsWith('sofa-')&&!/sofa|couch|settee/i.test(p.name),
+  'All':p=>true,
+  'Beds & Wardrobes':p=>['Bedroom','Storage'].includes(p.category)&&/bed|wardrobe|almirah|cupboard|linen|shoe cabinet/i.test(p.name),
+  'Coffee & Centre Tables':p=>/coffee|centre|center table/i.test(p.name),
+  'Side Tables':p=>/side table|bedside table/i.test(p.name),
+  'TV Units':p=>/tv unit|media unit/i.test(p.name),
   'Study & Office':p=>['Office','Shelving'].includes(p.category),
-  'Outdoor':p=>p.category==='Outdoor',
-  'Decor & Furnishing':p=>['Decor','Prayer'].includes(p.category)
+  'Outdoor':p=>p.category==='Outdoor'
  };
- const matches=categoryMap[filter]||((p)=>p.category===filter);
- const list=products.filter(p=>matches(p));
+ const matches=categoryMap[filter]||(()=>false);
+ const list=products.filter(p=>matches(p)&&!(/sofa|couch|settee|dining|accent lounge chair|accent bench|pooja|temple|decorative accent/i.test(p.name))&&!['Prayer','Decor'].includes(p.category));
  const resultCount=document.getElementById('result-count');
  if(resultCount)resultCount.textContent=list.length;
  const productGrid=document.getElementById('product-grid');
