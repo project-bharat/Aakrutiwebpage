@@ -632,12 +632,12 @@ function productSpecs(p){
 }
 function renderProducts(filter='All'){
  const categoryMap={
-  'All':p=>true,
-  'Beds & Wardrobes':p=>['Bedroom','Storage'].includes(p.category)&&/bed|wardrobe|almirah|cupboard|linen|shoe cabinet/i.test(p.name),
+  'All':p=>['Bedroom','Office','Outdoor'].includes(p.category)||/coffee table|centre table|center table|side table|bedside table|wardrobe|almirah|\bbed\b/i.test(p.name),
+  'Beds & Wardrobes':p=>/bed|wardrobe|almirah/i.test(p.name),
   'Coffee & Centre Tables':p=>/coffee|centre|center table/i.test(p.name),
   'Side Tables':p=>/side table|bedside table/i.test(p.name),
   'TV Units':p=>/tv unit|media unit/i.test(p.name),
-  'Study & Office':p=>['Office','Shelving'].includes(p.category),
+  'Study & Office':p=>p.category==='Office',
   'Outdoor':p=>p.category==='Outdoor'
  };
  const matches=categoryMap[filter]||(()=>false);
