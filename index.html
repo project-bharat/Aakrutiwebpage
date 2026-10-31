@@ -551,6 +551,42 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
  #values .values-pattern-card>.pattern-strip-card{width:38px}
 }
 
+
+/* Refined pattern visibility and fade boundaries */
+.hero-pattern-strip{
+ width:62%!important;
+ left:0!important;right:auto!important;
+ -webkit-mask-image:linear-gradient(to right,#000 0%,#000 48%,transparent 100%)!important;
+ mask-image:linear-gradient(to right,#000 0%,#000 48%,transparent 100%)!important;
+}
+#values .values-pattern-card{
+ position:relative!important;isolation:isolate!important;overflow:hidden!important;
+}
+#values .values-pattern-card>.pattern-strip-card{
+ position:absolute!important;inset:0!important;
+ width:100%!important;height:100%!important;
+ left:0!important;right:0!important;top:0!important;bottom:0!important;
+ z-index:2!important;opacity:.22!important;
+ background-repeat:repeat!important;background-size:120px 208px!important;
+ -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 32%,#000 100%)!important;
+ mask-image:linear-gradient(to right,transparent 0%,#000 32%,#000 100%)!important;
+}
+#values .values-pattern-card>.pattern-card-content{
+ position:relative!important;z-index:1!important;
+}
+#values .values-pattern-card>.pattern-card-content>.absolute.bottom-0{
+ z-index:3!important;
+}
+.footer-main-pattern-host>.pattern-footer-band{
+ opacity:.065!important;
+ -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 18%,#000 82%,transparent 100%)!important;
+ mask-image:linear-gradient(to bottom,transparent 0%,#000 18%,#000 82%,transparent 100%)!important;
+}
+@media(max-width:640px){
+ .hero-pattern-strip{width:78%!important}
+ #values .values-pattern-card>.pattern-strip-card{opacity:.19!important}
+}
+
 </style>
 </head>
 <body class="antialiased">
