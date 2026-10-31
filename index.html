@@ -681,23 +681,16 @@ function quickEnquire(id){const p=products.find(x=>x.id===id);if(p&&window.Aakru
 function contactMessage(d){return 'New enquiry for Aakruti Enterprises\\n\\nName: '+d.get('name')+'\\nPhone: '+d.get('phone')+'\\nEmail: '+(d.get('email')||'Not provided')+'\\nEnquiry: '+d.get('interest')+'\\nProject details: '+(d.get('details')||'Not provided')}
 function emailContact(){const f=document.getElementById('contact-form');if(!f.reportValidity())return;const d=new FormData(f);window.location.href='mailto:'+BUSINESS_EMAIL+'?subject='+encodeURIComponent('New enquiry for Aakruti — '+d.get('name'))+'&body='+encodeURIComponent(contactMessage(d))}
 function whatsAppContact(){const f=document.getElementById('contact-form');if(!f.reportValidity())return;const d=new FormData(f);window.open('https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(contactMessage(d)),'_blank','noopener')}
-document.getElementById('contact-form').addEventListener('submit',async function(e){
+document.getElementById('contact-form').addEventListener('submit',function(e){
   e.preventDefault();
   const form=e.currentTarget;
   if(!form.reportValidity())return;
   const d=new FormData(form);
   if(d.get('website'))return;
   const status=document.getElementById('enquiry-status');
-  const button=form.querySelector('button[type="submit"]');
-  button.disabled=true;button.textContent='Submitting…';status.textContent='Sending your enquiry securely…';
-  const payload={event:'enquiry_submit',name:String(d.get('name')||'').trim(),phone:String(d.get('phone')||'').trim(),email:String(d.get('email')||'').trim(),interest:String(d.get('interest')||'').trim(),details:String(d.get('details')||'').trim(),product:String(d.get('product')||'').trim(),page:location.pathname,device:matchMedia('(max-width: 767px)').matches?'mobile':(matchMedia('(min-width: 1024px)').matches?'desktop':'tablet'),source:(new URLSearchParams(location.search).get('utm_source')||'website').slice(0,100),visitorId:localStorage.getItem('aakruti_analytics_consent_v1')==='accepted'?(localStorage.getItem('aakruti_analytics_visitor_v1')||''):'',occurredAt:new Date().toISOString(),website:String(d.get('website')||'')};
-  try{
-    await fetch(ANALYTICS_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload),keepalive:true});
-    status.textContent='Your enquiry has been submitted. If you do not hear from us, please contact us by WhatsApp or email.';
-    form.reset();
-  }catch(err){
-    status.textContent='We could not submit your enquiry. Please try again or contact us by WhatsApp or email.';
-  }finally{button.disabled=false;button.innerHTML='<i class="fa-solid fa-paper-plane mr-1.5"></i>Submit Enquiry';}
+  const message=contactMessage(d);
+  status.textContent='Opening your email app with the enquiry details. Please review and send the message there. If it does not open, use WhatsApp or call us.';
+  window.location.href='mailto:'+BUSINESS_EMAIL+'?subject='+encodeURIComponent('New enquiry for Aakruti — '+String(d.get('name')||'').trim())+'&body='+encodeURIComponent(message);
 });
 
 function syncGallery(gallery,index){const track=gallery.querySelector('[data-gallery-track]');const slides=[...track.querySelectorAll('img')];index=Math.max(0,Math.min(index,slides.length-1));track.scrollTo({left:index*track.clientWidth,behavior:'smooth'});gallery.querySelectorAll('[data-gallery-dot]').forEach((dot,i)=>{dot.classList.toggle('active',i===index);dot.setAttribute('aria-pressed',String(i===index));});gallery.querySelector('[data-gallery-count]').textContent=(index+1)+' / '+slides.length;}
@@ -765,141 +758,6 @@ document.querySelectorAll('[data-story-scroll]').forEach(btn=>btn.addEventListen
     button.style.touchAction='manipulation';
   });
   if(typeof renderProducts==='function')activate(filters.querySelector('button[data-filter="All"]'));
-})();
-</script>
-
-<!-- Privacy-first visitor analytics: optional, only enabled after consent and endpoint setup. -->
-<style>
-#ak-cookie-consent{position:fixed;z-index:10000;left:16px;right:16px;bottom:16px;max-width:760px;margin:auto;padding:20px;background:#fff;color:#525266;border:1px solid rgba(82,82,102,.2);box-shadow:0 18px 55px rgba(35,29,42,.2);font-family:'Plus Jakarta Sans',sans-serif}
-#ak-cookie-consent[hidden]{display:none}
-#ak-cookie-consent h2{font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.15;margin:0 0 8px}
-#ak-cookie-consent p{font-size:13px;line-height:1.6;margin:0 0 14px}
-#ak-cookie-consent a{color:#b53e49;text-decoration:underline}
-.ak-consent-actions{display:flex;flex-wrap:wrap;gap:8px}
-.ak-consent-actions button{padding:10px 15px;font-size:12px;font-weight:700;border:1px solid #525266;background:#fff;color:#525266}
-.ak-consent-actions .ak-accept{background:#ff6666;border-color:#ff6666;color:#fff}
-@media(max-width:480px){#ak-cookie-consent{left:10px;right:10px;bottom:10px;padding:16px}.ak-consent-actions button{flex:1}}
-</style>
-<section id="ak-cookie-consent" role="dialog" aria-labelledby="ak-consent-title" aria-describedby="ak-consent-copy" hidden>
-  <h2 id="ak-consent-title">Your privacy choices</h2>
-  <p id="ak-consent-copy">Aakruti uses essential browser storage to remember this choice. If you agree, we also collect limited, anonymous website usage events—such as pages and furniture categories viewed—to improve the website. We do not use this feature to collect your name, phone, email, precise location, or age. You can reject optional analytics and still use the website. <a href="./privacy.html">Read the privacy notice</a>.</p>
-  <div class="ak-consent-actions">
-    <button type="button" id="ak-consent-reject">Reject optional analytics</button>
-    <button type="button" id="ak-consent-accept" class="ak-accept">Accept analytics</button>
-  </div>
-</section>
-<script>
-(function(){
-  'use strict';
-  const ENDPOINT = '';
-  const CONSENT_KEY = 'aakruti_analytics_consent_v1';
-  const VISITOR_KEY = 'aakruti_analytics_visitor_v1';
-  const panel = document.getElementById('ak-cookie-consent');
-  const saved = localStorage.getItem(CONSENT_KEY);
-  if (!saved) panel.hidden = false;
-
-  function visitorId(){
-    let id = localStorage.getItem(VISITOR_KEY);
-    if (!id) {
-      id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() :
-        'v-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,12);
-      localStorage.setItem(VISITOR_KEY,id);
-    }
-    return id;
-  }
-  function configured(){
-    // Cloudflare Workers keeps the Apps Script URL server-side.
-    return ENDPOINT === '/api/analytics' ||
-      (ENDPOINT.startsWith('https://script.google.com/macros/s/') && ENDPOINT.endsWith('/exec'));
-  }
-  function send(eventName, details){
-    if (localStorage.getItem(CONSENT_KEY) !== 'accepted' || !configured()) return;
-    const payload = {
-      event: String(eventName).slice(0,60),
-      visitorId: visitorId(),
-      page: location.pathname.slice(0,120),
-      device: matchMedia('(max-width: 767px)').matches ? 'mobile' : (matchMedia('(min-width: 1024px)').matches ? 'desktop' : 'tablet'),
-      campaign: (new URLSearchParams(location.search).get('utm_source') || 'direct').slice(0,100),
-      category: details && details.category ? String(details.category).slice(0,80) : '',
-      item: details && details.item ? String(details.item).slice(0,100) : '',
-      occurredAt: new Date().toISOString()
-    };
-    try {
-      fetch(ENDPOINT, {method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload),keepalive:true}).catch(function(){});
-    } catch(e) {}
-  }
-  document.getElementById('ak-consent-accept').addEventListener('click',function(){
-    localStorage.setItem(CONSENT_KEY,'accepted'); panel.hidden=true; send('consent_granted');
-    send('page_view');
-  });
-  document.getElementById('ak-consent-reject').addEventListener('click',function(){
-    localStorage.setItem(CONSENT_KEY,'rejected');
-    localStorage.removeItem(VISITOR_KEY);
-    panel.hidden=true;
-  });
-  if (saved === 'accepted') send('page_view');
-  document.addEventListener('click',function(e){
-    if (localStorage.getItem(CONSENT_KEY) !== 'accepted') return;
-    const filter=e.target.closest('#filters button[data-filter]');
-    if(filter) send('category_view',{category:String(filter.dataset.filter||'').trim()});
-  });
-  window.AakrutiAnalytics = {track:function(name,details){send(name,details);}};
-  // Catalogue analytics records deliberate interactions, not passive product impressions.
-  const productGrid=document.getElementById('product-grid');
-  function trackCatalogueInteraction(card, action){
-    if(!card) return;
-    const title=card.querySelector('h3');
-    const category=card.querySelector('.product-gallery .absolute.top-3');
-    send('product_interaction',{
-      category:category?category.textContent.trim():'',
-      item:(title?title.textContent.trim():'')+' — '+action
-    });
-  }
-  if(productGrid){
-    productGrid.addEventListener('click',function(e){
-      const card=e.target.closest('article.product-card');
-      if(!card) return;
-      if(e.target.closest('[data-gallery-dot]')) trackCatalogueInteraction(card,'gallery image selected');
-      else if(e.target.closest('[data-gallery-prev]')) trackCatalogueInteraction(card,'previous image clicked');
-      else if(e.target.closest('[data-gallery-next]')) trackCatalogueInteraction(card,'next image clicked');
-    });
-    // Record meaningful product dwell once the card stays mostly visible for five seconds.
-    if('IntersectionObserver' in window){
-      const timers=new WeakMap(), viewed=new WeakSet();
-      const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-        const card=entry.target;
-        if(entry.isIntersecting && entry.intersectionRatio>=0.6 && !viewed.has(card)){
-          if(timers.has(card)) return;
-          timers.set(card,setTimeout(()=>{
-            if(card.isConnected && !viewed.has(card)){viewed.add(card);trackCatalogueInteraction(card,'product viewed for 5+ seconds');}
-            timers.delete(card);
-          },5000));
-        }else if(timers.has(card)){clearTimeout(timers.get(card));timers.delete(card);}
-      }),{threshold:[0,0.6,1]});
-      const observeCards=()=>productGrid.querySelectorAll('article.product-card').forEach(card=>observer.observe(card));
-      observeCards();
-      new MutationObserver(observeCards).observe(productGrid,{childList:true});
-    }
-    const lastIndex=new WeakMap();
-    productGrid.addEventListener('scroll',function(e){
-      const track=e.target;if(!track.matches('[data-gallery-track]'))return;
-      const index=Math.round(track.scrollLeft/Math.max(1,track.clientWidth));
-      if(lastIndex.has(track)&&lastIndex.get(track)!==index)trackCatalogueInteraction(track.closest('article.product-card'),'gallery image scrolled to '+(index+1));
-      lastIndex.set(track,index);
-    },true);
-    let swipeStart=new WeakMap();
-    productGrid.addEventListener('pointerdown',function(e){
-      const track=e.target.closest('[data-gallery-track]');
-      if(track) swipeStart.set(track,track.scrollLeft);
-    },{passive:true});
-    productGrid.addEventListener('pointerup',function(e){
-      const track=e.target.closest('[data-gallery-track]');
-      if(!track || !swipeStart.has(track)) return;
-      const start=swipeStart.get(track);
-      if(Math.abs(track.scrollLeft-start)>24) trackCatalogueInteraction(track.closest('article.product-card'),'gallery swiped');
-      swipeStart.delete(track);
-    },{passive:true});
-  }
 })();
 </script>
 
