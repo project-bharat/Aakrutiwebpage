@@ -55,16 +55,13 @@
     {"@type": "AdministrativeArea", "name": "Maharashtra"}
   ],
   "knowsAbout": [
-    "Luxury furniture",
-    "Premium furniture",
-    "Bespoke furniture",
-    "Residential furniture",
-    "Office furniture",
-    "Hospitality furniture",
-    "Interior solutions",
-    "Living room furniture",
-    "Bedroom furniture",
-    "Dining furniture",
+    "Made-to-order furniture",
+    "Beds and wardrobes",
+    "Coffee and centre tables",
+    "Side tables",
+    "TV units",
+    "Study and office furniture",
+    "Outdoor furniture",
     "Custom furniture"
   ]
 }
@@ -638,7 +635,7 @@ function renderProducts(filter='All'){
   'Coffee & Centre Tables':p=>/coffee|centre|center table/i.test(p.name),
   'Side Tables':p=>/side table|bedside table/i.test(p.name),
   'TV Units':p=>/tv unit|media unit/i.test(p.name),
-  'Study & Office':p=>p.category==='Office',
+  'Study & Office':p=>p.category==='Study & Office',
   'Outdoor':p=>p.category==='Outdoor'
  };
  const matches=categoryMap[filter]||(()=>false);
