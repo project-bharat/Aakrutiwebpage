@@ -633,7 +633,7 @@ function productSpecs(p){
 }
 function renderProducts(filter='All'){
  const categoryMap={
-  'All':p=>/bed|wardrobe|almirah|coffee table|centre table|center table|side table|bedside table|tv unit|media unit/i.test(p.name)||p.category==='Office'||p.category==='Outdoor',
+  'All':p=>/bed|wardrobe|almirah|coffee table|centre table|center table|side table|bedside table|tv unit|media unit/i.test(p.name)||p.category==='Study & Office'||p.category==='Outdoor',
   'Beds & Wardrobes':p=>/bed|wardrobe|almirah/i.test(p.name),
   'Coffee & Centre Tables':p=>/coffee|centre|center table/i.test(p.name),
   'Side Tables':p=>/side table|bedside table/i.test(p.name),
