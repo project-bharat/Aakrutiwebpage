@@ -691,6 +691,7 @@ const ANALYTICS_ENDPOINT='/api/analytics';
  if(getChoice()==='accepted')send('page_view');else if(!getChoice())showBanner();
 })();
 
+document.addEventListener('click',function(e){const button=e.target.closest('[data-filter]');if(button&&window.AakrutiAnalytics)window.AakrutiAnalytics.track('category_view',{category:button.getAttribute('data-filter')||'All'})});
 const products=[
 {id:'table-01',name:'Coffee Table Design',category:'Coffee & Centre Tables',desc:'A coffee table reference for a living space.',image:'photo-1499933374294-4584851497cc'},
 {id:'bed-01',name:'Platform Bed Design',category:'Beds & Wardrobes',desc:'A bed design reference for a bedroom.',image:'photo-1505693416388-ac5ce068fe85'},
@@ -742,6 +743,17 @@ function renderProducts(filter='All'){
  return '<article class="product-card rounded-2xl overflow-hidden reveal flex flex-col" style="animation-delay:'+i*35+'ms">'+gallery+'<div class="p-5 flex flex-col flex-1"><div class="flex-1"><h3 class="font-serif text-2xl leading-tight">'+moneySafe(p.name)+'</h3><p class="text-gray-400 text-xs leading-5 mt-2">'+moneySafe(p.desc)+'</p><div class="specification-panel"><p class="specification-heading">Specifications to choose</p><p class="specification-details">'+moneySafe(productSpecs(p))+'</p><p class="specification-note">Final options confirmed on enquiry</p></div></div><div class="flex items-center gap-2 mt-4"><button onclick="addToCart(\''+p.id+'\')" class="gold-button rounded-lg px-3 py-3 text-xs font-bold flex-1"><i class="fa-solid fa-cart-plus mr-1.5"></i>Add to Cart</button><button onclick="quickEnquire(\''+p.id+'\')" class="outline-button rounded-lg px-3 py-3 text-xs" aria-label="Enquire about '+moneySafe(p.name)+'">Enquire</button></div></div></article>';
  }).join('');
  if(!list.length)productGrid.innerHTML='<div class="col-span-full text-center border border-white/10 rounded-xl p-10 text-gray-400">This collection is being curated. Contact us to discuss a custom requirement.</div>';
+ if(window.AakrutiAnalytics&&'IntersectionObserver' in window){
+  const seen=new WeakSet();
+  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+   if(entry.isIntersecting&&!seen.has(entry.target)){
+    seen.add(entry.target);const card=entry.target,heading=card.querySelector('h3'),category=card.querySelector('.product-gallery span');
+    window.AakrutiAnalytics.track('product_view',{item:heading?heading.textContent:'',category:category?category.textContent:''});
+    observer.unobserve(card);
+   }
+  }),{threshold:.45});
+  productGrid.querySelectorAll('.product-card').forEach(card=>observer.observe(card));
+ }
 }
 function renderCart(){
  const count=Object.values(cart).reduce((s,n)=>s+n,0);
