@@ -649,14 +649,14 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
  background:linear-gradient(to right,#ff6666 0%,rgba(255,102,102,.72) 58%,rgba(255,102,102,0) 100%);
 }
 
-/* Header accent: pattern fills the full-height band behind the navigation and action buttons, fading from right to left */
+/* Header accent: low-contrast full-height pattern across the right 58% of the header, fading out toward the left */
 .site-header{position:sticky!important;isolation:isolate}
 .site-header:after{
- content:"";position:absolute;z-index:-1;left:0;right:0;top:0;height:100%;pointer-events:none;
- background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22416%22 viewBox=%220 0 240 416%22%3E%3Cpath d=%22M0 0V416M120 0V416M240 0V416M0 0L120 208L240 0M0 208L120 416L240 208%22 fill=%22none%22 stroke=%22%23525266%22 stroke-opacity=%220.22%22 stroke-width=%224.5%22/%3E%3C/svg%3E");
+ content:"";position:absolute;z-index:-1;right:0;top:0;width:58%;height:100%;pointer-events:none;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22416%22 viewBox=%220 0 240 416%22%3E%3Cpath d=%22M0 0V416M120 0V416M240 0V416M0 0L120 208L240 0M0 208L120 416L240 208%22 fill=%22none%22 stroke=%22%23525266%22 stroke-opacity=%220.15%22 stroke-width=%224.5%22/%3E%3C/svg%3E");
  background-size:48px 84px;background-repeat:repeat;background-position:right center;
- -webkit-mask-image:linear-gradient(to left,#000 0%,#000 24%,transparent 100%);
- mask-image:linear-gradient(to left,#000 0%,#000 24%,transparent 100%);
+ -webkit-mask-image:linear-gradient(to left,#000 0%,#000 48%,transparent 100%);
+ mask-image:linear-gradient(to left,#000 0%,#000 48%,transparent 100%);
 }
 </style>
 </head>
