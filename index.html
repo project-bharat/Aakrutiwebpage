@@ -618,6 +618,23 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
  #filters .filter-btn .category-line-icon{width:15px;height:15px;flex-basis:15px}
 }
 
+
+/* Specifications panel: pattern occupies the left side and fades toward the text */
+#product-grid .specification-panel:before{
+ left:0!important;right:auto!important;top:28px!important;bottom:0!important;
+ width:48%!important;height:auto!important;
+ -webkit-mask-image:linear-gradient(to right,#000 0%,#000 38%,transparent 100%)!important;
+ mask-image:linear-gradient(to right,#000 0%,#000 38%,transparent 100%)!important;
+}
+#product-grid .specification-panel .specification-details,
+#product-grid .specification-panel .specification-note{
+ background:transparent!important;
+ padding-left:44%!important;padding-right:.65rem!important;
+}
+#product-grid .specification-panel .specification-details{
+ border-top:2px solid #ff6666;
+}
+
 </style>
 </head>
 <body class="antialiased">
