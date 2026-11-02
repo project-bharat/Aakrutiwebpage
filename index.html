@@ -619,17 +619,27 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
 }
 
 
-/* Specifications panel: pattern occupies the left side and fades toward the text */
+/* Specifications panel: text stays on the left; a stronger pattern fills the full-height right side */
+#product-grid .specification-panel{
+ background:#f0ebe7!important;
+}
 #product-grid .specification-panel:before{
- left:0!important;right:auto!important;top:28px!important;bottom:0!important;
- width:48%!important;height:auto!important;
- -webkit-mask-image:linear-gradient(to right,#000 0%,#000 38%,transparent 100%)!important;
- mask-image:linear-gradient(to right,#000 0%,#000 38%,transparent 100%)!important;
+ left:auto!important;right:0!important;top:0!important;bottom:0!important;
+ width:48%!important;height:100%!important;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22416%22 viewBox=%220 0 240 416%22%3E%3Cpath d=%22M0 0V416M120 0V416M240 0V416M0 0L120 208L240 0M0 208L120 416L240 208%22 fill=%22none%22 stroke=%22%23525266%22 stroke-opacity=%220.48%22 stroke-width=%224.5%22/%3E%3C/svg%3E")!important;
+ background-size:82px 142px!important;background-repeat:repeat!important;
+ opacity:1!important;
+ -webkit-mask-image:linear-gradient(to left,#000 0%,#000 42%,transparent 100%)!important;
+ mask-image:linear-gradient(to left,#000 0%,#000 42%,transparent 100%)!important;
+}
+#product-grid .specification-panel .specification-heading{
+ position:relative;z-index:1;background:transparent!important;
+ color:#525266!important;padding-left:.65rem!important;padding-right:44%!important;
 }
 #product-grid .specification-panel .specification-details,
 #product-grid .specification-panel .specification-note{
- background:transparent!important;
- padding-left:44%!important;padding-right:.65rem!important;
+ position:relative;z-index:1;background:transparent!important;
+ padding-left:.65rem!important;padding-right:44%!important;
 }
 #product-grid .specification-panel .specification-details{
  border-top:2px solid #ff6666;
