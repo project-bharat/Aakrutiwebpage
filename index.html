@@ -587,6 +587,37 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
  #values .values-pattern-card>.pattern-strip-card{opacity:.19!important}
 }
 
+
+/* Requested catalogue and footer refinements */
+.footer-main-pattern-host>.pattern-footer-band{
+ opacity:.16!important;
+ -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 88%,transparent 100%)!important;
+ mask-image:linear-gradient(to bottom,transparent 0%,#000 12%,#000 88%,transparent 100%)!important;
+}
+#product-grid .specification-panel{position:relative!important;isolation:isolate!important}
+#product-grid .specification-panel:before{
+ content:"";position:absolute;z-index:0;left:0;right:0;top:28px;bottom:0;pointer-events:none;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22416%22 viewBox=%220 0 240 416%22%3E%3Cpath d=%22M0 0V416M120 0V416M240 0V416M0 0L120 208L240 0M0 208L120 416L240 208%22 fill=%22none%22 stroke=%22%23525266%22 stroke-opacity=%220.22%22 stroke-width=%224.5%22/%3E%3C/svg%3E");
+ background-size:82px 142px;background-repeat:repeat;
+ opacity:.9;
+ -webkit-mask-image:linear-gradient(to right,#000 0%,#000 28%,transparent 100%);
+ mask-image:linear-gradient(to right,#000 0%,#000 28%,transparent 100%);
+}
+#product-grid .specification-panel .specification-heading,
+#product-grid .specification-panel .specification-details,
+#product-grid .specification-panel .specification-note{position:relative;z-index:1}
+#product-grid .specification-panel .specification-details,
+#product-grid .specification-panel .specification-note{background:rgba(240,235,231,.94)!important}
+#filters .filter-btn .category-filter-content{display:inline-flex;align-items:center;gap:.5rem}
+#filters .filter-btn .category-line-icon{
+ width:17px;height:17px;flex:0 0 17px;fill:none;stroke:currentColor;
+ stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round;opacity:.9;
+}
+@media(max-width:639px){
+ #filters .filter-btn .category-filter-content{gap:.4rem}
+ #filters .filter-btn .category-line-icon{width:15px;height:15px;flex-basis:15px}
+}
+
 </style>
 </head>
 <body class="antialiased">
@@ -645,7 +676,7 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
 
 <section id="catalogue" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28">
  <div class="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-9"><div><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Curated collection</p><h2 class="font-serif text-4xl sm:text-5xl mt-2">Explore the catalogue</h2><p class="text-gray-400 text-sm mt-3 max-w-xl">Browse our furniture categories. Images are illustrative references. Final specifications and prices are confirmed on enquiry.</p></div><div class="text-xs text-gray-400"><i class="fa-solid fa-circle-check text-gold mr-2"></i>Browse our furniture categories</div></div>
- <div id="filters" class="flex gap-2 overflow-x-auto pb-1 mb-5 border-0 py-1" aria-label="Furniture category tabs"><button class="filter-btn active border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="All">All</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Beds & Wardrobes">Beds &amp; Wardrobes</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Coffee & Centre Tables">Coffee &amp; Centre Tables</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Side Tables">Side Tables</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="TV Units">TV Units</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Study & Office">Study &amp; Office</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Outdoor">Outdoor</button></div>
+ <div id="filters" class="flex gap-2 overflow-x-auto pb-1 mb-5 border-0 py-1" aria-label="Furniture category tabs"><button class="filter-btn active border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="All">All</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Beds & Wardrobes">Beds &amp; Wardrobes</button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Coffee & Centre Tables"><span class="category-filter-content"><svg class="category-line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18l-1.5 9h-15L3 10Z"/><path d="M5 10V7h14v3M7 19v2m10-2v2M8 7V4h8v3"/></svg><span>Coffee &amp; Centre Tables</span></span></button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Side Tables"><span class="category-filter-content"><svg class="category-line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v3H4zM6 11v9m12-9v9M8 20h8M7 5h10"/></svg><span>Side Tables</span></span></button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="TV Units"><span class="category-filter-content"><svg class="category-line-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="11" rx="1.5"/><path d="M2 18h20M7 15v3m10-3v3M9 8l2 2 4-3"/></svg><span>TV Units</span></span></button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Study & Office"><span class="category-filter-content"><svg class="category-line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18v3H3zM5 11v9m14-9v9M8 20h8M8 4h8v4H8z"/></svg><span>Study &amp; Office</span></span></button><button class="filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap" data-filter="Outdoor"><span class="category-filter-content"><svg class="category-line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h16l-1 5H5l-1-5Z"/><path d="M6 13V9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4M7 18v3m10-3v3M3 21h18"/></svg><span>Outdoor</span></span></button></div>
  <div id="product-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
  <div class="mt-9 bg-charcoal border border-gold/20 rounded-xl p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"><div><h3 class="font-serif text-2xl">Have a specific design in mind?</h3><p class="text-gray-400 text-sm mt-1">Send a reference image or describe your dimensions and finish preferences.</p></div><a href="#contact" class="outline-button rounded-lg px-5 py-3 text-sm whitespace-nowrap"><i class="fa-solid fa-pen-ruler text-gold mr-2"></i>Discuss custom furniture</a></div>
 </section>
@@ -823,7 +854,7 @@ const products=[
 const mobileNavToggle=document.getElementById('mobile-nav-toggle');
 const mobileNav=document.getElementById('mobile-nav');
 if(mobileNavToggle&&mobileNav){mobileNavToggle.addEventListener('click',()=>{const open=mobileNavToggle.getAttribute('aria-expanded')!=='true';mobileNavToggle.setAttribute('aria-expanded',String(open));mobileNavToggle.setAttribute('aria-label',open?'Close navigation menu':'Open navigation menu');mobileNavToggle.innerHTML=open?'<i class="fa-solid fa-xmark"></i>':'<i class="fa-solid fa-bars"></i>';mobileNav.hidden=!open;});mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mobileNav.hidden=true;mobileNavToggle.setAttribute('aria-expanded','false');mobileNavToggle.setAttribute('aria-label','Open navigation menu');mobileNavToggle.innerHTML='<i class="fa-solid fa-bars"></i>';}));}
-const GALLERY_POOLS={"Coffee & Centre Tables":["photo-1499933374294-4584851497cc"],"Beds & Wardrobes":["photo-1505693416388-ac5ce068fe85","photo-1595428774223-ef52624120d2"],"Side Tables":["photo-1499933374294-4584851497cc"],"TV Units":["photo-1600210492486-724fe5c67fb0"],"Study & Office":["photo-1497366754035-f200968a6e72"],"Outdoor":["photo-1600210492486-724fe5c67fb0"]}
+const GALLERY_POOLS={"Coffee & Centre Tables":["photo-1499933374294-4584851497cc","photo-1533090481720-856c6e3c1fdc","photo-1494438639946-1ebd1d20bf85","photo-1600210492486-724fe5c67fb0"],"Beds & Wardrobes":["photo-1505693416388-ac5ce068fe85","photo-1595428774223-ef52624120d2","photo-1505693416388-ac5ce068fe85","photo-1616486338812-3dadae4b4ace"],"Side Tables":["photo-1499933374294-4584851497cc","photo-1616486338812-3dadae4b4ace","photo-1533090481720-856c6e3c1fdc","photo-1600210492486-724fe5c67fb0"],"TV Units":["photo-1600210492486-724fe5c67fb0","photo-1600607687939-ce8a6c25118c","photo-1600566753086-00f18fb6b3ea","photo-1600566753190-17f0baa2a6c3"],"Study & Office":["photo-1497366754035-f200968a6e72","photo-1497366811353-6870744d04b2","photo-1497366216548-37526070297c","photo-1497366811353-6870744d04b2"],"Outdoor":["photo-1600210492486-724fe5c67fb0","photo-1600607687939-ce8a6c25118c","photo-1600566753190-17f0baa2a6c3","photo-1600566753086-00f18fb6b3ea"]}
 function productGalleryImages(p){const supplied=Array.isArray(p.images)?p.images.filter(v=>typeof v==="string"&&v.trim()):[];if(supplied.length)return supplied.slice(0,4);return [...new Set([p.image,...(GALLERY_POOLS[p.category]||GALLERY_POOLS.Living)])].slice(0,4);}
 const cart={};
 const moneySafe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
