@@ -619,14 +619,14 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
 }
 
 
-/* Specifications panel: text stays on the left; a stronger pattern fills the full-height right side */
+/* Specifications panel: text left, softened full-height pattern right, half-width fading separator */
 #product-grid .specification-panel{
  background:#f0ebe7!important;
 }
 #product-grid .specification-panel:before{
  left:auto!important;right:0!important;top:0!important;bottom:0!important;
  width:48%!important;height:100%!important;
- background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22416%22 viewBox=%220 0 240 416%22%3E%3Cpath d=%22M0 0V416M120 0V416M240 0V416M0 0L120 208L240 0M0 208L120 416L240 208%22 fill=%22none%22 stroke=%22%23525266%22 stroke-opacity=%220.48%22 stroke-width=%224.5%22/%3E%3C/svg%3E")!important;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22416%22 viewBox=%220 0 240 416%22%3E%3Cpath d=%22M0 0V416M120 0V416M240 0V416M0 0L120 208L240 0M0 208L120 416L240 208%22 fill=%22none%22 stroke=%22%23525266%22 stroke-opacity=%220.36%22 stroke-width=%224.5%22/%3E%3C/svg%3E")!important;
  background-size:82px 142px!important;background-repeat:repeat!important;
  opacity:1!important;
  -webkit-mask-image:linear-gradient(to left,#000 0%,#000 42%,transparent 100%)!important;
@@ -642,9 +642,22 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
  padding-left:.65rem!important;padding-right:44%!important;
 }
 #product-grid .specification-panel .specification-details{
- border-top:2px solid #ff6666;
+ position:relative;border-top:0!important;padding-top:.48rem!important;
+}
+#product-grid .specification-panel .specification-details:before{
+ content:"";position:absolute;top:0;left:.65rem;width:50%;height:2px;
+ background:linear-gradient(to right,#ff6666 0%,rgba(255,102,102,.72) 58%,rgba(255,102,102,0) 100%);
 }
 
+/* Header accent: subtle Aakruti pattern sits beneath the navigation/action buttons and fades from right to left */
+.site-header{position:sticky!important;isolation:isolate;padding-bottom:8px}
+.site-header:after{
+ content:"";position:absolute;z-index:-1;left:0;right:0;bottom:0;height:8px;pointer-events:none;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22416%22 viewBox=%220 0 240 416%22%3E%3Cpath d=%22M0 0V416M120 0V416M240 0V416M0 0L120 208L240 0M0 208L120 416L240 208%22 fill=%22none%22 stroke=%22%23525266%22 stroke-opacity=%220.22%22 stroke-width=%224.5%22/%3E%3C/svg%3E");
+ background-size:48px 84px;background-repeat:repeat-x;background-position:right center;
+ -webkit-mask-image:linear-gradient(to left,#000 0%,#000 24%,transparent 100%);
+ mask-image:linear-gradient(to left,#000 0%,#000 24%,transparent 100%);
+}
 </style>
 </head>
 <body class="antialiased">
