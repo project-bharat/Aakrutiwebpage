@@ -658,6 +658,35 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
  -webkit-mask-image:linear-gradient(to left,#000 0%,#000 48%,transparent 100%);
  mask-image:linear-gradient(to left,#000 0%,#000 48%,transparent 100%);
 }
+
+/* Subtle hero texture and patterned section-edge separators */
+.hero-pattern-strip{opacity:.72!important}
+@media(max-width:640px){.hero-pattern-strip{opacity:.64!important}}
+main section:not(.hero){
+ position:relative;
+}
+main section:not(.hero)::before,
+main section:not(.hero)::after{
+ content:"";
+ position:absolute;
+ left:0;right:0;
+ height:11px;
+ pointer-events:none;
+ z-index:5;
+ opacity:.13;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22416%22 viewBox=%220 0 240 416%22%3E%3Cpath d=%22M0 0V416M120 0V416M240 0V416M0 0L120 208L240 0M0 208L120 416L240 208%22 fill=%22none%22 stroke=%22%23525266%22 stroke-opacity=%220.32%22 stroke-width=%224.5%22/%3E%3C/svg%3E");
+ background-size:74px 128px;
+ background-repeat:repeat;
+ -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 16%,#000 84%,transparent 100%);
+ mask-image:linear-gradient(to right,transparent 0%,#000 16%,#000 84%,transparent 100%);
+}
+main section:not(.hero)::before{top:0}
+main section:not(.hero)::after{bottom:0}
+@media(max-width:640px){
+ main section:not(.hero)::before,
+ main section:not(.hero)::after{height:8px;opacity:.11;background-size:62px 107px}
+}
+
 </style>
 </head>
 <body class="antialiased">
