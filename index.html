@@ -1000,16 +1000,30 @@ function quickEnquire(id){const p=products.find(x=>x.id===id);if(p&&window.Aakru
 function contactMessage(d){return 'New enquiry for Aakruti Enterprises\\n\\nName: '+d.get('name')+'\\nPhone: '+d.get('phone')+'\\nEmail: '+(d.get('email')||'Not provided')+'\\nEnquiry: '+d.get('interest')+'\\nProject details: '+(d.get('details')||'Not provided')}
 function emailContact(){const f=document.getElementById('contact-form');if(!f.reportValidity())return;const d=new FormData(f);window.location.href='mailto:'+BUSINESS_EMAIL+'?subject='+encodeURIComponent('New enquiry for Aakruti — '+d.get('name'))+'&body='+encodeURIComponent(contactMessage(d))}
 function whatsAppContact(){const f=document.getElementById('contact-form');if(!f.reportValidity())return;const d=new FormData(f);window.open('https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(contactMessage(d)),'_blank','noopener')}
-document.getElementById('contact-form').addEventListener('submit',function(e){
+const publicCfg=window.AAKRUTI_SUPABASE_CONFIG||{};
+const publicSupabase=(publicCfg.url&&publicCfg.publishableKey&&window.supabase)?window.supabase.createClient(publicCfg.url,publicCfg.publishableKey):null;
+document.getElementById('contact-form').addEventListener('submit',async function(e){
   e.preventDefault();
   const form=e.currentTarget;
   if(!form.reportValidity())return;
   const d=new FormData(form);
   if(d.get('website'))return;
   const status=document.getElementById('enquiry-status');
-  const message=contactMessage(d);
-  status.textContent='Opening your email app with the enquiry details. Please review and send the message there. If it does not open, use WhatsApp or call us.';
-  window.location.href='mailto:'+BUSINESS_EMAIL+'?subject='+encodeURIComponent('New enquiry for Aakruti — '+String(d.get('name')||'').trim())+'&body='+encodeURIComponent(message);
+  const submit=form.querySelector('button[type=submit]');
+  if(submit){submit.disabled=true;submit.dataset.originalText=submit.innerHTML;submit.innerHTML='Sending…';}
+  try{
+    if(!publicSupabase)throw new Error('Enquiry service unavailable.');
+    const payload={name:String(d.get('name')||'').trim(),phone:String(d.get('phone')||'').trim(),email:String(d.get('email')||'').trim()||null,subject:String(d.get('interest')||'Furniture enquiry'),message:String(d.get('details')||'').trim()||null,enquiry_type:'website',status:'new'};
+    const {error}=await publicSupabase.from('enquiries').insert(payload);
+    if(error)throw error;
+    status.textContent='Thank you. Your enquiry has been received. We will contact you shortly.';
+    status.style.color='#a9d8b0';
+    form.reset();
+  }catch(err){
+    console.error('Enquiry submission failed:',err);
+    status.textContent='Could not submit online. Please use WhatsApp or email to send your enquiry.';
+    status.style.color='#ffd0a5';
+  }finally{if(submit){submit.disabled=false;submit.innerHTML=submit.dataset.originalText||'Submit Enquiry';}}
 });
 
 function syncGallery(gallery,index){const track=gallery.querySelector('[data-gallery-track]');const slides=[...track.querySelectorAll('img')];index=Math.max(0,Math.min(index,slides.length-1));track.scrollTo({left:index*track.clientWidth,behavior:'smooth'});gallery.querySelectorAll('[data-gallery-dot]').forEach((dot,i)=>{dot.classList.toggle('active',i===index);dot.setAttribute('aria-pressed',String(i===index));});gallery.querySelector('[data-gallery-count]').textContent=(index+1)+' / '+slides.length;}
