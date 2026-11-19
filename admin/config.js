@@ -2,5 +2,5 @@
 // The publishable/anon key is designed for browser use. Database security is enforced by RLS.
 window.AAKRUTI_SUPABASE_CONFIG = {
   url: "https://rqgmyqnzwgchrqdhtdhi.supabase.co",
-  publishableKey: "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE"
+  publishableKey: "sb_publishable_hr1p-RaFsYRsl4oBI6klpw_L3M6Fus0"
 };
