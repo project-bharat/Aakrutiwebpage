@@ -4,21 +4,27 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Aakruti Admin</title>
+<meta name="theme-color" content="#525266">
+<link rel="icon" type="image/png" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--coral:#ff6666;--slate:#525266;--paper:#f7f4f1;--white:#fff;--line:#e5ded8;--muted:#817d87}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--slate);font:14px 'Plus Jakarta Sans',sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .login-wrap{min-height:100vh;display:grid;place-items:center;padding:20px}.login-card{width:min(440px,100%);background:#fff;border:1px solid var(--line);padding:34px;border-radius:18px}.brand{font-size:22px;font-weight:700;letter-spacing:.02em}.brand span{color:var(--coral)}.muted{color:var(--muted)}.field{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:white;color:var(--slate)}.field:focus{outline:2px solid #ff666633;border-color:var(--coral)}.btn{padding:10px 14px;border:1px solid var(--line);border-radius:9px;background:white;color:var(--slate);font-weight:600}.btn-primary{background:var(--coral);border-color:var(--coral);color:white}.btn:hover{filter:brightness(.98)}.alert{padding:10px 12px;border-radius:8px;background:#fff0ee;color:#a33c42;margin:12px 0}.layout{min-height:100vh;display:grid;grid-template-columns:235px 1fr}.sidebar{background:#fff;border-right:1px solid var(--line);padding:22px 14px;position:sticky;top:0;height:100vh}.nav{margin-top:28px;display:grid;gap:5px}.nav button{text-align:left;border:0;background:transparent;padding:11px 13px;border-radius:8px;color:var(--slate)}.nav button.active,.nav button:hover{background:#ff666615;color:#d94c55}.main{padding:28px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.stat{padding:18px;border:1px solid var(--line);background:#fff;border-radius:12px}.stat .value{font-size:26px;font-weight:700;margin-top:8px}.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:16px}.panel h2{margin:0 0 14px;font-size:17px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:620px}th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #eee;font-size:13px}th{color:var(--muted);font-weight:600}.pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#f0ece8;font-size:11px;text-transform:capitalize}.actions{display:flex;gap:6px;flex-wrap:wrap}.small{padding:6px 9px;font-size:12px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-grid .full{grid-column:1/-1}.modal-backdrop{position:fixed;inset:0;background:#3338;display:grid;place-items:center;padding:16px;z-index:10}.modal{background:#fff;width:min(640px,100%);max-height:90vh;overflow:auto;padding:22px;border-radius:14px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.toast{position:fixed;bottom:20px;right:20px;background:#525266;color:white;padding:12px 16px;border-radius:9px;z-index:20}.empty{padding:30px;text-align:center;color:var(--muted)}@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{height:auto;position:static;padding:12px}.nav{display:flex;overflow:auto;margin-top:12px}.nav button{white-space:nowrap}.main{padding:16px}.cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}.cards{grid-template-columns:1fr 1fr}.login-card{padding:24px}}
+.admin-label{display:block;font-size:11px;margin-top:5px;text-transform:uppercase}.admin-account{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:11px;overflow-wrap:anywhere}.nav i{width:1.35em;text-align:center;margin-right:4px}
 </style>
 </head>
 <body>
 <div id="login-view" class="login-wrap">
  <div class="login-card">
-  <div class="brand"><img src="../assets/brand/aakruti-horizontal-light.png" data-brand-asset="aakruti-horizontal-light.png" alt="Aakruti Enterprises" width="180" style="height:auto;vertical-align:middle"> <span>ADMIN</span></div>
+  <div class="brand"><img src="../assets/brand/aakruti-horizontal-light.png" data-brand-asset="aakruti-horizontal-light.png" alt="Aakruti Enterprises" width="180" style="height:auto;vertical-align:middle"> <span class="admin-label"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Admin</span></div>
   <p class="muted">Sign in to manage the website</p>
   <form id="login-form">
-   <label>Email</label><input class="field" id="login-email" type="email" autocomplete="username" required value="budgetbharatpro@gmail.com" style="margin:7px 0 14px">
+   <label>Email</label><input class="field" id="login-email" type="email" autocomplete="username" required style="margin:7px 0 14px">
    <label>Password</label><input class="field" id="login-password" type="password" autocomplete="current-password" required style="margin:7px 0 14px">
    <button class="btn btn-primary" style="width:100%" type="submit">Sign in</button>
   </form>
@@ -28,20 +34,20 @@
 </div>
 <div id="app-view" class="layout hidden">
  <aside class="sidebar">
-  <div class="brand"><img src="../assets/brand/aakruti-horizontal-light.png" data-brand-asset="aakruti-horizontal-light.png" alt="Aakruti Enterprises" width="180" style="height:auto;vertical-align:middle"> <span>ADMIN</span></div>
-  <div id="admin-email" class="muted" style="font-size:12px;margin-top:6px"></div>
+  <div class="brand"><img src="../assets/brand/aakruti-horizontal-light.png" data-brand-asset="aakruti-horizontal-light.png" alt="Aakruti Enterprises" width="180" style="height:auto;vertical-align:middle"> <span class="admin-label"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Admin</span></div>
+  <div class="admin-account muted"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span id="admin-email"></span></div>
   <nav class="nav">
-   <button data-page="dashboard" class="active">Overview</button>
-   <button data-page="products">Products</button>
-   <button data-page="categories">Categories</button>
-   <button data-page="brand">Brand assets</button>
-   <button data-page="blog">Blog</button>
-   <button data-page="enquiries">Enquiries</button>
+   <button data-page="dashboard" class="active"><i class="fa-solid fa-gauge" aria-hidden="true"></i> Overview</button>
+   <button data-page="products"><i class="fa-solid fa-couch" aria-hidden="true"></i> Products</button>
+   <button data-page="categories"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Categories</button>
+   <button data-page="brand"><i class="fa-solid fa-palette" aria-hidden="true"></i> Brand assets</button>
+   <button data-page="blog"><i class="fa-solid fa-newspaper" aria-hidden="true"></i> Blog</button>
+   <button data-page="enquiries"><i class="fa-solid fa-inbox" aria-hidden="true"></i> Enquiries</button>
   </nav>
   <button id="logout" class="btn" style="margin-top:22px;width:100%">Sign out</button>
  </aside>
  <main class="main">
-  <div class="topbar"><div><h1 id="page-title" style="font-size:24px;margin:0">Overview</h1><p class="muted" style="margin:5px 0">Aakruti Enterprises website management</p></div><a class="btn" href="/" target="_blank" rel="noopener">View website ↗</a></div>
+  <div class="topbar"><div><h1 id="page-title" style="font-size:24px;margin:0">Overview</h1></div><a class="btn" href="/" target="_blank" rel="noopener">View website ↗</a></div>
   <div id="page-content"></div>
  </main>
 </div>
@@ -77,7 +83,7 @@ async function listCategories(){const {data,error}=await sb.from('categories').s
 const brandAssetSlots = [
  ['aakruti-horizontal-light.png', 'Header and admin logo'],
  ['aakruti-vertical-dark.png', 'Footer logo'],
- ['aakruti-icon-dark.png', 'Favicon and catalogue icon'],
+ ['aakruti-icon-dark.png', 'Website favicon and catalogue icon'],
  ['aakruti-icon-light.png', 'Hero icon']
 ];
 async function listBrandAssets(){

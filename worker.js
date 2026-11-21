@@ -83,6 +83,18 @@ export default {
         }
         return json(responseBody, upstream.status);
       }
+      let notification = false;
+      try {
+        notification = JSON.parse(body)?.event === "support_enquiry_submit";
+      } catch {
+        // The upstream handler validates the original request body.
+      }
+      if (notification) {
+        const result = await upstream.json().catch(() => null);
+        if (result?.emailSent !== true) {
+          return json({ ok: false, error: "Enquiry email could not be sent." }, 502);
+        }
+      }
       return json({ ok: upstream.ok });
     } catch {
       return json({ ok: false, error: "The submission service is temporarily unavailable." }, 502);

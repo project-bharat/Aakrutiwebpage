@@ -4,6 +4,7 @@
  */
 const SPREADSHEET_ID = ''; // Optional: set an existing spreadsheet ID. Leave blank to create a workbook automatically.
 const OWNER_EMAIL = 'budgetbharatpro@gmail.com';
+const ENQUIRY_EMAIL = 'support@aakruti-enterprises.com';
 const EVENT_SHEET = 'Visitor Events';
 const SUMMARY_SHEET = 'Daily Summary';
 const ENQUIRY_SHEET = 'Enquiries';
@@ -27,7 +28,7 @@ function doPost(e) {
     const p = JSON.parse(e.postData.contents);
     if (p.action === 'admin_login') return authenticateAdmin_(p);
     const eventName = clean_(p.event, 60);
-    if (eventName === 'enquiry_submit') return submitEnquiry_(p);
+    if (eventName === 'enquiry_submit' || eventName === 'support_enquiry_submit') return submitEnquiry_(p);
     const allowed = new Set(['page_view','consent_granted','category_view','product_interaction','product_view','add_to_cart','enquire_click']);
     if (!allowed.has(eventName)) return json_({ok:false,error:'event_not_allowed'});
     const visitorId = clean_(p.visitorId, 80);
@@ -114,7 +115,7 @@ function submitEnquiry_(p) {
     saved ? 'Open the Aakruti Website Analytics workbook and its Enquiries tab.' : 'Spreadsheet error: ' + saveError
   ].join('\n');
   try {
-    const mail = {to: OWNER_EMAIL, subject: subject, body: body};
+    const mail = {to: ENQUIRY_EMAIL, subject: subject, body: body};
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) mail.replyTo = email;
     MailApp.sendEmail(mail);
   } catch (mailError) {

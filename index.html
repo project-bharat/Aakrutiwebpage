@@ -15,7 +15,7 @@
 <meta name="geo.position" content="18.5835783;73.7451264">
 <meta name="ICBM" content="18.5835783, 73.7451264">
 <meta name="language" content="English">
-<link rel="canonical" href="https://project-bharat.github.io/Aakrutiwebpage/">
+<link rel="canonical" href="https://aakruti-enterprises.com/">
 <link rel="icon" type="image/png" href="./assets/brand/aakruti-icon-dark.png" data-brand-asset="aakruti-icon-dark.png">
 <link rel="apple-touch-icon" href="./assets/brand/aakruti-icon-dark.png" data-brand-asset="aakruti-icon-dark.png">
 <meta property="og:type" content="website">
@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Aakruti Enterprises">
 <meta property="og:title" content="Aakruti Enterprises | Made-to-Order Furniture Manufacturer in Pune">
 <meta property="og:description" content="Furniture manufacturer in Hinjewadi, Pune. Made to your dimensions, colours and finishes. Business since 1992; manufacturing since 2008.">
-<meta property="og:url" content="https://project-bharat.github.io/Aakrutiwebpage/">
+<meta property="og:url" content="https://aakruti-enterprises.com/">
 <!-- TODO: replace with real Aakruti photo, 1200x630 -->
 <meta property="og:image" content="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&h=630&q=85">
 <meta property="og:image:alt" content="Illustrative furniture reference image">
@@ -38,10 +38,10 @@
 {
   "@context": "https://schema.org",
   "@type": ["LocalBusiness", "FurnitureStore"],
-  "@id": "https://project-bharat.github.io/Aakrutiwebpage/#business",
+  "@id": "https://aakruti-enterprises.com/#business",
   "name": "Aakruti Enterprises",
   "alternateName": "Aakruti Enterprises Furniture Manufacturing",
-  "url": "https://project-bharat.github.io/Aakrutiwebpage/",
+  "url": "https://aakruti-enterprises.com/",
   "description": "Made-to-order furniture manufacturer in Hinjewadi, Pune. Business established in 1992; furniture manufacturing since 2008. Beds, wardrobes, tables, TV units, study and office furniture, outdoor furniture and custom furniture.",
   "foundingDate": "1992",
   "founder": [
@@ -694,10 +694,10 @@ main section:not(.hero)::after{bottom:0}
 <header class="site-header sticky top-0 z-40 bg-obsidian/95 backdrop-blur-xl border-b border-white/10">
  <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-[72px] flex items-center justify-between gap-4">
   <a href="#home" class="flex items-center shrink-0 group" aria-label="Aakruti Enterprises home"><img src="./assets/brand/aakruti-horizontal-light.png" data-brand-asset="aakruti-horizontal-light.png" alt="Aakruti Enterprises" class="aakruti-header-logo h-10 sm:h-12 w-auto max-w-[190px] sm:max-w-[230px] object-contain group-hover:opacity-90 transition-opacity"></a>
-  <nav class="desktop-nav hidden lg:flex items-center gap-1 text-xs xl:text-sm text-gray-300" aria-label="Primary"><a href="#home">Home</a><a href="#about">Our story</a><a href="#services">Collections</a><a href="#process">Made around you</a><a href="#values">Why Aakruti</a><a href="#professionals">Professionals</a><a href="#faqs">FAQs</a><a href="#catalogue" class="nav-featured">Catalogue</a><a href="#contact">Contact</a></nav>
+  <nav class="desktop-nav hidden lg:flex items-center gap-1 text-xs xl:text-sm text-gray-300" aria-label="Primary"><a href="#home">Home</a><a href="#about">Our story</a><a href="#services">Collections</a><a href="#process">Made around you</a><a href="#values">Why Aakruti</a><a href="#professionals">Professionals</a><a href="#faqs">FAQs</a><a href="#catalogue" class="nav-featured">Catalogue</a><a href="#blog" data-blog-nav hidden>Blog</a><a href="#contact">Contact</a></nav>
   <div class="header-actions flex items-center gap-1 shrink-0"><button type="button" onclick="openTray()" class="tray-button p-0 flex items-center justify-center" aria-label="Open cart" title="Open cart"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i><span id="cart-badge" class="cart-badge" hidden>0</span></button><button type="button" id="mobile-nav-toggle" class="mobile-menu-button lg:hidden" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation menu"><i class="fa-solid fa-bars"></i></button></div>
  </div>
- <nav id="mobile-nav" class="mobile-nav lg:hidden" aria-label="Mobile navigation" hidden><a href="#home">Home</a><a href="#about">Our story</a><a href="#services">Collections</a><a href="#process">Made around you</a><a href="#values">Why Aakruti</a><a href="#professionals">Professionals</a><a href="#faqs">FAQs</a><a href="#catalogue">Catalogue</a><a href="#contact">Contact</a></nav>
+ <nav id="mobile-nav" class="mobile-nav lg:hidden" aria-label="Mobile navigation" hidden><a href="#home">Home</a><a href="#about">Our story</a><a href="#services">Collections</a><a href="#process">Made around you</a><a href="#values">Why Aakruti</a><a href="#professionals">Professionals</a><a href="#faqs">FAQs</a><a href="#catalogue">Catalogue</a><a href="#blog" data-blog-nav hidden>Blog</a><a href="#contact">Contact</a></nav>
 </header>
 <main>
 <section id="home" class="hero pattern-host min-h-[680px] flex items-center py-20 sm:py-24 px-4 sm:px-6 border-b border-white/10">
@@ -878,8 +878,12 @@ main section:not(.hero)::after{bottom:0}
   ]
 }
 </script>
+<section id="blog" hidden class="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20" aria-labelledby="blog-title">
+ <h2 id="blog-title" class="font-serif text-4xl sm:text-5xl mb-7">Blog</h2>
+ <div id="blog-articles" class="grid gap-5 md:grid-cols-2"></div>
+</section>
 <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-24 grid lg:grid-cols-2 gap-12">
- <div><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Contact & enquiries</p><h2 class="font-serif text-4xl sm:text-5xl mt-3">Let's talk about your space.</h2><p class="text-gray-300 leading-7 mt-5 max-w-lg">Share a few details about your project or send your selected items through the order tray. We'll use your message to understand what you're looking for.</p><div class="space-y-4 mt-8 text-sm"><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-regular fa-clock"></i></span><div><b>Business hours</b><p class="text-gray-400 mt-1">Mon–Sat 9:00 AM–5:30 PM · Sunday closed · Appointment preferred</p></div></div><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-solid fa-phone"></i></span><div><b>Call / WhatsApp</b><p class="text-gray-400 mt-1"><a href="tel:+918308764140">+91 83087 64140</a> · <a href="https://wa.me/918308764140" target="_blank" rel="noopener noreferrer">Message on WhatsApp</a></p></div></div><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-regular fa-envelope"></i></span><div><b>Email</b><p class="text-gray-400 mt-1"><a href="mailto:chauhanrushi098@gmail.com">chauhanrushi098@gmail.com</a></p></div></div><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></span><div><b>Location</b><p class="text-gray-400 mt-1">Aakruti Enterprises, Hulavale Vasti, Hinjewadi, Taluka Mulshi, District Pune, Maharashtra 411057</p><a class="text-xs underline mt-2 inline-block" target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/cL5JcCFjrB4NHpUx8">Get directions</a></div></div><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-solid fa-user-tie"></i></span><div><b>Owner</b><p class="text-gray-400 mt-1">Rushikesh Chauhan</p></div></div><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-solid fa-truck-fast"></i></span><div><b>Service area</b><p class="text-gray-400 mt-1">Based in Hinjewadi, Pune. Serving Pune, Pimpri-Chinchwad and nearby areas; other locations on enquiry.</p><div id="contact-socials" aria-label="Aakruti social media links"><span class="social-placeholder" role="img" aria-label="Instagram link coming soon" title="Instagram — link to be added"><i class="fa-brands fa-instagram" aria-hidden="true"></i></span><span class="social-placeholder" role="img" aria-label="Facebook link coming soon" title="Facebook — link to be added"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></span><span class="social-placeholder" role="img" aria-label="Pinterest link coming soon" title="Pinterest — link to be added"><i class="fa-brands fa-pinterest-p" aria-hidden="true"></i></span><span class="social-placeholder" role="img" aria-label="YouTube link coming soon" title="YouTube — link to be added"><i class="fa-brands fa-youtube" aria-hidden="true"></i></span><span class="social-placeholder" role="img" aria-label="LinkedIn link coming soon" title="LinkedIn — link to be added"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></span><span class="social-placeholder" role="img" aria-label="X link coming soon" title="X — link to be added"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></span></div></div></div></div></div>
+ <div><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Contact & enquiries</p><h2 class="font-serif text-4xl sm:text-5xl mt-3">Let's talk about your space.</h2><p class="text-gray-300 leading-7 mt-5 max-w-lg">Share a few details about your project or send your selected items through the order tray. We'll use your message to understand what you're looking for.</p><div class="space-y-4 mt-8 text-sm"><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-regular fa-clock"></i></span><div><b>Business hours</b><p class="text-gray-400 mt-1">Mon–Sat 9:00 AM–5:30 PM · Sunday closed · Appointment preferred</p></div></div><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-solid fa-phone"></i></span><div><b>Call / WhatsApp</b><p class="text-gray-400 mt-1"><a href="tel:+918308764140">+91 83087 64140</a> · <a href="https://wa.me/918308764140" target="_blank" rel="noopener noreferrer">Message on WhatsApp</a></p></div></div><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-regular fa-envelope"></i></span><div><b>Email</b><p class="text-gray-400 mt-1"><a href="mailto:support@aakruti-enterprises.com">support@aakruti-enterprises.com</a></p></div></div><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></span><div><b>Location</b><p class="text-gray-400 mt-1">Aakruti Enterprises, Hulavale Vasti, Hinjewadi, Taluka Mulshi, District Pune, Maharashtra 411057</p><a class="text-xs underline mt-2 inline-block" target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/cL5JcCFjrB4NHpUx8">Get directions</a></div></div><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-solid fa-user-tie"></i></span><div><b>Owner</b><p class="text-gray-400 mt-1">Rushikesh Chauhan</p></div></div><div class="flex gap-4 items-start"><span class="w-10 h-10 rounded-lg bg-gold/10 text-gold flex items-center justify-center"><i class="fa-solid fa-truck-fast"></i></span><div><b>Service area</b><p class="text-gray-400 mt-1">Based in Hinjewadi, Pune. Serving Pune, Pimpri-Chinchwad and nearby areas; other locations on enquiry.</p><div id="contact-socials" aria-label="Aakruti social media links"><span class="social-placeholder" role="img" aria-label="Instagram link coming soon" title="Instagram — link to be added"><i class="fa-brands fa-instagram" aria-hidden="true"></i></span><span class="social-placeholder" role="img" aria-label="Facebook link coming soon" title="Facebook — link to be added"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></span><span class="social-placeholder" role="img" aria-label="Pinterest link coming soon" title="Pinterest — link to be added"><i class="fa-brands fa-pinterest-p" aria-hidden="true"></i></span><span class="social-placeholder" role="img" aria-label="YouTube link coming soon" title="YouTube — link to be added"><i class="fa-brands fa-youtube" aria-hidden="true"></i></span><span class="social-placeholder" role="img" aria-label="LinkedIn link coming soon" title="LinkedIn — link to be added"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></span><span class="social-placeholder" role="img" aria-label="X link coming soon" title="X — link to be added"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></span></div></div></div></div></div>
  <form id="contact-form" class="bg-charcoal border border-white/10 rounded-2xl p-5 sm:p-7 space-y-4"><h3 class="font-serif text-3xl">Request a callback / quote</h3><p class="text-xs text-gray-400">Your enquiry details can be sent to us through WhatsApp or your email app. We use your details only to respond to your request.</p><div class="grid sm:grid-cols-2 gap-4"><label class="text-xs text-gray-300">Your name<input class="field mt-2" name="name" autocomplete="name" placeholder="Full name" required></label><label class="text-xs text-gray-300">Phone number<input class="field mt-2" name="phone" autocomplete="tel" inputmode="tel" placeholder="Your contact number" required></label></div><label class="block text-xs text-gray-300">Email (optional)<input class="field mt-2" name="email" type="email" autocomplete="email" placeholder="you@example.com"></label><label class="block text-xs text-gray-300">What are you looking for?<select class="field mt-2" name="interest"><option>Furniture catalogue enquiry</option><option>Custom furniture</option><option>Office / commercial project</option><option>Bulk / trade order</option></select></label><label class="block text-xs text-gray-300">Project details<textarea class="field mt-2" name="details" rows="4" placeholder="Furniture type, dimensions, finish, quantity, budget or delivery area…"></textarea></label><div class="flex flex-wrap items-center justify-center gap-2 mt-1"><button class="gold-button rounded-lg px-4 py-2.5 font-bold text-xs w-auto min-w-0" type="submit"><i class="fa-solid fa-paper-plane mr-1.5"></i>Submit Enquiry</button><button class="outline-button rounded-lg px-4 py-2.5 text-xs w-auto min-w-0" type="button" onclick="whatsAppContact()"><i class="fa-brands fa-whatsapp"></i></button><button class="outline-button contact-icon-button" type="button" onclick="emailContact()" aria-label="Email us" title="Email us"><i class="fa-regular fa-envelope"></i></button></div><p id="enquiry-status" class="text-xs text-center" role="status" aria-live="polite"></p><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px" class="hidden"><input type="hidden" name="page" value="website contact form"></form>
 </section>
 </main>
@@ -889,9 +893,10 @@ main section:not(.hero)::after{bottom:0}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/admin/config.js"></script>
 <script src="./assets/brand-assets.js" defer></script>
+<script src="./assets/blog.js" defer></script>
 <script>
 const WHATSAPP_NUMBER='918308764140';
-const BUSINESS_EMAIL='chauhanrushi098@gmail.com';
+const BUSINESS_EMAIL='support@aakruti-enterprises.com';
 const ANALYTICS_ENDPOINT='/api/analytics';
 /* Consent-gated first-party analytics. No event is sent before opt-in. */
 (function(){
@@ -1051,6 +1056,15 @@ document.getElementById('contact-form').addEventListener('submit',async function
     const payload={name:String(d.get('name')||'').trim(),phone:String(d.get('phone')||'').trim(),email:String(d.get('email')||'').trim()||null,subject:String(d.get('interest')||'Furniture enquiry'),message:String(d.get('details')||'').trim()||null,enquiry_type:'website',status:'new'};
     const {error}=await publicSupabase.from('enquiries').insert(payload);
     if(error)throw error;
+    fetch('/api/analytics', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      keepalive:true,
+      body:JSON.stringify({event:'support_enquiry_submit',name:payload.name,phone:payload.phone,
+        email:payload.email,interest:payload.subject,details:payload.message,page:location.pathname})
+    }).then(response=>{
+      if(!response.ok)throw new Error('Notification service returned '+response.status);
+    }).catch(error=>console.warn('Enquiry saved, but the email notification failed:',error.message));
     status.textContent='Thank you. Your enquiry has been received. We will contact you shortly.';
     status.style.color='#a9d8b0';
     form.reset();
