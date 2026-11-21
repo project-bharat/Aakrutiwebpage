@@ -937,7 +937,7 @@ const referenceNames={
  'Bathroom Vanities':['Floating Vanity','Freestanding Vanity','Compact Basin Cabinet','Bathroom Storage Vanity']
 };
 function referenceImage(category,index=0){
- const collection=collectionPhotoPools[category];
+ const collection=collectionPhotoPools[category==='Temple'?'Puja Units':category];
  if(collection?.length)return './assets/collections/'+collection[index%collection.length];
  const pool=GALLERY_POOLS[category];
  return pool?.length?pool[index%pool.length]:cataloguePlaceholder;
