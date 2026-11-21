@@ -81,21 +81,21 @@ async function dashboard(){const [p,c,b,e,n]=await Promise.all([count('products'
 async function listProducts(){const {data,error}=await sb.from('products').select('id,name,slug,is_active,is_featured,created_at').order('created_at',{ascending:false});if(error)throw error;return '<div class="section-head"><h2 style="margin:0">Products</h2><button class="btn btn-primary" data-add="product">Add product</button></div>'+panel('Catalogue',data.length?'<div class="table-wrap"><table><thead><tr><th>Name</th><th>Slug</th><th>Status</th><th>Featured</th><th>Action</th></tr></thead><tbody>'+data.map(p=>'<tr><td>'+esc(p.name)+'</td><td>'+esc(p.slug)+'</td><td><span class="pill">'+(p.is_active?'active':'hidden')+'</span></td><td>'+(p.is_featured?'Yes':'No')+'</td><td><button class="btn small" data-edit-product="'+p.id+'">Edit</button> <button class="btn small" data-delete-product="'+p.id+'">Delete</button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No products have been added yet.</div>')}
 async function listCategories(){const {data,error}=await sb.from('categories').select('*').order('sort_order');if(error)throw error;return '<div class="section-head"><h2 style="margin:0">Categories</h2><button class="btn btn-primary" data-add="category">Add category</button></div>'+panel('Categories',data.length?'<div class="table-wrap"><table><thead><tr><th>Name</th><th>Slug</th><th>Active</th><th>Action</th></tr></thead><tbody>'+data.map(c=>'<tr><td>'+esc(c.name)+'</td><td>'+esc(c.slug)+'</td><td>'+(c.is_active?'Yes':'No')+'</td><td><button class="btn small" data-edit-category="'+c.id+'">Edit</button> <button class="btn small" data-delete-category="'+c.id+'">Delete</button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No categories yet.</div>')}
 const brandAssetSlots = [
- ['aakruti-horizontal-light.png', 'Header and admin logo'],
- ['aakruti-vertical-dark.png', 'Footer logo'],
- ['aakruti-icon-dark.png', 'Website favicon and catalogue icon'],
- ['aakruti-icon-light.png', 'Hero icon']
+ ['aakruti-horizontal-light.png', 'Header and admin logo', '#f7f4f1'],
+ ['aakruti-vertical-dark.png', 'Footer logo', '#525266'],
+ ['aakruti-icon-dark.png', 'Website favicon and catalogue icon', '#525266'],
+ ['aakruti-icon-light.png', 'Hero icon', '#f7f4f1']
 ];
 async function listBrandAssets(){
  const bucket=sb.storage.from('brand-assets');
  const {data,error}=await bucket.list('website');
  if(error)throw new Error('Brand assets could not be listed. Run the Supabase setup SQL and refresh. '+error.message);
  const files=new Set(data.map(file=>file.name));
- return '<p class="muted">PNG images up to 5 MB. Upload a replacement to update the website asset.</p>'+brandAssetSlots.map(([name,label])=>{
+ return '<p class="muted">PNG images up to 5 MB. Upload a replacement to update the website asset.</p>'+brandAssetSlots.map(([name,label,background])=>{
   const url=bucket.getPublicUrl('website/'+name).data.publicUrl;
   const uploaded=files.has(name);
   return panel(label,
-   '<img src="'+esc(uploaded?url:'../assets/brand/'+name)+'" alt="'+esc(label)+'" width="160" style="height:70px;object-fit:contain;background:'+(name.includes('-light')?'#525266':'#f7f4f1')+';border-radius:8px">'+
+   '<img src="'+esc(uploaded?url:'../assets/brand/'+name)+'" alt="'+esc(label)+'" width="160" style="height:70px;object-fit:contain;background:'+background+';border-radius:8px">'+
    '<p class="muted">'+(uploaded?'Supabase · website/'+name:'Using the bundled brand kit image')+'</p>'+
    '<form data-brand-upload="'+name+'"><label>Replacement PNG <input type="file" name="asset" accept="image/png,.png" required></label> <button class="btn btn-primary" type="submit">Upload</button></form>');
  }).join('');
