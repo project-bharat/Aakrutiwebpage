@@ -15,7 +15,7 @@
 <body>
 <div id="login-view" class="login-wrap">
  <div class="login-card">
-  <div class="brand"><img src="../assets/brand/aakruti-horizontal-dark.png" data-brand-asset="aakruti-horizontal-dark.png" alt="Aakruti Enterprises" width="180" style="height:auto;vertical-align:middle"> <span>ADMIN</span></div>
+  <div class="brand"><img src="../assets/brand/aakruti-horizontal-light.png" data-brand-asset="aakruti-horizontal-light.png" alt="Aakruti Enterprises" width="180" style="height:auto;vertical-align:middle"> <span>ADMIN</span></div>
   <p class="muted">Sign in to manage the website</p>
   <form id="login-form">
    <label>Email</label><input class="field" id="login-email" type="email" autocomplete="username" required value="budgetbharatpro@gmail.com" style="margin:7px 0 14px">
@@ -28,7 +28,7 @@
 </div>
 <div id="app-view" class="layout hidden">
  <aside class="sidebar">
-  <div class="brand"><img src="../assets/brand/aakruti-horizontal-dark.png" data-brand-asset="aakruti-horizontal-dark.png" alt="Aakruti Enterprises" width="180" style="height:auto;vertical-align:middle"> <span>ADMIN</span></div>
+  <div class="brand"><img src="../assets/brand/aakruti-horizontal-light.png" data-brand-asset="aakruti-horizontal-light.png" alt="Aakruti Enterprises" width="180" style="height:auto;vertical-align:middle"> <span>ADMIN</span></div>
   <div id="admin-email" class="muted" style="font-size:12px;margin-top:6px"></div>
   <nav class="nav">
    <button data-page="dashboard" class="active">Overview</button>
@@ -75,8 +75,8 @@ async function dashboard(){const [p,c,b,e,n]=await Promise.all([count('products'
 async function listProducts(){const {data,error}=await sb.from('products').select('id,name,slug,is_active,is_featured,created_at').order('created_at',{ascending:false});if(error)throw error;return '<div class="section-head"><h2 style="margin:0">Products</h2><button class="btn btn-primary" data-add="product">Add product</button></div>'+panel('Catalogue',data.length?'<div class="table-wrap"><table><thead><tr><th>Name</th><th>Slug</th><th>Status</th><th>Featured</th><th>Action</th></tr></thead><tbody>'+data.map(p=>'<tr><td>'+esc(p.name)+'</td><td>'+esc(p.slug)+'</td><td><span class="pill">'+(p.is_active?'active':'hidden')+'</span></td><td>'+(p.is_featured?'Yes':'No')+'</td><td><button class="btn small" data-edit-product="'+p.id+'">Edit</button> <button class="btn small" data-delete-product="'+p.id+'">Delete</button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No products have been added yet.</div>')}
 async function listCategories(){const {data,error}=await sb.from('categories').select('*').order('sort_order');if(error)throw error;return '<div class="section-head"><h2 style="margin:0">Categories</h2><button class="btn btn-primary" data-add="category">Add category</button></div>'+panel('Categories',data.length?'<div class="table-wrap"><table><thead><tr><th>Name</th><th>Slug</th><th>Active</th><th>Action</th></tr></thead><tbody>'+data.map(c=>'<tr><td>'+esc(c.name)+'</td><td>'+esc(c.slug)+'</td><td>'+(c.is_active?'Yes':'No')+'</td><td><button class="btn small" data-edit-category="'+c.id+'">Edit</button> <button class="btn small" data-delete-category="'+c.id+'">Delete</button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No categories yet.</div>')}
 const brandAssetSlots = [
- ['aakruti-horizontal-dark.png', 'Header and admin logo'],
- ['aakruti-vertical-light.png', 'Footer logo'],
+ ['aakruti-horizontal-light.png', 'Header and admin logo'],
+ ['aakruti-vertical-dark.png', 'Footer logo'],
  ['aakruti-icon-dark.png', 'Favicon and catalogue icon'],
  ['aakruti-icon-light.png', 'Hero icon']
 ];
