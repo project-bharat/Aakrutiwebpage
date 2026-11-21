@@ -1106,7 +1106,7 @@ document.querySelectorAll('[data-story-scroll]').forEach(btn=>btn.addEventListen
   const {data,error}=await client.from('products').select('id,name,short_description,description,featured_image,sort_order,categories(name),product_images(image_url,sort_order)').eq('is_active',true).order('sort_order',{ascending:true});
   if(error)throw error;
   if(!data||!data.length)return;
-  products=data.map(x=>({id:x.id,name:x.name,category:x.categories?.name||'Other',desc:x.short_description||x.description||'Made-to-order furniture.',image:x.featured_image||'',images:(x.product_images||[]).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map(y=>y.image_url).filter(Boolean)}));
+  products=data.map(x=>({id:x.id,name:x.name,category:x.categories?.name||'Other',desc:x.short_description||x.description||'Made-to-order furniture.',image:x.featured_image||'',images:[...new Set([x.featured_image,...(x.product_images||[]).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map(y=>y.image_url)].filter(Boolean))]}));
   const active=document.querySelector('#filters button.active')?.dataset.filter||'All';
   renderProducts(active);renderCart();
   console.info('Supabase catalogue loaded',products.length);
