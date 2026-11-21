@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aakruti-enterprises.com/sitemap.xml
