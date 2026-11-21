@@ -15,3 +15,6 @@ CLOUDFLARE_MIGRATION.md
 GOOGLE_SHEETS_ANALYTICS_SETUP.md
 site-archives
 
+
+# SQL migrations are run from the Supabase dashboard
+supabase
