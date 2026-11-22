@@ -1205,10 +1205,10 @@ renderProducts();renderCart();
  const grid=document.getElementById('featured-cards');
  if(!grid)return;
  const items=[
-  {category:'Modular Kitchens',image:'./assets/collections/modular-kitchens.webp'},
-  {category:'Beds & Wardrobes',image:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=85'},
-  {category:'TV Units',image:'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=85'},
-  {category:'Puja Units',image:'./assets/collections/puja-units.webp'}
+  {category:'Modular Kitchens',image:'./assets/featured-collections/modular-kitchens.webp'},
+  {category:'Beds & Wardrobes',image:'./assets/featured-collections/beds-and-wardrobes.webp'},
+  {category:'TV Units',image:'./assets/featured-collections/tv-units.webp'},
+  {category:'Puja Units',image:'./assets/featured-collections/puja-units.webp'}
  ];
  const subtitles={
   'Modular Kitchens':'Made-to-order cabinetry shaped around your layout, storage and finish preferences.',
@@ -1258,4 +1258,51 @@ function closeAakrutiStory(){
 }
 const storyDialog=document.getElementById('aakruti-story-dialog');
 if(storyDialog){storyDialog.addEventListener('close',()=>{const video=document.getElementById('aakruti-story-video');if(video){video.pause();video.currentTime=0}})}
+</script>
+<script>
+(function(){
+ 'use strict';
+ const catalogue=[
+  {id:'kitchen-1',name:'White & Turquoise Modular Kitchen',category:'Modular Kitchens',image:'./assets/featured-collections/modular-kitchens.webp',desc:'Made-to-order kitchen cabinetry planned around your layout, storage and finish preferences.'},
+  {id:'wardrobe-1',name:'White Fitted Bedroom & Wardrobes',category:'Beds & Wardrobes',image:'./assets/featured-collections/beds-and-wardrobes.webp',desc:'Bedroom furniture planned around room dimensions, routines and storage needs.'},
+  {id:'tv-1',name:'Circular Illuminated TV Wall',category:'TV Units',image:'./assets/featured-collections/tv-units.webp',desc:'A made-to-measure TV feature planned around your wall and equipment.'},
+  {id:'puja-1',name:'Recessed Illuminated Puja Unit',category:'Puja Units',image:'./assets/featured-collections/puja-units.webp',desc:'A thoughtful puja unit designed to suit your space and traditions.'},
+  {id:'coffee-1',name:'Marble & Walnut TV Wall',category:'Coffee & Centre Tables',image:'./assets/featured-collections/coffee-centre-tables.webp',desc:'A considered centre-piece finish and proportion for your living space.'},
+  {id:'side-1',name:'White & Walnut Fitted Sideboard',category:'Side Tables',image:'./assets/featured-collections/side-tables.webp',desc:'A compact side table or console planned around the surrounding furniture.'},
+  {id:'study-1',name:'Turquoise Study Workstation',category:'Study & Office',image:'./assets/featured-collections/study-office.webp',desc:'Study and office furniture for practical dimensions and work routines.'},
+  {id:'bathroom-1',name:'Floating Grey Basin Vanity',category:'Bathroom Vanities',image:'./assets/featured-collections/bathroom-vanities.webp',desc:'Vanity cabinetry planned around your basin, storage and bathroom layout.'}
+ ];
+ const grid=document.getElementById('product-grid');
+ const result=document.getElementById('result-count');
+ if(!grid)return;
+ function render(filter){
+  const list=filter==='All'?catalogue:catalogue.filter(function(item){return item.category===filter});
+  if(result)result.textContent=list.length;
+  grid.style.setProperty('display','grid','important');
+  grid.style.setProperty('visibility','visible','important');
+  grid.innerHTML=list.map(function(item){
+   return '<article class="product-card rounded-xl overflow-hidden flex flex-col" data-product-category="'+item.category+'"><button type="button" class="catalogue-cover" aria-label="Enquire about '+item.name+'"><img loading="lazy" decoding="async" src="'+item.image+'" alt="'+item.name+'" style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover"></button><div class="p-5 flex flex-col flex-1 gap-3"><h3 class="font-serif text-2xl leading-tight">'+item.name+'</h3><p class="text-gray-400 text-sm line-clamp-2 flex-1">'+item.desc+'</p><button type="button" class="gold-button catalogue-enquire rounded-lg text-sm font-bold" data-fallback-enquire="'+item.name+'">Enquire</button></div></article>';
+  }).join('');
+ }
+ const filters=document.getElementById('filters');
+ if(filters){
+  filters.addEventListener('click',function(event){
+   const button=event.target.closest('[data-filter]');
+   if(!button)return;
+   filters.querySelectorAll('[data-filter]').forEach(function(item){
+    const active=item===button;
+    item.classList.toggle('active',active);
+    item.setAttribute('aria-pressed',String(active));
+   });
+   render(button.dataset.filter||'All');
+  });
+ }
+ grid.addEventListener('click',function(event){
+  const button=event.target.closest('[data-fallback-enquire]');
+  if(!button)return;
+  const contact=document.getElementById('contact');
+  if(contact)contact.scrollIntoView({block:'start'});
+ });
+ render('All');
+})();
 </script>
