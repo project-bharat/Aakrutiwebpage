@@ -946,7 +946,7 @@ const ANALYTICS_ENDPOINT='/api/analytics';
  const hideBanner=()=>{banner.classList.remove('is-visible');banner.setAttribute('aria-hidden','true')};
  let visitorId=null;
  function getVisitorId(){if(visitorId)return visitorId;try{visitorId=localStorage.getItem(VISITOR_KEY);if(!visitorId){visitorId=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'v-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,12);localStorage.setItem(VISITOR_KEY,visitorId)}}catch(e){visitorId='v-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,12)}return visitorId}
- function send(event,details){if(getChoice()!=='accepted')return;const d=details||{},params=new URLSearchParams(location.search);let source=params.get('utm_source')||'direct';if(!params.get('utm_source')&&document.referrer){try{source=new URL(document.referrer).hostname}catch(e){}}const payload={event:event,visitorId:getVisitorId(),page:(location.pathname||'/').slice(0,120),device:/Mobi|Android/i.test(navigator.userAgent)?'mobile':(/Tablet|iPad/i.test(navigator.userAgent)?'tablet':'desktop'),campaign:source.slice(0,100),category:String(d.category||'').slice(0,80),item:String(d.item||'').slice(0,100)};try{fetch(ANALYTICS_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{})}catch(e){}}}
+ function send(event,details){if(getChoice()!=='accepted')return;const d=details||{},params=new URLSearchParams(location.search);let source=params.get('utm_source')||'direct';if(!params.get('utm_source')&&document.referrer){try{source=new URL(document.referrer).hostname}catch(e){}}const payload={event:event,visitorId:getVisitorId(),page:(location.pathname||'/').slice(0,120),device:/Mobi|Android/i.test(navigator.userAgent)?'mobile':(/Tablet|iPad/i.test(navigator.userAgent)?'tablet':'desktop'),campaign:source.slice(0,100),category:String(d.category||'').slice(0,80),item:String(d.item||'').slice(0,100)};try{fetch(ANALYTICS_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{})}catch(e){}}
  function choose(value){setChoice(value);if(value==='accepted'){send('consent_granted');send('page_view')}hideBanner()}
  document.getElementById('cookie-accept').addEventListener('click',()=>choose('accepted'));
  document.getElementById('cookie-reject').addEventListener('click',()=>choose('rejected'));
@@ -1200,44 +1200,7 @@ function closeAakrutiStory(){
 const heroPhrase=document.getElementById('hero-rotating-phrase');if(heroPhrase){const heroWord=document.getElementById('hero-rotating-word');const heroIcon=document.getElementById('hero-type-icon');const heroWords=['life','style','choice','taste','peace','aura','vision','rhythm'];let heroWordIndex=0;const heroReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;const setHeroWord=(value,state)=>{heroWord.textContent=value;heroPhrase.setAttribute('aria-label',value||'');if(heroIcon){heroIcon.classList.toggle('is-visible',true);heroIcon.classList.toggle('is-turning-left',state==='turn-left'||state==='erase');heroIcon.classList.toggle('is-erasing',state==='erase');heroIcon.classList.toggle('is-settled',state==='settled')}};if(heroWord&&heroIcon){if(heroReducedMotion){setHeroWord('life','settled')}else{const typeSpeed=430,eraseSpeed=430,holdTime=1300,turnTime=1450,resetPause=1300;const typeHeroWord=()=>{const nextWord=heroWords[heroWordIndex];let pos=0;setHeroWord('','ready');const typeNext=()=>{if(pos<nextWord.length){setHeroWord(nextWord.slice(0,++pos),'type');window.setTimeout(typeNext,typeSpeed)}else{setHeroWord(nextWord,'turn-left');window.setTimeout(()=>window.setTimeout(eraseHeroWord,holdTime),turnTime)}};const eraseHeroWord=()=>{if(pos>0){setHeroWord(nextWord.slice(0,--pos),'erase');window.setTimeout(eraseHeroWord,eraseSpeed)}else{setHeroWord('','ready');heroWordIndex=(heroWordIndex+1)%heroWords.length;window.setTimeout(typeHeroWord,resetPause)}};typeNext()};const beginFirstWord=()=>{const first=heroWords[heroWordIndex];let pos=0;setHeroWord('','ready');const typeFirst=()=>{if(pos<first.length){setHeroWord(first.slice(0,++pos),'type');window.setTimeout(typeFirst,typeSpeed)}else{setHeroWord(first,'turn-left');window.setTimeout(()=>window.setTimeout(eraseFirstWord,holdTime),turnTime)}};const eraseFirstWord=()=>{if(pos>0){setHeroWord(first.slice(0,--pos),'erase');window.setTimeout(eraseFirstWord,eraseSpeed)}else{setHeroWord('','ready');heroWordIndex=(heroWordIndex+1)%heroWords.length;window.setTimeout(typeHeroWord,resetPause)}};setHeroWord('','ready');window.setTimeout(typeFirst,900)};beginFirstWord()}}}
 renderProducts();renderCart();
 </script>
-<script>
-(function(){
- const grid=document.getElementById('featured-cards');
- if(!grid)return;
- const items=[
-  {category:'Modular Kitchens',image:'./assets/featured-collections/modular-kitchens.webp'},
-  {category:'Beds & Wardrobes',image:'./assets/featured-collections/beds-and-wardrobes.webp'},
-  {category:'TV Units',image:'./assets/featured-collections/tv-units.webp'},
-  {category:'Puja Units',image:'./assets/featured-collections/puja-units.webp'}
- ];
- const subtitles={
-  'Modular Kitchens':'Made-to-order cabinetry shaped around your layout, storage and finish preferences.',
-  'Beds & Wardrobes':'Bedroom furniture planned around your room, routines and storage needs.',
-  'TV Units':'Made to suit your wall, media setup and everyday storage.',
-  'Puja Units':'Thoughtful home mandirs made to complement your space and traditions.'
- };
- grid.innerHTML=items.map(function(item){
-  return '<button type="button" class="aakruti-photo-card aakruti-photo-card--collection" data-collection="'+item.category+'" aria-label="Explore '+item.category+' collection"><img loading="lazy" src="'+item.image+'" alt="'+item.category+' design reference"><span class="collection-card-copy"><span class="collection-card-title">'+item.category+'</span><span class="collection-card-subtitle">'+subtitles[item.category]+'</span><span class="collection-card-action">Explore collection <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></span></button>';
- }).join('');
- grid.addEventListener('click',function(event){
-  const card=event.target.closest('[data-collection]');
-  if(!card)return;
-  const filter=[...document.querySelectorAll('#filters [data-filter]')].find(function(button){return button.dataset.filter===card.dataset.collection});
-  if(!filter)return;
-  document.querySelectorAll('#filters [data-filter]').forEach(function(button){
-   const active=button===filter;
-   button.classList.toggle('active',active);
-   button.setAttribute('aria-pressed',String(active));
-  });
-  if(typeof renderProducts==='function')renderProducts(filter.dataset.filter);
-  const grid=document.getElementById('product-grid');
-  if(grid)grid.style.setProperty('display','grid','important');
-  filter.focus({preventScroll:true});
-  const catalogue=document.getElementById('catalogue');
-  if(catalogue)catalogue.scrollIntoView({block:'start'});
- });
-})();
-</script>
+
 <script>
 function openAakrutiStory(){
  const dialog=document.getElementById('aakruti-story-dialog');
@@ -1259,50 +1222,4 @@ function closeAakrutiStory(){
 const storyDialog=document.getElementById('aakruti-story-dialog');
 if(storyDialog){storyDialog.addEventListener('close',()=>{const video=document.getElementById('aakruti-story-video');if(video){video.pause();video.currentTime=0}})}
 </script>
-<script>
-(function(){
- 'use strict';
- const catalogue=[
-  {id:'kitchen-1',name:'White & Turquoise Modular Kitchen',category:'Modular Kitchens',image:'./assets/featured-collections/modular-kitchens.webp',desc:'Made-to-order kitchen cabinetry planned around your layout, storage and finish preferences.'},
-  {id:'wardrobe-1',name:'White Fitted Bedroom & Wardrobes',category:'Beds & Wardrobes',image:'./assets/featured-collections/beds-and-wardrobes.webp',desc:'Bedroom furniture planned around room dimensions, routines and storage needs.'},
-  {id:'tv-1',name:'Circular Illuminated TV Wall',category:'TV Units',image:'./assets/featured-collections/tv-units.webp',desc:'A made-to-measure TV feature planned around your wall and equipment.'},
-  {id:'puja-1',name:'Recessed Illuminated Puja Unit',category:'Puja Units',image:'./assets/featured-collections/puja-units.webp',desc:'A thoughtful puja unit designed to suit your space and traditions.'},
-  {id:'coffee-1',name:'Marble & Walnut TV Wall',category:'Coffee & Centre Tables',image:'./assets/featured-collections/coffee-centre-tables.webp',desc:'A considered centre-piece finish and proportion for your living space.'},
-  {id:'side-1',name:'White & Walnut Fitted Sideboard',category:'Side Tables',image:'./assets/featured-collections/side-tables.webp',desc:'A compact side table or console planned around the surrounding furniture.'},
-  {id:'study-1',name:'Turquoise Study Workstation',category:'Study & Office',image:'./assets/featured-collections/study-office.webp',desc:'Study and office furniture for practical dimensions and work routines.'},
-  {id:'bathroom-1',name:'Floating Grey Basin Vanity',category:'Bathroom Vanities',image:'./assets/featured-collections/bathroom-vanities.webp',desc:'Vanity cabinetry planned around your basin, storage and bathroom layout.'}
- ];
- const grid=document.getElementById('product-grid');
- const result=document.getElementById('result-count');
- if(!grid)return;
- function render(filter){
-  const list=filter==='All'?catalogue:catalogue.filter(function(item){return item.category===filter});
-  if(result)result.textContent=list.length;
-  grid.style.setProperty('display','grid','important');
-  grid.style.setProperty('visibility','visible','important');
-  grid.innerHTML=list.map(function(item){
-   return '<article class="product-card rounded-xl overflow-hidden flex flex-col" data-product-category="'+item.category+'"><button type="button" class="catalogue-cover" aria-label="Enquire about '+item.name+'"><img loading="lazy" decoding="async" src="'+item.image+'" alt="'+item.name+'" style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover"></button><div class="p-5 flex flex-col flex-1 gap-3"><h3 class="font-serif text-2xl leading-tight">'+item.name+'</h3><p class="text-gray-400 text-sm line-clamp-2 flex-1">'+item.desc+'</p><button type="button" class="gold-button catalogue-enquire rounded-lg text-sm font-bold" data-fallback-enquire="'+item.name+'">Enquire</button></div></article>';
-  }).join('');
- }
- const filters=document.getElementById('filters');
- if(filters){
-  filters.addEventListener('click',function(event){
-   const button=event.target.closest('[data-filter]');
-   if(!button)return;
-   filters.querySelectorAll('[data-filter]').forEach(function(item){
-    const active=item===button;
-    item.classList.toggle('active',active);
-    item.setAttribute('aria-pressed',String(active));
-   });
-   render(button.dataset.filter||'All');
-  });
- }
- grid.addEventListener('click',function(event){
-  const button=event.target.closest('[data-fallback-enquire]');
-  if(!button)return;
-  const contact=document.getElementById('contact');
-  if(contact)contact.scrollIntoView({block:'start'});
- });
- render('All');
-})();
-</script>
+
