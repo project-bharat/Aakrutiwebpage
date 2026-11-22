@@ -704,6 +704,8 @@ main section:not(.hero)::after{
 @media(min-width:1024px){#about{padding-top:7rem!important;padding-bottom:7.25rem!important}#about .about-story-overlay{width:320px!important}}
 @media(max-width:1023px){#about .about-story-overlay{width:min(82%,300px)!important}}
 
+#product-grid .product-view-angles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.3rem;margin:.55rem .65rem 0}
+#product-grid .product-view-angles button{min-height:34px;padding:.3rem .2rem;font-size:.72rem}
 </style>
 </head>
 <body class="antialiased">
@@ -1009,6 +1011,17 @@ function productSpecs(p){
 function cataloguePhoto(product,image,priority=false){
  return '<img data-catalogue-image data-category="'+moneySafe(product.category)+'" data-fallback="'+moneySafe(cataloguePlaceholder)+'"'+(image===cataloguePlaceholder?' class="catalogue-placeholder"':'')+' loading="'+(priority?'eager':'lazy')+'" decoding="async" src="'+moneySafe(catalogueImageUrl(image))+'" alt="'+moneySafe(image===cataloguePlaceholder?'No product photo available':product.name)+'">';
 }
+function galleryViewLabels(product,images){
+ const views=[['01-full-product','Full Product'],['02-side-angle','Side Angle'],['03-close-up','Close-up'],['04-lifestyle','Lifestyle']];
+ const named=images.map(image=>views.find(([slug])=>image.toLowerCase().includes(slug))?.[1]);
+ if(named.every(Boolean))return named;
+ if(images.length===4&&/illustrative views based on an aakruti installation/i.test(product.desc))return views.map(([,label])=>label);
+ return named.map((label,i)=>label||'View '+(i+1));
+}
+function galleryViewButtons(labels,attribute,selected=0){
+ if(labels.length<2)return '';
+ return '<div class="product-view-angles" role="group" aria-label="Gallery views">'+labels.map((label,i)=>'<button type="button" '+attribute+'="'+i+'" aria-pressed="'+(i===selected)+'">'+label+'</button>').join('')+'</div>';
+}
 function renderProducts(filter='All'){
  const list=catalogueEntries(filter);
  const resultCount=document.getElementById('result-count');
@@ -1016,8 +1029,9 @@ function renderProducts(filter='All'){
  productGrid.innerHTML=list.map((p,i)=>{
   const id=moneySafe(p.id);
   const title=moneySafe(p.name);
+  const images=productGalleryImages(p);
   return '<article class="product-card rounded-xl overflow-hidden flex flex-col" data-product-category="'+moneySafe(p.category)+'">'+
-   '<button type="button" class="catalogue-cover" data-product-view="'+id+'" aria-label="View '+title+'">'+cataloguePhoto(p,productGalleryImages(p)[0],i===0)+'</button>'+
+   '<button type="button" class="catalogue-cover" data-product-view="'+id+'" aria-label="View '+title+'">'+cataloguePhoto(p,images[0],i===0)+'</button>'+galleryViewButtons(galleryViewLabels(p,images),'data-card-angle')+
    '<div class="p-5 flex flex-col flex-1 gap-3"><h3 class="font-serif text-2xl leading-tight"><button type="button" class="catalogue-product-title" data-product-view="'+id+'">'+title+'</button></h3>'+
    '<p class="text-gray-400 text-sm line-clamp-2 flex-1">'+moneySafe(p.desc)+'</p>'+
    '<button type="button" class="gold-button catalogue-enquire rounded-lg text-sm font-bold" data-product-enquire="'+id+'" aria-label="Enquire about '+title+'">Enquire</button></div></article>';
@@ -1117,16 +1131,16 @@ function renderShowcase(){
  document.getElementById('completed-projects').innerHTML=projects.map(p=>photoCard(p,p.name,'data-product-view',p.id)).join('');
  document.getElementById('testimonials').hidden=!projects.length;
 }
-function openProductView(id){
+function openProductView(id,selected=0){
  const product=products.find(p=>String(p.id)===id);
  if(!product)return;
  const images=productGalleryImages(product);
- const isIllustrative=/illustrative/i.test(product.desc);
- const angleLabels=isIllustrative&&images.length===4?['Full view','Side angle','Close-up','Lifestyle']:images.map((_,i)=>'View '+(i+1));
+ const angleLabels=galleryViewLabels(product,images);
+ if(!images[selected])selected=0;
  document.getElementById('product-view-title').textContent=product.name;
  const content=document.getElementById('product-view-content');
- content.innerHTML=cataloguePhoto(product,images[0],true).replace('<img ','<img id="product-view-image" ')+
-  (images.length>1?'<div class="product-view-angles" role="group" aria-label="Gallery views">'+angleLabels.map((label,i)=>'<button type="button" data-product-angle="'+i+'" aria-pressed="'+(i===0)+'">'+label+'</button>').join('')+'</div>':'')+
+ content.innerHTML=cataloguePhoto(product,images[selected],true).replace('<img ','<img id="product-view-image" ')+
+  galleryViewButtons(angleLabels,'data-product-angle',selected)+
   '<p class="mt-3 text-sm">'+moneySafe(product.desc)+'</p>'+
   (product.description&&product.description!==product.desc?'<p class="mt-3 whitespace-pre-line">'+moneySafe(product.description)+'</p>':'')+
   '<section class="product-view-specs"><h3 class="font-bold mb-1">Specifications</h3><p>'+moneySafe(productSpecs(product))+'</p><p class="text-sm mt-1">Final options confirmed on enquiry.</p></section>'+
@@ -1151,6 +1165,24 @@ document.addEventListener('error',event=>{
  image.alt='No product photo available';
  image.src=cataloguePlaceholder;
 },true);
+productGrid.addEventListener('click',event=>{
+ const angle=event.target.closest('[data-card-angle]');
+ if(!angle)return;
+ const card=angle.closest('.product-card');
+ const cover=card.querySelector('.catalogue-cover');
+ const product=products.find(p=>String(p.id)===cover.dataset.productView);
+ if(!product)return;
+ const images=productGalleryImages(product);
+ const index=Number(angle.dataset.cardAngle);
+ if(!images[index])return;
+ const image=cover.querySelector('img');
+ image.dataset.fallback=cataloguePlaceholder;
+ image.classList.toggle('catalogue-placeholder',images[index]===cataloguePlaceholder);
+ image.src=catalogueImageUrl(images[index]);
+ image.alt=product.name+' — '+galleryViewLabels(product,images)[index];
+ cover.dataset.selectedAngle=String(index);
+ card.querySelectorAll('[data-card-angle]').forEach(button=>button.setAttribute('aria-pressed',String(button===angle)));
+});
 document.addEventListener('click',event=>{
  const trigger=event.target.closest('[data-collection],[data-product-view],[data-product-enquire],[data-product-add]');
  if(!trigger)return;
@@ -1163,7 +1195,7 @@ document.addEventListener('click',event=>{
   document.getElementById('catalogue').scrollIntoView({block:'start'});
   return;
  }
- if(viewId){openProductView(viewId);return;}
+ if(viewId){openProductView(viewId,Number(trigger.closest('.product-card')?.querySelector('.catalogue-cover')?.dataset.selectedAngle||0));return;}
  if(productEnquire){if(productView.open)productView.close();quickEnquire(productEnquire);return;}
  if(productAdd)addToCart(productAdd);
 });
