@@ -719,7 +719,7 @@ main section:not(.hero)::after{
  </div></div>
 </div>
 </section>
-<section id="featured-collections" class="aakruti-showcase max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16" hidden aria-labelledby="featured-title">
+<section id="featured-collections" class="aakruti-showcase max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16" aria-labelledby="featured-title">
  <div class="mb-7"><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Find your fit</p><h2 id="featured-title" class="font-serif text-4xl sm:text-5xl mt-2">Featured Collections</h2><p class="text-gray-400 text-sm leading-6 mt-3 max-w-2xl">Explore a few of the ways we make thoughtful furniture for the spaces you live in every day.</p></div>
  <div id="featured-cards" class="aakruti-photo-grid"></div>
 </section>
@@ -1187,6 +1187,27 @@ function closeAakrutiStory(){
 
 const heroPhrase=document.getElementById('hero-rotating-phrase');if(heroPhrase){const heroWord=document.getElementById('hero-rotating-word');const heroIcon=document.getElementById('hero-type-icon');const heroWords=['life','style','choice','taste','peace','aura','vision','rhythm'];let heroWordIndex=0;const heroReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;const setHeroWord=(value,state)=>{heroWord.textContent=value;heroPhrase.setAttribute('aria-label',value||'');if(heroIcon){heroIcon.classList.toggle('is-visible',true);heroIcon.classList.toggle('is-turning-left',state==='turn-left'||state==='erase');heroIcon.classList.toggle('is-erasing',state==='erase');heroIcon.classList.toggle('is-settled',state==='settled')}};if(heroWord&&heroIcon){if(heroReducedMotion){setHeroWord('life','settled')}else{const typeSpeed=430,eraseSpeed=430,holdTime=1300,turnTime=1450,resetPause=1300;const typeHeroWord=()=>{const nextWord=heroWords[heroWordIndex];let pos=0;setHeroWord('','ready');const typeNext=()=>{if(pos<nextWord.length){setHeroWord(nextWord.slice(0,++pos),'type');window.setTimeout(typeNext,typeSpeed)}else{setHeroWord(nextWord,'turn-left');window.setTimeout(()=>window.setTimeout(eraseHeroWord,holdTime),turnTime)}};const eraseHeroWord=()=>{if(pos>0){setHeroWord(nextWord.slice(0,--pos),'erase');window.setTimeout(eraseHeroWord,eraseSpeed)}else{setHeroWord('','ready');heroWordIndex=(heroWordIndex+1)%heroWords.length;window.setTimeout(typeHeroWord,resetPause)}};typeNext()};const beginFirstWord=()=>{const first=heroWords[heroWordIndex];let pos=0;setHeroWord('','ready');const typeFirst=()=>{if(pos<first.length){setHeroWord(first.slice(0,++pos),'type');window.setTimeout(typeFirst,typeSpeed)}else{setHeroWord(first,'turn-left');window.setTimeout(()=>window.setTimeout(eraseFirstWord,holdTime),turnTime)}};const eraseFirstWord=()=>{if(pos>0){setHeroWord(first.slice(0,--pos),'erase');window.setTimeout(eraseFirstWord,eraseSpeed)}else{setHeroWord('','ready');heroWordIndex=(heroWordIndex+1)%heroWords.length;window.setTimeout(typeHeroWord,resetPause)}};setHeroWord('','ready');window.setTimeout(typeFirst,900)};beginFirstWord()}}}
 renderProducts();renderCart();
+</script>
+<script>
+(function(){
+ const grid=document.getElementById('featured-cards');
+ if(!grid||grid.children.length)return;
+ const items=[
+  {category:'Modular Kitchens',image:'./assets/collections/modular-kitchens.webp'},
+  {category:'Beds & Wardrobes',image:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=85'},
+  {category:'TV Units',image:'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=85'},
+  {category:'Puja Units',image:'./assets/collections/puja-units.webp'}
+ ];
+ const subtitles={
+  'Modular Kitchens':'Made-to-order cabinetry shaped around your layout, storage and finish preferences.',
+  'Beds & Wardrobes':'Bedroom furniture planned around your room, routines and storage needs.',
+  'TV Units':'Made to suit your wall, media setup and everyday storage.',
+  'Puja Units':'Thoughtful home mandirs made to complement your space and traditions.'
+ };
+ grid.innerHTML=items.map(function(item){
+  return '<button type="button" class="aakruti-photo-card aakruti-photo-card--collection" data-collection="'+item.category.replace(/&/g,'&amp;')+'" aria-label="Explore '+item.category+' collection"><img loading="lazy" src="'+item.image+'" alt="'+item.category+' design reference"><span class="collection-card-copy"><span class="collection-card-title">'+item.category+'</span><span class="collection-card-subtitle">'+subtitles[item.category]+'</span><span class="collection-card-action">Explore collection <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></span></button>';
+ }).join('');
+})();
 </script>
 <script>
 function openAakrutiStory(){
