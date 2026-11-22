@@ -657,6 +657,18 @@ main section:not(.hero)::after{
 #services article h3{color:#ff6666!important}
 #filters .category-line-icon{display:none!important}
 #filters .category-filter-content{display:contents!important}
+/* Featured collection cards */
+.aakruti-photo-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+.aakruti-photo-card--collection{display:flex!important;flex-direction:column!important;width:100%;overflow:hidden;border:1px solid rgba(82,82,102,.18);border-radius:.75rem;background:#fff;color:#525266;text-align:left;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.aakruti-photo-card--collection:hover{transform:translateY(-4px);border-color:rgba(255,102,102,.65)!important;box-shadow:0 14px 32px rgba(82,82,102,.14)!important}
+.aakruti-photo-card--collection>img{display:block;width:100%;aspect-ratio:4/3!important;object-fit:cover}
+.aakruti-photo-card--collection .collection-card-copy{display:flex!important;flex-direction:column!important;align-items:flex-start!important;flex:1!important;width:100%;min-height:145px!important;padding:1rem 1.1rem 1.1rem!important}
+.aakruti-photo-card--collection .collection-card-title{display:block;width:100%;padding:0!important;color:#525266!important;font:600 1.22rem/1.15 'Cormorant Garamond',serif!important}
+.aakruti-photo-card--collection .collection-card-subtitle{display:block;padding:0!important;margin-top:.55rem!important;color:#737383!important;font-size:.75rem!important;font-weight:400!important;line-height:1.55!important}
+.aakruti-photo-card--collection .collection-card-action{display:inline-flex!important;align-items:center!important;gap:.45rem!important;margin-top:auto!important;padding-top:1rem!important;color:#d94c55!important;font-size:.72rem!important;font-weight:700!important}
+.aakruti-photo-card--collection .collection-card-action i{transition:transform .22s ease}
+.aakruti-photo-card--collection:hover .collection-card-action i{transform:translateX(4px)}
+@media(max-width:639px){.aakruti-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}.aakruti-photo-card--collection .collection-card-copy{min-height:138px!important;padding:.85rem .8rem 1rem!important}.aakruti-photo-card--collection .collection-card-title{font-size:1.05rem!important}.aakruti-photo-card--collection .collection-card-subtitle{font-size:.68rem!important;line-height:1.45!important}.aakruti-photo-card--collection .collection-card-action{font-size:.68rem!important}}
 @media(max-width:639px){.about-story-overlay{right:.55rem;bottom:.55rem;width:min(78%,240px);padding:.7rem .75rem;gap:.4rem}.about-story-logo{width:96px}.about-story-overlay h3{font-size:1.05rem}}
 /* Story-image brand card */
 .about-story-image{overflow:visible!important}
@@ -1191,7 +1203,7 @@ renderProducts();renderCart();
 <script>
 (function(){
  const grid=document.getElementById('featured-cards');
- if(!grid||grid.children.length)return;
+ if(!grid)return;
  const items=[
   {category:'Modular Kitchens',image:'./assets/collections/modular-kitchens.webp'},
   {category:'Beds & Wardrobes',image:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=85'},
@@ -1205,8 +1217,25 @@ renderProducts();renderCart();
   'Puja Units':'Thoughtful home mandirs made to complement your space and traditions.'
  };
  grid.innerHTML=items.map(function(item){
-  return '<button type="button" class="aakruti-photo-card aakruti-photo-card--collection" data-collection="'+item.category.replace(/&/g,'&amp;')+'" aria-label="Explore '+item.category+' collection"><img loading="lazy" src="'+item.image+'" alt="'+item.category+' design reference"><span class="collection-card-copy"><span class="collection-card-title">'+item.category+'</span><span class="collection-card-subtitle">'+subtitles[item.category]+'</span><span class="collection-card-action">Explore collection <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></span></button>';
+  return '<button type="button" class="aakruti-photo-card aakruti-photo-card--collection" data-collection="'+item.category+'" aria-label="Explore '+item.category+' collection"><img loading="lazy" src="'+item.image+'" alt="'+item.category+' design reference"><span class="collection-card-copy"><span class="collection-card-title">'+item.category+'</span><span class="collection-card-subtitle">'+subtitles[item.category]+'</span><span class="collection-card-action">Explore collection <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></span></button>';
  }).join('');
+ grid.addEventListener('click',function(event){
+  const card=event.target.closest('[data-collection]');
+  if(!card)return;
+  const filter=[...document.querySelectorAll('#filters [data-filter]')].find(function(button){return button.dataset.filter===card.dataset.collection});
+  if(!filter)return;
+  document.querySelectorAll('#filters [data-filter]').forEach(function(button){
+   const active=button===filter;
+   button.classList.toggle('active',active);
+   button.setAttribute('aria-pressed',String(active));
+  });
+  if(typeof renderProducts==='function')renderProducts(filter.dataset.filter);
+  const grid=document.getElementById('product-grid');
+  if(grid)grid.style.setProperty('display','grid','important');
+  filter.focus({preventScroll:true});
+  const catalogue=document.getElementById('catalogue');
+  if(catalogue)catalogue.scrollIntoView({block:'start'});
+ });
 })();
 </script>
 <script>
