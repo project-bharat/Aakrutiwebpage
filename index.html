@@ -498,6 +498,7 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
 .process-step-card h3{font-family:'Cormorant Garamond',serif;font-size:27px;line-height:1.1;font-weight:600;color:var(--brand-slate)}
 .process-step-card>p:last-child{font-size:13px;line-height:1.7;color:#747482;margin-top:7px}
 @media(min-width:768px){.process-timeline{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:54px;row-gap:8px}.process-step{grid-template-columns:60px minmax(0,1fr);gap:16px;min-height:150px}.process-step:not(:last-child)::before{left:30px;top:54px;bottom:-8px}.process-step-card{padding:19px 20px}.process-step-card h3{font-size:25px}}
+.process-step-marker span{font-family:'Plus Jakarta Sans',sans-serif!important;font-size:12px!important;font-weight:700!important;letter-spacing:.12em}
 @media(min-width:1100px){.process-timeline{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:72px}.process-step-card{padding:22px 24px}}
 @media(prefers-reduced-motion:reduce){.process-step-card{transition:none}}
 /* Brand Kit v2 Chevron geometry with the existing site palette and placement. */
@@ -597,52 +598,7 @@ footer .developer-contact-icon:hover,footer .developer-contact-icon:focus-visibl
  background-size:328px 460px;background-repeat:repeat;
  opacity:.9;
  -webkit-mask-image:linear-gradient(to right,#000 0%,#000 28%,transparent 100%);
- mask-image:linear-gradient(to right,#000 0%,#000 28%,transparent 100%);
-}
-#product-grid .specification-panel .specification-heading,
-#product-grid .specification-panel .specification-details,
-#product-grid .specification-panel .specification-note{position:relative;z-index:1}
-#product-grid .specification-panel .specification-details,
-#product-grid .specification-panel .specification-note{background:rgba(240,235,231,.94)!important}
-#filters .filter-btn .category-filter-content{display:inline-flex;align-items:center;gap:.5rem}
-#filters .filter-btn .category-line-icon{
- width:17px;height:17px;flex:0 0 17px;fill:none;stroke:currentColor;
- stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round;opacity:.9;
-}
-@media(max-width:639px){
- #filters .filter-btn .category-filter-content{gap:.4rem}
- #filters .filter-btn .category-line-icon{width:15px;height:15px;flex-basis:15px}
-}
-
-
-/* Specifications panel: text left, softened full-height pattern right, half-width fading separator */
-#product-grid .specification-panel{
- background:#f0ebe7!important;
-}
-#product-grid .specification-panel:before{
- left:auto!important;right:0!important;top:0!important;bottom:0!important;
- width:48%!important;height:100%!important;
- background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 width=%221454%22 height=%222040%22 viewBox=%220 0 1454 2040%22%3E%3Cpath d=%22M0 0V2040M169.5 0V2040M381.5 0V2040M526.5 0V2040M713.5 0V2040M883.5 0V2040M1104.5 0V2040M1257.5 0V2040M1454 0V2040M0 666L169.5 801M0 878L169.5 1148M0 1652L169.5 1516M0 33L169.5 -101M0 2073L169.5 1939M169.5 -99L381.5 70M169.5 1941L381.5 2110M169.5 800L381.5 629M169.5 1146L381.5 975M169.5 1517L381.5 1856M381.5 79L526.5 -38M381.5 2119L526.5 2002M381.5 695L526.5 811M381.5 1162L526.5 931M381.5 1766L526.5 1649M526.5 -37L713.5 113M526.5 2003L713.5 2153M526.5 812L713.5 661M526.5 932L713.5 1085M526.5 1649L713.5 1801M713.5 57L883.5 326M713.5 638L883.5 501M713.5 1218L883.5 1354M713.5 1863L883.5 2000M883.5 326L1104.5 147M883.5 502L1104.5 855M883.5 1353L1104.5 1174M883.5 1994L1104.5 1646M1104.5 350L1257.5 473M1104.5 925L1257.5 1047M1104.5 1121L1257.5 1365M1104.5 1619L1257.5 1863M1257.5 470L1454 163M1257.5 1047L1454 891M1257.5 1365L1454 1208M1257.5 1862L1454 1705%22 fill=%22none%22 stroke=%22%23525266%22 stroke-opacity=%220.36%22 stroke-width=%225%22/%3E%3C/svg%3E")!important;
- background-size:328px 460px!important;background-repeat:repeat!important;
- opacity:1!important;
- -webkit-mask-image:linear-gradient(to left,#000 0%,#000 42%,transparent 100%)!important;
- mask-image:linear-gradient(to left,#000 0%,#000 42%,transparent 100%)!important;
-}
-#product-grid .specification-panel .specification-heading{
- position:relative;z-index:1;background:transparent!important;
- color:#525266!important;padding-left:.65rem!important;padding-right:44%!important;
-}
-#product-grid .specification-panel .specification-details,
-#product-grid .specification-panel .specification-note{
- position:relative;z-index:1;background:transparent!important;
- padding-left:.65rem!important;padding-right:44%!important;
-}
-#product-grid .specification-panel .specification-details{
- position:relative;border-top:0!important;padding-top:.48rem!important;
-}
-#product-grid .specification-panel .specification-details:before{
- content:"";position:absolute;top:0;left:.65rem;width:50%;height:2px;
- background:linear-gradient(to right,#ff6666 0%,rgba(255,102,102,.72) 58%,rgba(255,102,102,0) 100%);
+ mask-image:linear-gradient(to right,#000 0%,#000 28%,transparent 100%)!important;
 }
 
 /* Header accent: low-contrast full-height pattern across the right 58% of the header, fading out toward the left */
@@ -666,46 +622,76 @@ main section:not(.hero)::after{
  content:"";
  position:absolute;
  left:0;right:0;
- height:96px;
+ height:72px;
  pointer-events:none;
  z-index:5;
- opacity:.20;
+ opacity:.18;
  background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http%3A//www.w3.org/2000/svg%22 width=%221454%22 height=%222040%22 viewBox=%220 0 1454 2040%22%3E%3Cpath d=%22M0 0V2040M169.5 0V2040M381.5 0V2040M526.5 0V2040M713.5 0V2040M883.5 0V2040M1104.5 0V2040M1257.5 0V2040M1454 0V2040M0 666L169.5 801M0 878L169.5 1148M0 1652L169.5 1516M0 33L169.5 -101M0 2073L169.5 1939M169.5 -99L381.5 70M169.5 1941L381.5 2110M169.5 800L381.5 629M169.5 1146L381.5 975M169.5 1517L381.5 1856M381.5 79L526.5 -38M381.5 2119L526.5 2002M381.5 695L526.5 811M381.5 1162L526.5 931M381.5 1766L526.5 1649M526.5 -37L713.5 113M526.5 2003L713.5 2153M526.5 812L713.5 661M526.5 932L713.5 1085M526.5 1649L713.5 1801M713.5 57L883.5 326M713.5 638L883.5 501M713.5 1218L883.5 1354M713.5 1863L883.5 2000M883.5 326L1104.5 147M883.5 502L1104.5 855M883.5 1353L1104.5 1174M883.5 1994L1104.5 1646M1104.5 350L1257.5 473M1104.5 925L1257.5 1047M1104.5 1121L1257.5 1365M1104.5 1619L1257.5 1863M1257.5 470L1454 163M1257.5 1047L1454 891M1257.5 1365L1454 1208M1257.5 1862L1454 1705%22 fill=%22none%22 stroke=%22%23525266%22 stroke-opacity=%220.15%22 stroke-width=%225%22/%3E%3C/svg%3E");
- background-size:192px 269px;
- background-repeat:repeat;
- -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 22%,#000 78%,transparent 100%);
- mask-image:linear-gradient(to right,transparent 0%,#000 22%,#000 78%,transparent 100%);
-}
-main section:not(.hero)::before{top:0}
-main section:not(.hero)::after{bottom:0}
-@media(max-width:640px){
- main section:not(.hero)::before,
- main section:not(.hero)::after{height:84px;opacity:.18;background-size:192px 269px}
+ background-size:192px 269px;background-repeat:repeat;background-position:right center;
+ -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 18%,#000 82%,transparent 100%);
+ mask-image:linear-gradient(to right,transparent 0%,#000 18%,#000 82%,transparent 100%);
 }
 
-.product-gallery[data-single-image] :is(.gallery-arrow,.gallery-dots,.gallery-count){display:none}
-.gallery-track img.catalogue-placeholder{object-fit:contain;padding:2rem;background:#f7f4f1}
+/* Supplied Aakruti furniture icon set */
+.aakruti-icon{
+ width:44px;height:44px;object-fit:contain;display:block;
+ filter:none;
+}
+.collection-icon{width:52px;height:52px;object-fit:contain}
+.process-icon{width:38px;height:38px;object-fit:contain;margin-bottom:10px}
+.values-icon{width:46px;height:46px;object-fit:contain;margin-bottom:12px}
+@media(max-width:639px){
+ .aakruti-icon{width:40px;height:40px}
+ .collection-icon{width:46px;height:46px}
+}
+.about-story-image{position:relative;overflow:hidden;aspect-ratio:4/3;border-radius:.75rem;background:#525266}
+.about-story-photo{display:block;width:100%;height:100%;object-fit:cover}
+.about-story-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:.8rem;padding:clamp(1.25rem,4vw,2.25rem);background:linear-gradient(180deg,rgba(20,20,28,.04) 20%,rgba(28,27,39,.82) 100%);color:#fff}
+.about-story-brand{color:#ff8585;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em}
+.about-story-overlay h3{max-width:18ch;color:#fff;font:600 clamp(1.6rem,3vw,2.45rem)/1.08 'Cormorant Garamond',serif}
+.watch-story-button{display:inline-flex;align-items:center;gap:.65rem;min-height:44px;padding:.4rem 1rem .4rem .45rem;border:1px solid rgba(255,255,255,.55);border-radius:999px;background:rgba(255,255,255,.95);color:#525266;font-size:.75rem;font-weight:700;text-decoration:none;transition:background .2s,color .2s}
+.watch-story-button:hover{background:#ff6666;border-color:#ff6666;color:#fff}
+.watch-story-play{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#ff6666;color:#fff}
+.watch-story-button:hover .watch-story-play{background:#fff;color:#ff6666}
+.watch-story-button:focus-visible{outline:3px solid #ff6666;outline-offset:3px}
+#services article h3{color:#ff6666!important}
+#filters .category-line-icon{display:none!important}
+#filters .category-filter-content{display:contents!important}
+@media(max-width:639px){.about-story-overlay{right:.55rem;bottom:.55rem;width:min(78%,240px);padding:.7rem .75rem;gap:.4rem}.about-story-logo{width:96px}.about-story-overlay h3{font-size:1.05rem}}
+/* Story-image brand card */
+.about-story-image{overflow:visible!important}
+.about-story-photo{border-radius:.75rem!important}
+.about-story-overlay{position:absolute!important;top:auto!important;left:auto!important;right:clamp(.75rem,4vw,1.5rem)!important;bottom:-62px!important;width:min(82%,320px)!important;height:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:.35rem!important;padding:.75rem 1rem!important;border:1px solid #ff6666!important;border-radius:12px!important;background:#fff!important;box-shadow:0 12px 30px rgba(82,82,102,.16)!important;text-align:center!important}
+.about-story-logo{display:block!important;width:112px!important;max-width:70%!important;height:auto!important;object-fit:contain!important;order:3!important;margin-top:.15rem!important}
+.about-story-quote{max-width:22ch!important;margin:0!important;color:#525266!important;font:500 clamp(1.02rem,1.55vw,1.35rem)/1.12 'Cormorant Garamond',serif!important;font-style:italic!important;text-align:center!important;display:-webkit-box!important;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.watch-story-button{position:absolute!important;z-index:3!important;left:16px!important;top:16px!important;bottom:auto!important;width:176px!important;height:44px!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;margin:0!important;padding:6px!important;border:1px solid rgba(255,255,255,.72)!important;border-radius:999px!important;background:rgba(255,255,255,.96)!important;color:#525266!important;font-size:.72rem!important;font-weight:700!important;box-shadow:0 10px 28px rgba(82,82,102,.24),0 3px 8px rgba(82,82,102,.12)!important;overflow:hidden!important;transition:background .32s ease,color .32s ease,border-color .32s ease,box-shadow .32s ease}
+.watch-story-button-text{position:absolute!important;left:0!important;right:0!important;top:0!important;bottom:0!important;z-index:1!important;white-space:nowrap!important;transition:transform .58s cubic-bezier(.22,.72,.24,1),opacity .36s ease}
+.story-label-default,.story-label-hover{display:block!important;transition:opacity .28s ease,transform .48s cubic-bezier(.22,.72,.24,1)}
+.story-label-default{position:absolute!important;right:12px!important;top:50%!important;transform:translateY(-50%)!important}
+.story-label-hover{position:absolute!important;left:50%!important;top:50%!important;right:auto!important;transform:translate(-50%,calc(-50% + 8px))!important;opacity:0!important}
+.watch-story-icon{position:absolute!important;z-index:2!important;left:6px!important;right:auto!important;top:6px!important;width:32px!important;height:32px!important;display:grid!important;place-items:center!important;border-radius:50%!important;background:#ff6666!important;box-shadow:0 4px 10px rgba(255,102,102,.18)!important;transition:left .62s cubic-bezier(.22,.72,.24,1),right .62s cubic-bezier(.22,.72,.24,1),transform .48s ease,background .28s ease,box-shadow .28s ease}
+.watch-story-button .explore-arrow-icon{width:18px!important;height:18px!important;filter:none!important;transition:transform .32s cubic-bezier(.2,.75,.25,1)!important}
+.watch-story-button:hover{background:#525266!important;color:#fff!important;border-color:#525266!important;box-shadow:0 12px 30px rgba(82,82,102,.28),0 4px 10px rgba(255,102,102,.12)!important}
+.watch-story-button:hover .watch-story-icon{left:auto!important;right:6px!important;background:#ff6666!important;box-shadow:0 5px 14px rgba(255,102,102,.32)!important}
+.watch-story-button:hover .watch-story-button-text{transform:none!important;opacity:1!important}
+.watch-story-button:hover .story-label-default{opacity:0!important;transform:translateX(-8px)!important}
+.watch-story-button:hover .story-label-hover{opacity:1!important;transform:translate(-50%,-50%)!important}
+.watch-story-button:hover .explore-arrow-icon{transform:rotate(90deg)!important}
+.watch-story-button:active .explore-arrow-icon{transform:rotate(180deg)!important}
+.watch-story-button:focus-visible{outline:3px solid #ff6666!important;outline-offset:3px!important}
+.watch-story-play{display:grid!important;place-items:center!important;width:32px!important;height:32px!important;border-radius:50%!important;background:#ff6666!important;color:#fff!important}
+.aakruti-story-dialog{width:min(92vw,960px)!important;max-height:90vh!important;margin:auto!important;padding:clamp(.75rem,2vw,1.25rem)!important;border:1px solid #cbbeb5!important;border-radius:14px!important;background:#f7f4f1!important;color:#525266!important}
+.aakruti-story-dialog::backdrop{background:rgba(28,27,39,.82)!important}
+.aakruti-story-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.75rem;padding-left:.65rem;border-left:3px solid #ff6666}
+.aakruti-story-header h2{font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.1;font-weight:600;color:#525266;margin:0}
+.aakruti-story-close{width:40px;height:40px;min-width:40px;border:1px solid rgba(82,82,102,.18);border-radius:50%;display:grid;place-items:center;background:#fff;color:#525266;font-size:16px;transition:background .2s,color .2s,border-color .2s,transform .2s}
+.aakruti-story-close:hover,.aakruti-story-close:focus-visible{background:#ff6666;border-color:#ff6666;color:#fff;transform:rotate(90deg)}
+.aakruti-story-close:focus-visible{outline:3px solid rgba(255,102,102,.35);outline-offset:3px}
+.aakruti-story-dialog video{display:block;width:100%!important;max-height:72vh!important;border-radius:8px!important;background:#525266!important}
+@media(max-width:639px){.about-story-overlay{right:.55rem!important;bottom:-58px!important;width:min(82%,260px)!important;padding:.7rem .75rem!important;gap:.35rem!important}.about-story-logo{width:96px!important}.about-story-quote{font-size:1.02rem!important}.watch-story-button{left:12px!important;top:12px!important;width:164px!important;font-size:.68rem!important;padding:6px!important}}
+@media(min-width:1024px){#about{padding-top:7rem!important;padding-bottom:7.25rem!important}#about .about-story-overlay{width:320px!important}}
+@media(max-width:1023px){#about .about-story-overlay{width:min(82%,300px)!important}}
 
-.aakruti-photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
-.aakruti-photo-card{display:block;width:100%;overflow:hidden;border:1px solid #ddd3cc;border-radius:.75rem;background:#fff;color:#525266;text-align:left}
-.aakruti-photo-card img,.catalogue-cover img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
-.aakruti-photo-card span{display:block;padding:.75rem clamp(.65rem,2vw,1.15rem);font-weight:700}
-.aakruti-photo-card:hover,.aakruti-photo-card:focus-visible{border-color:#ff6666}
-.catalogue-cover{display:block;width:100%;text-align:left;background:#f7f4f1}
-.catalogue-cover img.catalogue-placeholder{object-fit:contain}
-.catalogue-product-title{display:block;text-align:left}
-.catalogue-product-title:hover{text-decoration:underline}
-.catalogue-enquire{align-self:flex-start;padding:.65rem 1.25rem}
-#product-view{width:min(92vw,760px);max-height:88vh;max-height:88dvh;margin:auto;overflow:auto;overscroll-behavior:contain;padding:clamp(1rem,3vw,1.75rem);border:1px solid #cbbeb5;border-radius:1rem;background:#f7f4f1;color:#525266}
-#product-view::backdrop{background:#1c1929b8}
-.product-view-header{display:flex;gap:1rem;align-items:flex-start;justify-content:space-between;margin-bottom:1rem}
-#product-view-image{width:100%;height:min(53vh,480px);background:#ede5df;object-fit:contain;border-radius:.6rem}
-.product-view-angles{display:flex;flex-wrap:wrap;gap:.5rem;margin:.8rem 0}
-.product-view-angles button{padding:.4rem .75rem;border:1px solid #cbbeb5;border-radius:.4rem}
-.product-view-angles [aria-pressed=true]{background:#525266;color:#fff;border-color:#525266}
-.product-view-specs{border-block:1px solid #cbbeb5;padding:.85rem 0;margin:1rem 0}
-@media(min-width:720px){.aakruti-photo-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.aakruti-project-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:480px){.aakruti-project-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body class="antialiased">
@@ -734,28 +720,35 @@ main section:not(.hero)::after{bottom:0}
 </div>
 </section>
 <section id="featured-collections" class="aakruti-showcase max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16" hidden aria-labelledby="featured-title">
- <h2 id="featured-title" class="font-serif text-4xl mb-6">Featured Collections</h2>
+ <div class="mb-7"><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Find your fit</p><h2 id="featured-title" class="font-serif text-4xl sm:text-5xl mt-2">Featured Collections</h2><p class="text-gray-400 text-sm leading-6 mt-3 max-w-2xl">Explore a few of the ways we make thoughtful furniture for the spaces you live in every day.</p></div>
  <div id="featured-cards" class="aakruti-photo-grid"></div>
 </section>
-<section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
- <div class="relative"><img loading="lazy" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=85" alt="Illustrative reference image: furnished bedroom" class="w-full aspect-[4/3] object-cover rounded-xl border border-white/10"><div class="absolute -bottom-5 right-4 sm:right-8 bg-charcoal border border-gold/40 rounded-xl p-4 sm:p-5 shadow-xl"><p class="font-serif italic text-lg sm:text-xl">Thoughtful design.<br>Furniture made around you.</p><p class="text-[10px] text-gold uppercase tracking-widest mt-2">Aakruti Enterprises</p></div></div>
- <div><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Our story</p><h2 class="font-serif text-4xl sm:text-5xl leading-tight mt-3">A journey shaped by experience. <em class="not-italic text-gold">A vision shaped around you.</em></h2><p class="text-gray-300 leading-7 mt-5">Every meaningful space begins with a vision. Since 1992, Aakruti Enterprises has been part of that journey, building its understanding of furniture, functionality and the details that make a space feel complete.</p><p class="text-gray-400 leading-7 mt-4 text-sm">What began as a foundation of experience has evolved into a dedicated furniture manufacturing journey, beginning in 2008. Today, from our manufacturing facility in Hinjewadi, Pune, we bring together skilled people, modern machinery and a thoughtful approach to making furniture.</p><p class="text-gray-400 leading-7 mt-4 text-sm">But for us, creating furniture is not simply about dimensions, materials or finishes. It begins with listening — understanding how you live, what your space needs and what matters to you.</p><p class="text-gray-400 leading-7 mt-4 text-sm">From the first conversation to the final finish, we believe every detail deserves consideration. Through personalised consultation, practical expertise and an appreciation for individual preferences, we work to create furniture that belongs naturally in your space.</p><div class="mt-6 border-l-[3px] border-gold pl-5 py-1"><p class="font-serif italic text-2xl sm:text-3xl leading-tight">A legacy built over time. A personal approach to every space.</p><p class="text-[10px] text-gold uppercase tracking-[.2em] mt-3">The Aakruti approach</p></div><div class="grid sm:grid-cols-2 gap-4 mt-7"><div class="bg-charcoal border border-white/10 p-4 rounded-lg"><i class="fa-solid fa-gem text-gold text-xl"></i><h3 class="font-semibold mt-3">Personalised consultation</h3><p class="text-gray-400 text-xs leading-5 mt-1">A considered discussion of your space, requirements, materials and finish preferences.</p></div><div class="bg-charcoal border border-white/10 p-4 rounded-lg"><i class="fa-solid fa-headset text-gold text-xl"></i><h3 class="font-semibold mt-3">Service beyond delivery</h3><p class="text-gray-400 text-xs leading-5 mt-1">Continued assistance and dependable after-sales support for your furniture.</p></div></div></div>
+<section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28 grid lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,.92fr)] gap-12 lg:gap-16 items-center">
+ <div class="about-story-image relative rounded-xl overflow-hidden border border-white/10">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=85" alt="Illustrative reference image: furnished bedroom" class="w-full aspect-[4/3] object-cover about-story-photo">
+  <button type="button" class="watch-story-button" onclick="openAakrutiStory()" aria-label="Play the Aakruti corporate story"><span class="watch-story-icon" aria-hidden="true"><img src="./assets/brand/aakruti-icon-dark.png" data-brand-asset="aakruti-icon-dark.png" alt="" class="brand-arrow-icon explore-arrow-icon rotate-90"></span><span class="watch-story-button-text"><span class="story-label-default">Watch Our Story</span><span class="story-label-hover">Play Now</span></span></button>
+ <div class="about-story-overlay">
+   <p class="about-story-quote">Thoughtful design.<br>Furniture made around you.</p>
+   <img src="./assets/brand/aakruti-horizontal-light.png" data-brand-asset="aakruti-horizontal-light.png" alt="Aakruti Enterprises" class="about-story-logo">
+  </div>
+ </div>
+ <div id="about-story-copy"><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Our story</p><h2 class="font-serif text-4xl sm:text-5xl leading-tight mt-3">A journey shaped by experience. <em class="not-italic text-gold">A vision shaped around you.</em></h2><p class="text-gray-300 leading-7 mt-5">Every meaningful space begins with a vision. Since 1992, Aakruti Enterprises has been part of that journey, building its understanding of furniture, functionality and the details that make a space feel complete.</p><p class="text-gray-400 leading-7 mt-4 text-sm">What began as a foundation of experience has evolved into a dedicated furniture manufacturing journey, beginning in 2008. Today, from our manufacturing facility in Hinjewadi, Pune, we bring together skilled people, modern machinery and a thoughtful approach to making furniture.</p><p class="text-gray-400 leading-7 mt-4 text-sm">But for us, creating furniture is not simply about dimensions, materials or finishes. It begins with listening — understanding how you live, what your space needs and what matters to you.</p><p class="text-gray-400 leading-7 mt-4 text-sm">From the first conversation to the final finish, we believe every detail deserves consideration. Through personalised consultation, practical expertise and an appreciation for individual preferences, we work to create furniture that belongs naturally in your space.</p><div class="mt-6 border-l-[3px] border-gold pl-5 py-1"><p class="font-serif italic text-2xl sm:text-3xl leading-tight">A legacy built over time. A personal approach to every space.</p><p class="text-[10px] text-gold uppercase tracking-[.2em] mt-3">The Aakruti approach</p></div><div class="grid sm:grid-cols-2 gap-4 mt-7"><div class="bg-charcoal border border-white/10 p-4 rounded-lg"><i class="fa-solid fa-gem text-gold text-xl"></i><h3 class="font-semibold mt-3">Personalised consultation</h3><p class="text-gray-400 text-xs leading-5 mt-1">A considered discussion of your space, requirements, materials and finish preferences.</p></div><div class="bg-charcoal border border-white/10 p-4 rounded-lg"><i class="fa-solid fa-headset text-gold text-xl"></i><h3 class="font-semibold mt-3">Service beyond delivery</h3><p class="text-gray-400 text-xs leading-5 mt-1">Continued assistance and dependable after-sales support for your furniture.</p></div></div></div>
+</div>
 </section>
 <section id="services" class="bg-charcoal border-y border-white/10 px-4 sm:px-6 py-20">
  <div class="max-w-7xl mx-auto"><div class="max-w-2xl mx-auto text-center mb-12"><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Our collections</p><h2 class="font-serif text-4xl sm:text-5xl mt-3">Furniture for considered spaces</h2><p class="text-gray-400 mt-4 text-sm leading-6">Explore our furniture categories, designed for practical use and considered interiors.</p></div>
  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><i class="fa-solid fa-bed text-gold text-2xl"></i><h3 class="font-serif text-2xl mt-5">Beds &amp; wardrobes</h3><p class="text-gray-400 text-sm leading-6 mt-2">Beds and wardrobes made to your room size, storage needs and finish.</p></article>
-  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><i class="fa-solid fa-table text-gold text-2xl"></i><h3 class="font-serif text-2xl mt-5">Coffee &amp; centre tables</h3><p class="text-gray-400 text-sm leading-6 mt-2">Coffee and centre tables in sizes and finishes that suit your living space.</p></article>
-  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><i class="fa-solid fa-cubes-stacked text-gold text-2xl"></i><h3 class="font-serif text-2xl mt-5">Side tables</h3><p class="text-gray-400 text-sm leading-6 mt-2">Side tables made to match your bed or reading corner.</p></article>
-  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><i class="fa-solid fa-tv text-gold text-2xl"></i><h3 class="font-serif text-2xl mt-5">TV units</h3><p class="text-gray-400 text-sm leading-6 mt-2">TV units made around your wall size, equipment and storage needs.</p></article>
-  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><i class="fa-solid fa-laptop text-gold text-2xl"></i><h3 class="font-serif text-2xl mt-5">Study &amp; office furniture</h3><p class="text-gray-400 text-sm leading-6 mt-2">Study tables and office furniture for homes, offices and project requirements.</p></article>
-  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><i class="fa-solid fa-kitchen-set text-gold text-2xl" aria-hidden="true"></i><h3 class="font-serif text-2xl mt-5">Modular Kitchens</h3><p class="text-gray-400 text-sm leading-6 mt-2">Made-to-order kitchen cabinetry, drawers and storage.</p></article>
-  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><i class="fa-solid fa-om text-gold text-2xl" aria-hidden="true"></i><h3 class="font-serif text-2xl mt-5">Puja Units</h3><p class="text-gray-400 text-sm leading-6 mt-2">Custom home mandirs and puja cabinets.</p></article>
-  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><i class="fa-solid fa-sink text-gold text-2xl" aria-hidden="true"></i><h3 class="font-serif text-2xl mt-5">Bathroom Vanities</h3><p class="text-gray-400 text-sm leading-6 mt-2">Vanity cabinets made to suit your basin and bathroom layout.</p></article>
-  <article class="bg-obsidian border border-white/10 rounded-xl p-6 sm:col-span-2"><i class="fa-solid fa-pen-ruler text-gold text-2xl"></i><h3 class="font-serif text-2xl mt-5">Custom furniture</h3><p class="text-gray-400 text-sm leading-6 mt-2">Have a design or reference image? We will discuss what is feasible and quote it.</p></article>
+  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><img src="./assets/icons/bookcase-slate.svg" alt="" class="aakruti-icon collection-icon" aria-hidden="true"><h3 class="font-serif text-2xl mt-5">Beds &amp; wardrobes</h3><p class="text-gray-400 text-sm leading-6 mt-2">Beds and wardrobes made to your room size, storage needs and finish.</p></article>
+  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><img src="./assets/icons/console-slate.svg" alt="" class="aakruti-icon collection-icon" aria-hidden="true"><h3 class="font-serif text-2xl mt-5">Coffee &amp; centre tables</h3><p class="text-gray-400 text-sm leading-6 mt-2">Coffee and centre tables in sizes and finishes that suit your living space.</p></article>
+  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><img src="./assets/icons/console-slate.svg" alt="" class="aakruti-icon collection-icon" aria-hidden="true"><h3 class="font-serif text-2xl mt-5">Side tables</h3><p class="text-gray-400 text-sm leading-6 mt-2">Side tables made to match your bed or reading corner.</p></article>
+  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><img src="./assets/icons/tv-unit-slate.svg" alt="" class="aakruti-icon collection-icon" aria-hidden="true"><h3 class="font-serif text-2xl mt-5">TV units</h3><p class="text-gray-400 text-sm leading-6 mt-2">TV units made around your wall size, equipment and storage needs.</p></article>
+  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><img src="./assets/icons/bookcase-slate.svg" alt="" class="aakruti-icon collection-icon" aria-hidden="true"><h3 class="font-serif text-2xl mt-5">Study &amp; office furniture</h3><p class="text-gray-400 text-sm leading-6 mt-2">Study tables and office furniture for homes, offices and project requirements.</p></article>
+  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><img src="./assets/icons/made-to-measure-slate.svg" alt="" class="aakruti-icon collection-icon" aria-hidden="true"><h3 class="font-serif text-2xl mt-5">Modular Kitchens</h3><p class="text-gray-400 text-sm leading-6 mt-2">Made-to-order kitchen cabinetry, drawers and storage.</p></article>
+  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><img src="./assets/icons/mandir-slate.svg" alt="" class="aakruti-icon collection-icon" aria-hidden="true"><h3 class="font-serif text-2xl mt-5">Puja Units</h3><p class="text-gray-400 text-sm leading-6 mt-2">Custom home mandirs and puja cabinets.</p></article>
+  <article class="bg-obsidian border border-white/10 rounded-xl p-6"><img src="./assets/icons/mirror-slate.svg" alt="" class="aakruti-icon collection-icon" aria-hidden="true"><h3 class="font-serif text-2xl mt-5">Bathroom Vanities</h3><p class="text-gray-400 text-sm leading-6 mt-2">Vanity cabinets made to suit your basin and bathroom layout.</p></article>
+  <article class="bg-obsidian border border-white/10 rounded-xl p-6 sm:col-span-2"><img src="./assets/icons/made-to-measure-slate.svg" alt="" class="aakruti-icon collection-icon" aria-hidden="true"><h3 class="font-serif text-2xl mt-5">Custom furniture</h3><p class="text-gray-400 text-sm leading-6 mt-2">Have a design or reference image? We will discuss what is feasible and quote it.</p></article>
  </div><p class="text-xs text-gray-500 text-center mt-8">Catalogue note: images currently shown are illustrative design references, not verified photographs of Aakruti-manufactured products. Product availability, specifications and prices are confirmed individually.</p></div>
 </section>
-
 <section id="values" class="bg-charcoal border-y border-white/10 px-4 sm:px-6 py-20 sm:py-24">
  <div class="max-w-7xl mx-auto">
   <div class="max-w-3xl mx-auto text-center mb-12"><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Why Aakruti</p><h2 class="font-serif text-4xl sm:text-6xl mt-3">Legacy, quality,<br><em class="gold-text font-normal">personalisation &amp; service.</em></h2><p class="text-gray-300 leading-7 mt-5">Established in 1992, Aakruti brings together a long-standing furniture legacy, considered quality, personalised solutions and continued customer support.</p></div>
@@ -777,13 +770,13 @@ main section:not(.hero)::after{bottom:0}
 <section id="process" class="bg-charcoal border-y border-white/10 px-4 sm:px-6 py-20">
  <div class="max-w-7xl mx-auto"><div class="text-center max-w-2xl mx-auto mb-14"><p class="text-xs text-gold uppercase tracking-[.25em] font-semibold">Our process</p><h2 class="font-serif text-4xl sm:text-5xl mt-3">From first conversation to final handover.</h2><p class="text-gray-400 mt-4 text-sm leading-6">A considered, step-by-step journey — with clarity at every stage.</p></div>
   <div class="process-timeline" aria-label="Aakruti furniture process, seven chronological stages">
-   <article class="process-step"><div class="process-step-marker"><span>01</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><p class="process-step-kicker">The conversation</p><h3>Share your vision</h3><p>Tell us about your space, furniture needs, dimensions and design references.</p></div></div></article>
-   <article class="process-step"><div class="process-step-marker"><span>02</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><p class="process-step-kicker">Understanding the space</p><h3>Site visit &amp; measurements</h3><p>Where applicable, we visit the site to review the space and confirm measurements.</p></div></div></article>
-   <article class="process-step"><div class="process-step-marker"><span>03</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><p class="process-step-kicker">Making it yours</p><h3>Choose materials &amp; finishes</h3><p>Discuss suitable material, colour and finish options for your requirements.</p></div></div></article>
-   <article class="process-step"><div class="process-step-marker"><span>04</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><p class="process-step-kicker">Clarity before commitment</p><h3>Review the quotation</h3><p>We share the agreed scope, quotation and estimated production timeline.</p></div></div></article>
-   <article class="process-step"><div class="process-step-marker"><span>05</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><p class="process-step-kicker">Work begins</p><h3>Approval &amp; production</h3><p>Once the details are approved and the agreed advance is received, production begins.</p></div></div></article>
-   <article class="process-step"><div class="process-step-marker"><span>06</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><p class="process-step-kicker">Bringing it to your space</p><h3>Delivery &amp; installation</h3><p>Delivery and installation or assembly are arranged as agreed for your order.</p></div></div></article>
-   <article class="process-step"><div class="process-step-marker"><span>07</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><p class="process-step-kicker">Beyond handover</p><h3>Continued support</h3><p>Our relationship does not end at delivery. Contact us for after-sales assistance.</p></div></div></article>
+   <article class="process-step"><div class="process-step-marker"><span>01</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><img src="./assets/icons/made-to-measure-slate.svg" alt="" class="process-icon" aria-hidden="true"><p class="process-step-kicker">The conversation</p><h3>Share your vision</h3><p>Tell us about your space, furniture needs, dimensions and design references.</p></div></div></article>
+   <article class="process-step"><div class="process-step-marker"><span>02</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><img src="./assets/icons/location-slate.svg" alt="" class="process-icon" aria-hidden="true"><p class="process-step-kicker">Understanding the space</p><h3>Site visit &amp; measurements</h3><p>Where applicable, we visit the site to review the space and confirm measurements.</p></div></div></article>
+   <article class="process-step"><div class="process-step-marker"><span>03</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><img src="./assets/icons/craft-slate.svg" alt="" class="process-icon" aria-hidden="true"><p class="process-step-kicker">Making it yours</p><h3>Choose materials &amp; finishes</h3><p>Discuss suitable material, colour and finish options for your requirements.</p></div></div></article>
+   <article class="process-step"><div class="process-step-marker"><span>04</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><img src="./assets/icons/made-to-measure-slate.svg" alt="" class="process-icon" aria-hidden="true"><p class="process-step-kicker">Clarity before commitment</p><h3>Review the quotation</h3><p>We share the agreed scope, quotation and estimated production timeline.</p></div></div></article>
+   <article class="process-step"><div class="process-step-marker"><span>05</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><img src="./assets/icons/craft-slate.svg" alt="" class="process-icon" aria-hidden="true"><p class="process-step-kicker">Work begins</p><h3>Approval &amp; production</h3><p>Once the details are approved and the agreed advance is received, production begins.</p></div></div></article>
+   <article class="process-step"><div class="process-step-marker"><span>06</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><img src="./assets/icons/installation-slate.svg" alt="" class="process-icon" aria-hidden="true"><p class="process-step-kicker">Bringing it to your space</p><h3>Delivery &amp; installation</h3><p>Delivery and installation or assembly are arranged as agreed for your order.</p></div></div></article>
+   <article class="process-step"><div class="process-step-marker"><span>07</span></div><div class="process-step-card pattern-host"><div class="pattern-strip-card pattern-ivory-chevron" aria-hidden="true"></div><div class="pattern-card-content"><img src="./assets/icons/sustainability-slate.svg" alt="" class="process-icon" aria-hidden="true"><p class="process-step-kicker">Beyond handover</p><h3>Continued support</h3><p>Our relationship does not end at delivery. Contact us for after-sales assistance.</p></div></div></article>
   </div>
   <p class="text-xs text-gray-500 text-center mt-10">Typical lead time is approximately 3–4 weeks; the final timeline is confirmed with the quotation.</p>
  </div>
@@ -909,6 +902,10 @@ main section:not(.hero)::after{bottom:0}
  <form id="contact-form" class="bg-charcoal border border-white/10 rounded-2xl p-5 sm:p-7 space-y-4"><h3 class="font-serif text-3xl">Request a callback / quote</h3><p class="text-xs text-gray-400">Your enquiry details can be sent to us through WhatsApp or your email app. We use your details only to respond to your request.</p><div class="grid sm:grid-cols-2 gap-4"><label class="text-xs text-gray-300">Your name<input class="field mt-2" name="name" autocomplete="name" placeholder="Full name" required></label><label class="text-xs text-gray-300">Phone number<input class="field mt-2" name="phone" autocomplete="tel" inputmode="tel" placeholder="Your contact number" required></label></div><label class="block text-xs text-gray-300">Email (optional)<input class="field mt-2" name="email" type="email" autocomplete="email" placeholder="you@example.com"></label><label class="block text-xs text-gray-300">What are you looking for?<select class="field mt-2" name="interest"><option>Furniture catalogue enquiry</option><option>Custom furniture</option><option>Office / commercial project</option><option>Bulk / trade order</option></select></label><label class="block text-xs text-gray-300">Project details<textarea class="field mt-2" name="details" rows="4" placeholder="Furniture type, dimensions, finish, quantity, budget or delivery area…"></textarea></label><div class="flex flex-wrap items-center justify-center gap-2 mt-1"><button class="gold-button rounded-lg px-4 py-2.5 font-bold text-xs w-auto min-w-0" type="submit"><i class="fa-solid fa-paper-plane mr-1.5"></i>Submit Enquiry</button><button class="outline-button rounded-lg px-4 py-2.5 text-xs w-auto min-w-0" type="button" onclick="whatsAppContact()"><i class="fa-brands fa-whatsapp"></i></button><button class="outline-button contact-icon-button" type="button" onclick="emailContact()" aria-label="Email us" title="Email us"><i class="fa-regular fa-envelope"></i></button></div><p id="enquiry-status" class="text-xs text-center" role="status" aria-live="polite"></p><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px" class="hidden"><input type="hidden" name="page" value="website contact form"></form>
 </section>
 </main>
+<dialog id="aakruti-story-dialog" class="aakruti-story-dialog" aria-labelledby="aakruti-story-title">
+ <div class="aakruti-story-header"><h2 id="aakruti-story-title">The Aakruti Story</h2><button type="button" class="aakruti-story-close" onclick="closeAakrutiStory()" aria-label="Close story video" title="Close"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>
+ <video id="aakruti-story-video" controls preload="metadata" playsinline poster="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1280&q=85"><source src="./assets/aakruti-corporate-video.mp4" type="video/mp4">Your browser does not support HTML video.</video>
+</dialog>
 <dialog id="product-view" aria-labelledby="product-view-title">
  <form method="dialog" class="product-view-header">
   <h2 id="product-view-title" class="font-serif text-3xl"></h2>
@@ -937,7 +934,7 @@ const ANALYTICS_ENDPOINT='/api/analytics';
  const hideBanner=()=>{banner.classList.remove('is-visible');banner.setAttribute('aria-hidden','true')};
  let visitorId=null;
  function getVisitorId(){if(visitorId)return visitorId;try{visitorId=localStorage.getItem(VISITOR_KEY);if(!visitorId){visitorId=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'v-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,12);localStorage.setItem(VISITOR_KEY,visitorId)}}catch(e){visitorId='v-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,12)}return visitorId}
- function send(event,details){if(getChoice()!=='accepted')return;const d=details||{},params=new URLSearchParams(location.search);let source=params.get('utm_source')||'direct';if(!params.get('utm_source')&&document.referrer){try{source=new URL(document.referrer).hostname}catch(e){}}const payload={event:event,visitorId:getVisitorId(),page:(location.pathname||'/').slice(0,120),device:/Mobi|Android/i.test(navigator.userAgent)?'mobile':(/Tablet|iPad/i.test(navigator.userAgent)?'tablet':'desktop'),campaign:source.slice(0,100),category:String(d.category||'').slice(0,80),item:String(d.item||'').slice(0,100)};try{fetch(ANALYTICS_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{})}catch(e){}}
+ function send(event,details){if(getChoice()!=='accepted')return;const d=details||{},params=new URLSearchParams(location.search);let source=params.get('utm_source')||'direct';if(!params.get('utm_source')&&document.referrer){try{source=new URL(document.referrer).hostname}catch(e){}}const payload={event:event,visitorId:getVisitorId(),page:(location.pathname||'/').slice(0,120),device:/Mobi|Android/i.test(navigator.userAgent)?'mobile':(/Tablet|iPad/i.test(navigator.userAgent)?'tablet':'desktop'),campaign:source.slice(0,100),category:String(d.category||'').slice(0,80),item:String(d.item||'').slice(0,100)};try{fetch(ANALYTICS_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{})}catch(e){}}}
  function choose(value){setChoice(value);if(value==='accepted'){send('consent_granted');send('page_view')}hideBanner()}
  document.getElementById('cookie-accept').addEventListener('click',()=>choose('accepted'));
  document.getElementById('cookie-reject').addEventListener('click',()=>choose('rejected'));
@@ -1096,10 +1093,12 @@ const completedTitles=['White kitchen with turquoise backsplash','White fitted b
 function renderShowcase(){
  const projects=completedTitles.map(title=>products.find(p=>p.name.toLowerCase()===title.toLowerCase()&&p.images.length===4)).filter(Boolean);
  const photoCard=(p,title,action,value)=>'<button type="button" class="aakruti-photo-card" '+action+'="'+moneySafe(value)+'" aria-label="'+(action==='data-collection'?'Browse ':'View project ')+moneySafe(title)+'">'+cataloguePhoto(p,p.images[0])+'<span>'+moneySafe(title)+'</span></button>';
+ const collectionSubtitles={'Modular Kitchens':'Made-to-order cabinetry shaped around your layout, storage and finish preferences.','Beds & Wardrobes':'Bedroom furniture planned around your room, routines and storage needs.','TV Units':'Made to suit your wall, media setup and everyday storage.','Puja Units':'Thoughtful home mandirs made to complement your space and traditions.'};
+ const collectionCard=(p,category)=>'<button type="button" class="aakruti-photo-card aakruti-photo-card--collection" data-collection="'+moneySafe(category)+'" aria-label="Explore '+moneySafe(category)+' collection">'+cataloguePhoto(p,p.images[0])+'<span class="collection-card-copy"><span class="collection-card-title">'+moneySafe(category)+'</span><span class="collection-card-subtitle">'+collectionSubtitles[category]+'</span><span class="collection-card-action">Explore collection <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span></span></button>';
  const collections=featuredCategories.map(category=>{
   const candidates=products.filter(p=>p.category===category&&p.images.length);
   const product=candidates.find(p=>!projects.includes(p))||candidates[0];
-  return product?photoCard(product,category,'data-collection',category):'';
+  return product?collectionCard(product,category):'';
  }).join('');
  document.getElementById('featured-cards').innerHTML=collections;
  document.getElementById('featured-collections').hidden=!collections;
@@ -1172,91 +1171,41 @@ document.getElementById('filters').addEventListener('click',e=>{
 document.querySelectorAll('#filters button[data-filter]').forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.filter==='All')));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTray()});
 document.getElementById('year').textContent=new Date().getFullYear();
+function openAakrutiStory(){
+ const dialog=document.getElementById('aakruti-story-dialog');
+ const video=document.getElementById('aakruti-story-video');
+ if(!dialog||!video)return;
+ if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');
+ video.play().catch(()=>{});
+}
+function closeAakrutiStory(){
+ const dialog=document.getElementById('aakruti-story-dialog');
+ const video=document.getElementById('aakruti-story-video');
+ if(video){video.pause();video.currentTime=0}
+ if(dialog&&typeof dialog.close==='function')dialog.close();else dialog?.removeAttribute('open');
+}
+
 const heroPhrase=document.getElementById('hero-rotating-phrase');if(heroPhrase){const heroWord=document.getElementById('hero-rotating-word');const heroIcon=document.getElementById('hero-type-icon');const heroWords=['life','style','choice','taste','peace','aura','vision','rhythm'];let heroWordIndex=0;const heroReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;const setHeroWord=(value,state)=>{heroWord.textContent=value;heroPhrase.setAttribute('aria-label',value||'');if(heroIcon){heroIcon.classList.toggle('is-visible',true);heroIcon.classList.toggle('is-turning-left',state==='turn-left'||state==='erase');heroIcon.classList.toggle('is-erasing',state==='erase');heroIcon.classList.toggle('is-settled',state==='settled')}};if(heroWord&&heroIcon){if(heroReducedMotion){setHeroWord('life','settled')}else{const typeSpeed=430,eraseSpeed=430,holdTime=1300,turnTime=1450,resetPause=1300;const typeHeroWord=()=>{const nextWord=heroWords[heroWordIndex];let pos=0;setHeroWord('','ready');const typeNext=()=>{if(pos<nextWord.length){setHeroWord(nextWord.slice(0,++pos),'type');window.setTimeout(typeNext,typeSpeed)}else{setHeroWord(nextWord,'turn-left');window.setTimeout(()=>window.setTimeout(eraseHeroWord,holdTime),turnTime)}};const eraseHeroWord=()=>{if(pos>0){setHeroWord(nextWord.slice(0,--pos),'erase');window.setTimeout(eraseHeroWord,eraseSpeed)}else{setHeroWord('','ready');heroWordIndex=(heroWordIndex+1)%heroWords.length;window.setTimeout(typeHeroWord,resetPause)}};typeNext()};const beginFirstWord=()=>{const first=heroWords[heroWordIndex];let pos=0;setHeroWord('','ready');const typeFirst=()=>{if(pos<first.length){setHeroWord(first.slice(0,++pos),'type');window.setTimeout(typeFirst,typeSpeed)}else{setHeroWord(first,'turn-left');window.setTimeout(()=>window.setTimeout(eraseFirstWord,holdTime),turnTime)}};const eraseFirstWord=()=>{if(pos>0){setHeroWord(first.slice(0,--pos),'erase');window.setTimeout(eraseFirstWord,eraseSpeed)}else{setHeroWord('','ready');heroWordIndex=(heroWordIndex+1)%heroWords.length;window.setTimeout(typeHeroWord,resetPause)}};setHeroWord('','ready');window.setTimeout(typeFirst,900)};beginFirstWord()}}}
-
 renderProducts();renderCart();
-
-
 </script>
-
-<!-- Catalogue category-filter recovery -->
 <script>
-(function(){
-  'use strict';
-  const filters=document.getElementById('filters');
-  const grid=document.getElementById('product-grid');
-  if(!filters||!grid)return;
-  function activate(button){
-    if(!button)return;
-    filters.querySelectorAll('button[data-filter]').forEach(function(item){
-      const active=item===button;
-      item.classList.toggle('active',active);
-      item.setAttribute('aria-pressed',String(active));
-    });
-    try{
-      if(typeof renderProducts==='function')renderProducts(button.dataset.filter||'All');
-      grid.style.setProperty('display','grid','important');
-      grid.style.setProperty('visibility','visible','important');
-      grid.style.setProperty('min-height','120px');
-    }catch(error){
-      console.error('Catalogue rendering failed:',error);
-      grid.innerHTML='<p class="col-span-full rounded-xl border p-6 text-center">Products could not be rendered. Please refresh and try again.</p>';
-    }
-  }
-  filters.addEventListener('click',function(event){
-    const button=event.target.closest('button[data-filter]');
-    if(!button||!filters.contains(button))return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    activate(button);
-  },true);
-  filters.querySelectorAll('button[data-filter]').forEach(function(button){
-    button.type='button';
-    button.style.pointerEvents='auto';
-    button.style.touchAction='manipulation';
-  });
-  if(typeof renderProducts==='function')activate(filters.querySelector('button[data-filter="All"]'));
-})();
+function openAakrutiStory(){
+ const dialog=document.getElementById('aakruti-story-dialog');
+ const video=document.getElementById('aakruti-story-video');
+ if(!dialog||!video)return;
+ if(typeof dialog.showModal==='function')dialog.showModal();
+ else dialog.setAttribute('open','');
+ video.muted=false;
+ video.volume=0.75;
+ video.play().catch(()=>{video.controls=true});
+}
+function closeAakrutiStory(){
+ const dialog=document.getElementById('aakruti-story-dialog');
+ const video=document.getElementById('aakruti-story-video');
+ if(video){video.pause();video.currentTime=0}
+ if(dialog&&typeof dialog.close==='function')dialog.close();
+ else if(dialog)dialog.removeAttribute('open');
+}
+const storyDialog=document.getElementById('aakruti-story-dialog');
+if(storyDialog){storyDialog.addEventListener('close',()=>{const video=document.getElementById('aakruti-story-video');if(video){video.pause();video.currentTime=0}})}
 </script>
-
-<!-- Load published products alongside clearly labelled design references -->
-<script>
-(async function(){
- const cfg=window.AAKRUTI_SUPABASE_CONFIG||{};
- if(!cfg.url||!cfg.publishableKey||!window.supabase)return;
- const client=window.supabase.createClient(cfg.url,cfg.publishableKey);
- const filters=document.getElementById('filters');
- const categoriesRequest=client.from('categories').select('name').eq('is_active',true).order('sort_order');
- const productsRequest=client.from('products').select('id,name,short_description,description,featured_image,sort_order,categories(name),product_images(image_url,sort_order)').eq('is_active',true).order('sort_order',{ascending:true});
- const [categoryResult,productResult]=await Promise.allSettled([categoriesRequest,productsRequest]);
- const categories=categoryResult.value;
- if(categories?.error)console.warn('Could not load CMS categories:',categories.error);
- const addCategoryTab=category=>{
-  const name=publicCategory(category);
-  if(!name||isOutdoor(name)||Array.from(filters.children).some(button=>button.dataset.filter===name))return;
-  const button=document.createElement('button');
-  button.type='button';
-  button.className='filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap';
-  button.dataset.filter=name;
-  button.setAttribute('aria-pressed','false');
-  button.textContent=name;
-  filters.append(button);
- };
- categories?.data?.forEach(category=>addCategoryTab(category.name));
- try{
-  if(productResult.status==='rejected')throw productResult.reason;
-  const {data,error}=productResult.value;
-  if(error)throw error;
-  if(!data)return;
-  products=uniqueCatalogueImages(data.map(x=>({id:x.id,name:x.name,category:publicCategory(x.categories?.name)||(/\bmodular kitchen\b/i.test(x.name)?'Modular Kitchens':'Other'),desc:x.short_description||x.description||'Made-to-order furniture.',description:x.description,image:x.featured_image||'',images:[...new Set([x.featured_image,...(x.product_images||[]).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map(y=>y.image_url)].filter(Boolean))]})).filter(product=>!isOutdoor(product.category)));
-  products.forEach(product=>addCategoryTab(product.category));
-  const active=document.querySelector('#filters button.active')?.dataset.filter||'All';
-  renderProducts(active);renderShowcase();renderCart();
-  console.info('Supabase catalogue loaded',products.length);
- }catch(err){console.warn('Supabase catalogue error:',err);
-  renderProducts(filters.querySelector('button.active')?.dataset.filter||'All');
- }
-})();
-</script>
-</body>
-</html>
