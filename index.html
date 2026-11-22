@@ -704,8 +704,10 @@ main section:not(.hero)::after{
 @media(min-width:1024px){#about{padding-top:7rem!important;padding-bottom:7.25rem!important}#about .about-story-overlay{width:320px!important}}
 @media(max-width:1023px){#about .about-story-overlay{width:min(82%,300px)!important}}
 
-#product-grid .product-view-angles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.3rem;margin:.55rem .65rem 0}
-#product-grid .product-view-angles button{min-height:34px;padding:.3rem .2rem;font-size:.72rem}
+.product-gallery{touch-action:auto}
+.product-gallery .catalogue-slide{display:block;flex:0 0 100%;min-width:0;scroll-snap-align:start}
+.product-gallery .gallery-track .catalogue-slide img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+@media(prefers-reduced-motion:reduce){.gallery-track{scroll-behavior:auto}}
 </style>
 </head>
 <body class="antialiased">
@@ -1022,6 +1024,18 @@ function galleryViewButtons(labels,attribute,selected=0){
  if(labels.length<2)return '';
  return '<div class="product-view-angles" role="group" aria-label="Gallery views">'+labels.map((label,i)=>'<button type="button" '+attribute+'="'+i+'" aria-pressed="'+(i===selected)+'">'+label+'</button>').join('')+'</div>';
 }
+function renderCardGallery(product,priority){
+ const images=productGalleryImages(product);
+ const id=moneySafe(product.id);
+ const name=moneySafe(product.name);
+ const slides=images.map((image,index)=>'<button type="button" class="catalogue-slide" data-product-view="'+id+'" data-view-index="'+index+'" aria-label="View '+name+', image '+(index+1)+'">'+cataloguePhoto(product,image,priority&&index===0)+'</button>').join('');
+ const controls=images.length>1?
+  '<button type="button" class="gallery-arrow prev" data-gallery-prev aria-label="Previous image"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>'+
+  '<button type="button" class="gallery-arrow next" data-gallery-next aria-label="Next image"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>'+
+  '<div class="gallery-dots" role="group" aria-label="Product image views">'+images.map((_,index)=>'<button type="button" class="gallery-dot'+(index===0?' active':'')+'" data-gallery-dot="'+index+'" aria-label="Show image '+(index+1)+' of '+name+'" aria-pressed="'+(index===0)+'"></button>').join('')+'</div>'+
+  '<span class="gallery-count" data-gallery-count>1 / '+images.length+'</span>':'';
+ return '<div class="product-gallery bg-surface" data-gallery><div class="gallery-track" data-gallery-track>'+slides+'</div>'+controls+'</div>';
+}
 function renderProducts(filter='All'){
  const list=catalogueEntries(filter);
  const resultCount=document.getElementById('result-count');
@@ -1029,9 +1043,8 @@ function renderProducts(filter='All'){
  productGrid.innerHTML=list.map((p,i)=>{
   const id=moneySafe(p.id);
   const title=moneySafe(p.name);
-  const images=productGalleryImages(p);
   return '<article class="product-card rounded-xl overflow-hidden flex flex-col" data-product-category="'+moneySafe(p.category)+'">'+
-   '<button type="button" class="catalogue-cover" data-product-view="'+id+'" aria-label="View '+title+'">'+cataloguePhoto(p,images[0],i===0)+'</button>'+galleryViewButtons(galleryViewLabels(p,images),'data-card-angle')+
+   renderCardGallery(p,i===0)+
    '<div class="p-5 flex flex-col flex-1 gap-3"><h3 class="font-serif text-2xl leading-tight"><button type="button" class="catalogue-product-title" data-product-view="'+id+'">'+title+'</button></h3>'+
    '<p class="text-gray-400 text-sm line-clamp-2 flex-1">'+moneySafe(p.desc)+'</p>'+
    '<button type="button" class="gold-button catalogue-enquire rounded-lg text-sm font-bold" data-product-enquire="'+id+'" aria-label="Enquire about '+title+'">Enquire</button></div></article>';
@@ -1165,24 +1178,29 @@ document.addEventListener('error',event=>{
  image.alt='No product photo available';
  image.src=cataloguePlaceholder;
 },true);
+function visibleGalleryIndex(track){
+ return Math.round(track.scrollLeft/(track.clientWidth||1));
+}
 productGrid.addEventListener('click',event=>{
- const angle=event.target.closest('[data-card-angle]');
- if(!angle)return;
- const card=angle.closest('.product-card');
- const cover=card.querySelector('.catalogue-cover');
- const product=products.find(p=>String(p.id)===cover.dataset.productView);
- if(!product)return;
- const images=productGalleryImages(product);
- const index=Number(angle.dataset.cardAngle);
- if(!images[index])return;
- const image=cover.querySelector('img');
- image.dataset.fallback=cataloguePlaceholder;
- image.classList.toggle('catalogue-placeholder',images[index]===cataloguePlaceholder);
- image.src=catalogueImageUrl(images[index]);
- image.alt=product.name+' — '+galleryViewLabels(product,images)[index];
- cover.dataset.selectedAngle=String(index);
- card.querySelectorAll('[data-card-angle]').forEach(button=>button.setAttribute('aria-pressed',String(button===angle)));
+ const control=event.target.closest('[data-gallery-dot],[data-gallery-prev],[data-gallery-next]');
+ if(!control)return;
+ const track=control.closest('[data-gallery]').querySelector('[data-gallery-track]');
+ const index=control.hasAttribute('data-gallery-dot')?Number(control.dataset.galleryDot):visibleGalleryIndex(track)+(control.hasAttribute('data-gallery-next')?1:-1);
+ const target=Math.max(0,Math.min(index,track.children.length-1));
+ track.scrollTo({left:target*track.clientWidth,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
 });
+productGrid.addEventListener('scroll',event=>{
+ const track=event.target;
+ if(!track.matches?.('[data-gallery-track]'))return;
+ const gallery=track.closest('[data-gallery]');
+ const index=Math.max(0,Math.min(visibleGalleryIndex(track),track.children.length-1));
+ gallery.querySelectorAll('[data-gallery-dot]').forEach((dot,i)=>{
+  dot.classList.toggle('active',i===index);
+  dot.setAttribute('aria-pressed',String(i===index));
+ });
+ const count=gallery.querySelector('[data-gallery-count]');
+ if(count)count.textContent=(index+1)+' / '+track.children.length;
+},true);
 document.addEventListener('click',event=>{
  const trigger=event.target.closest('[data-collection],[data-product-view],[data-product-enquire],[data-product-add]');
  if(!trigger)return;
@@ -1195,7 +1213,11 @@ document.addEventListener('click',event=>{
   document.getElementById('catalogue').scrollIntoView({block:'start'});
   return;
  }
- if(viewId){openProductView(viewId,Number(trigger.closest('.product-card')?.querySelector('.catalogue-cover')?.dataset.selectedAngle||0));return;}
+ if(viewId){
+  const track=trigger.closest('.product-card')?.querySelector('[data-gallery-track]');
+  openProductView(viewId,trigger.dataset.viewIndex!==undefined?Number(trigger.dataset.viewIndex):(track?visibleGalleryIndex(track):0));
+  return;
+ }
  if(productEnquire){if(productView.open)productView.close();quickEnquire(productEnquire);return;}
  if(productAdd)addToCart(productAdd);
 });
