@@ -1222,4 +1222,43 @@ function closeAakrutiStory(){
 const storyDialog=document.getElementById('aakruti-story-dialog');
 if(storyDialog){storyDialog.addEventListener('close',()=>{const video=document.getElementById('aakruti-story-video');if(video){video.pause();video.currentTime=0}})}
 </script>
-
+<script>
+(async function(){
+ const cfg=window.AAKRUTI_SUPABASE_CONFIG||{};
+ if(!cfg.url||!cfg.publishableKey||!window.supabase)return;
+ const client=window.supabase.createClient(cfg.url,cfg.publishableKey);
+ const filters=document.getElementById('filters');
+ const categoriesRequest=client.from('categories').select('name').eq('is_active',true).order('sort_order');
+ const productsRequest=client.from('products').select('id,name,short_description,description,featured_image,sort_order,categories(name),product_images(image_url,sort_order)').eq('is_active',true).order('sort_order',{ascending:true});
+ const [categoryResult,productResult]=await Promise.allSettled([categoriesRequest,productsRequest]);
+ const categories=categoryResult.value;
+ if(categories?.error)console.warn('Could not load CMS categories:',categories.error);
+ const addCategoryTab=category=>{
+  const name=publicCategory(category);
+  if(!name||isOutdoor(name)||Array.from(filters.children).some(button=>button.dataset.filter===name))return;
+  const button=document.createElement('button');
+  button.type='button';
+  button.className='filter-btn border border-white/15 rounded-full px-4 py-2.5 text-sm whitespace-nowrap';
+  button.dataset.filter=name;
+  button.setAttribute('aria-pressed','false');
+  button.textContent=name;
+  filters.append(button);
+ };
+ categories?.data?.forEach(category=>addCategoryTab(category.name));
+ try{
+  if(productResult.status==='rejected')throw productResult.reason;
+  const {data,error}=productResult.value;
+  if(error)throw error;
+  if(!data)return;
+  products=uniqueCatalogueImages(data.map(x=>({id:x.id,name:x.name,category:publicCategory(x.categories?.name)||(/\bmodular kitchen\b/i.test(x.name)?'Modular Kitchens':'Other'),desc:x.short_description||x.description||'Made-to-order furniture.',description:x.description,image:x.featured_image||'',images:[...new Set([x.featured_image,...(x.product_images||[]).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map(y=>y.image_url)].filter(Boolean))]})).filter(product=>!isOutdoor(product.category)));
+  products.forEach(product=>addCategoryTab(product.category));
+  const active=document.querySelector('#filters button.active')?.dataset.filter||'All';
+  renderProducts(active);renderShowcase();renderCart();
+  console.info('Supabase catalogue loaded',products.length);
+ }catch(err){console.warn('Supabase catalogue error:',err);
+  renderProducts(filters.querySelector('button.active')?.dataset.filter||'All');
+ }
+})();
+</script>
+</body>
+</html>
