@@ -94,11 +94,11 @@ tailwind.config={theme:{extend:{colors:{obsidian:'#cbbeb5',charcoal:'#cbbeb5',su
 </script>
 <style>
 :root{color-scheme:dark}body{background:#0b0b0e;color:#f3f4f6;font-family:'Plus Jakarta Sans',sans-serif}::selection{background:#F28C28;color:#0b0b0e}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:#0b0b0e}::-webkit-scrollbar-thumb{background:#393744;border-radius:9px}.gold-text{background:linear-gradient(125deg,#FFE0B8,#F28C28 60%,#C65A12);-webkit-background-clip:text;background-clip:text;color:transparent}.hero{
- background:linear-gradient(90deg,rgba(11,11,14,.88),rgba(11,11,14,.72) 34%,rgba(11,11,14,.22) 63%,transparent 82%),linear-gradient(0deg,rgba(11,11,14,.48),transparent 26%),url('./assets/hero/aakruti-open-plan.webp') right center/cover no-repeat #0b0b0e;
+ background:linear-gradient(90deg,rgba(11,11,14,.97) 0%,rgba(11,11,14,.82) 56%,rgba(11,11,14,.48) 100%),linear-gradient(0deg,#0b0b0e 0%,transparent 40%),url('./assets/hero/aakruti-open-plan.webp') right center/cover no-repeat #0b0b0e;
 }
 @media(max-width:767px) and (orientation:portrait){
  #home.hero{
-  background:linear-gradient(180deg,rgba(11,11,14,.64),rgba(11,11,14,.70) 60%,rgba(11,11,14,.58)),url('./assets/hero/aakruti-open-plan.webp') 55% center/cover no-repeat #0b0b0e;
+  background-position:0 0,0 0,55% center;
   padding-block:3.5rem;
  }
 }
@@ -723,7 +723,7 @@ main section:not(.hero)::after{
 
 .developer-credit{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:14px 8px;color:#fff;background:#525266;border-radius:10px;margin:24px auto 0}
 .developer-credit img{object-fit:contain}.developer-credit small,.developer-credit strong{display:block}
-.developer-links{display:flex;gap:6px}.developer-links a{display:grid;place-items:center;width:32px;height:32px;border:1px solid #ffffff55;border-radius:50%;color:#fff;text-decoration:none}
+.developer-links{display:flex;gap:6px}.developer-links a{display:grid;place-items:center;width:32px;height:32px;color:#fff;text-decoration:none}
 </style>
 </head>
 <body class="antialiased">
