@@ -800,7 +800,6 @@ main section:not(.hero)::after{
 
 <section id="testimonials" class="aakruti-showcase max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16" hidden aria-labelledby="completed-title">
  <h2 id="completed-title" class="font-serif text-4xl mb-2">Recently Completed Projects</h2>
- <p class="text-gray-400 mb-6">Illustrative views based on Aakruti installations.</p>
  <div id="completed-projects" class="aakruti-photo-grid aakruti-project-grid"></div>
 </section>
 
@@ -1036,6 +1035,9 @@ function renderCardGallery(product,priority){
   '<span class="gallery-count" data-gallery-count>1 / '+images.length+'</span>':'';
  return '<div class="product-gallery bg-surface" data-gallery><div class="gallery-track" data-gallery-track>'+slides+'</div>'+controls+'</div>';
 }
+function visibleProductDescription(description){
+ return (description||'').replace(/\billustrative views based on (?:an\s+)?aakruti installations?\.?/gi,'').trim();
+}
 function renderProducts(filter='All'){
  const list=catalogueEntries(filter);
  const resultCount=document.getElementById('result-count');
@@ -1043,10 +1045,11 @@ function renderProducts(filter='All'){
  productGrid.innerHTML=list.map((p,i)=>{
   const id=moneySafe(p.id);
   const title=moneySafe(p.name);
+  const description=visibleProductDescription(p.desc);
   return '<article class="product-card rounded-xl overflow-hidden flex flex-col" data-product-category="'+moneySafe(p.category)+'">'+
    renderCardGallery(p,i===0)+
    '<div class="p-5 flex flex-col flex-1 gap-3"><h3 class="font-serif text-2xl leading-tight"><button type="button" class="catalogue-product-title" data-product-view="'+id+'">'+title+'</button></h3>'+
-   '<p class="text-gray-400 text-sm line-clamp-2 flex-1">'+moneySafe(p.desc)+'</p>'+
+   (description?'<p class="text-gray-400 text-sm line-clamp-2 flex-1">'+moneySafe(description)+'</p>':'')+
    '<button type="button" class="gold-button catalogue-enquire rounded-lg text-sm font-bold" data-product-enquire="'+id+'" aria-label="Enquire about '+title+'">Enquire</button></div></article>';
  }).join('');
  if(!list.length)productGrid.innerHTML='<p class="col-span-full p-6 text-gray-400" role="status">No products are available in this category yet.</p>';
@@ -1151,11 +1154,13 @@ function openProductView(id,selected=0){
  const angleLabels=galleryViewLabels(product,images);
  if(!images[selected])selected=0;
  document.getElementById('product-view-title').textContent=product.name;
+ const summary=visibleProductDescription(product.desc);
+ const description=visibleProductDescription(product.description);
  const content=document.getElementById('product-view-content');
  content.innerHTML=cataloguePhoto(product,images[selected],true).replace('<img ','<img id="product-view-image" ')+
   galleryViewButtons(angleLabels,'data-product-angle',selected)+
-  '<p class="mt-3 text-sm">'+moneySafe(product.desc)+'</p>'+
-  (product.description&&product.description!==product.desc?'<p class="mt-3 whitespace-pre-line">'+moneySafe(product.description)+'</p>':'')+
+  (summary?'<p class="mt-3 text-sm">'+moneySafe(summary)+'</p>':'')+
+  (description&&description!==summary?'<p class="mt-3 whitespace-pre-line">'+moneySafe(description)+'</p>':'')+
   '<section class="product-view-specs"><h3 class="font-bold mb-1">Specifications</h3><p>'+moneySafe(productSpecs(product))+'</p><p class="text-sm mt-1">Final options confirmed on enquiry.</p></section>'+
   '<button type="button" class="gold-button rounded-lg px-4 py-2 font-bold" data-product-enquire="'+moneySafe(id)+'">Enquire</button> '+
   '<button type="button" class="outline-button rounded-lg px-4 py-2" data-product-add="'+moneySafe(id)+'">Add to Cart</button>';
