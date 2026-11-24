@@ -79,7 +79,7 @@ td:last-child:has(.icon-action){white-space:nowrap}
  .icon-action{width:40px;height:40px;min-height:40px}
 }
 
-.page-heading{display:flex;align-items:center;gap:10px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.brand-upload label:focus-within{outline:2px solid #a93744}.page-heading{display:flex;align-items:center;gap:10px}
 .home-back{width:40px;padding:0}
 .kpi-link{display:inline-flex;align-items:center;gap:6px;justify-self:start;min-height:32px;font-size:12px;font-weight:700;color:#a33c42;background:none;border:0;padding:0;text-align:left}
 .kpi-link:hover{text-decoration:underline}
@@ -93,6 +93,26 @@ td:last-child:has(.icon-action){white-space:nowrap}
 .analytics-form label{display:grid;gap:6px;min-width:0}
 .analytics-form button{justify-self:start}
 .analytics-form .field{min-width:0}
+
+.developer-credit{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:14px 8px;color:#fff;background:#525266;border-radius:10px;margin:24px auto 0}
+.developer-credit img{object-fit:contain}.developer-credit small,.developer-credit strong{display:block}
+.developer-links{display:flex;gap:6px}.developer-links a{display:grid;place-items:center;width:32px;height:32px;border:1px solid #ffffff55;border-radius:50%;color:#fff;text-decoration:none}
+
+.admin-header{flex-wrap:wrap;row-gap:6px}.header-site{flex-basis:100%}.header-site .btn{min-height:27px;padding:3px 9px;border-radius:4px}
+.topbar{flex-wrap:nowrap}.topbar-actions,#page-action{display:flex;gap:6px}.page-action{min-width:0;padding:6px 9px;font-size:12px}
+.home-back,.circle-action{border-radius:50%;width:34px;height:34px;min-height:34px;padding:0}
+.stat{position:relative;padding-right:46px}.stat .kpi-link{position:absolute;right:8px;bottom:8px;width:32px;min-height:32px;justify-content:center;background:#f5e9eb;border-radius:8px}
+.btn.icon-action{width:30px;height:30px;min-height:30px;padding:0}
+.pipeline-card{border-color:var(--status-color,#817d87)}.pipeline-card strong{color:var(--status-color,#525266)}
+[data-status-tone=new]{--status-color:#a93744}[data-status-tone=contacted]{--status-color:#285991}[data-status-tone=quoted]{--status-color:#87580a}[data-status-tone=won]{--status-color:#287451}[data-status-tone=lost]{--status-color:#696174}
+.panel h2 i{color:#a93744;margin-right:7px}.panel h2{display:flex;align-items:center;gap:4px}.panel h2 .circle-action{margin-left:auto}.panel h2 .circle-action i{margin:0}
+.brand-row{display:grid;grid-template-columns:minmax(62px,105px) minmax(0,1fr);gap:10px;align-items:center}.brand-row .brand-thumb{width:100%;height:70px;object-fit:contain;border-radius:8px}.brand-row h2{margin:0 0 8px}.brand-upload{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.brand-upload .btn{padding:5px 7px;min-height:30px;font-size:11px}
+.preview-dialog{border:1px solid var(--line);border-radius:12px;padding:14px;width:max-content;max-width:calc(100% - 24px);max-height:90dvh;color:var(--slate);overflow:auto}.preview-dialog::backdrop{background:#211b32a0}.preview-dialog .dialog-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.preview-dialog h2{margin:0;font-size:18px}.asset-large{display:block;max-width:none}.asset-scroll{overflow:auto;max-width:85vw;max-height:72dvh}
+.article-preview{border:1px solid var(--line);border-radius:10px;overflow:hidden}.preview-bar{padding:8px 12px;background:#ede8ee;font-size:12px}.article-preview article{padding:16px;overflow-wrap:anywhere}.article-preview img{max-width:100%;max-height:260px;object-fit:contain}.article-preview p{white-space:pre-wrap}
+.article-status{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.article-status select{width:112px;margin-left:auto}.milestones{display:flex;flex:1;align-items:center;min-width:160px;gap:4px;font-size:11px}.milestones span{display:flex;align-items:center;gap:4px;flex:1}.milestones span:not(:last-child)::after{content:'';height:1px;flex:1;background:var(--line)}.milestones [aria-current]{font-weight:700;color:#a93744}
+.analytics-history table{min-width:390px}.analytics-history th:nth-child(n+3),.analytics-history td:nth-child(n+3){text-align:center;width:16%;white-space:normal;position:static;box-shadow:none;padding-inline:5px}
+.enquiry-table tbody tr{cursor:pointer}.enquiry-table tbody tr:hover{background:#f8f3f4}.detail-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.enquiry-message{white-space:pre-wrap;overflow-wrap:anywhere;max-width:55ch}
+@media(max-width:400px){.brand-row{grid-template-columns:60px minmax(0,1fr)}.brand-row h2{font-size:14px}.page-heading{gap:5px}.topbar{gap:4px}.circle-action{width:31px;height:31px;min-height:31px}}
 </style>
 </head>
 <body>
@@ -138,6 +158,7 @@ td:last-child:has(.icon-action){white-space:nowrap}
    </div>
    <button id="admin-menu-toggle" class="btn menu-toggle" type="button" aria-label="Open admin menu" aria-haspopup="dialog" aria-controls="admin-menu" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
   </div>
+  <div class="header-site"><a class="btn view-site" href="/" target="_blank" rel="noopener"><i class="fa-solid fa-globe" aria-hidden="true"></i> View website</a></div>
  </header>
  <dialog id="admin-menu" class="admin-menu" aria-labelledby="admin-menu-title">
   <div class="menu-content">
@@ -155,8 +176,13 @@ td:last-child:has(.icon-action){white-space:nowrap}
   </div>
  </dialog>
  <main class="main">
-  <div class="topbar"><div class="page-heading"><button class="btn home-back hidden" data-home type="button" aria-label="Back to overview" title="Back to overview"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button><h1 id="page-title" tabindex="-1">Overview</h1></div><div class="topbar-actions"><div id="page-action"></div><a class="btn view-site" href="/" target="_blank" rel="noopener"><i class="fa-solid fa-globe" aria-hidden="true"></i> View website</a></div></div>
+  <div class="topbar"><div class="page-heading"><button class="btn home-back hidden" data-home type="button" aria-label="Back to overview" title="Back to overview"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button><h1 id="page-title" tabindex="-1">Overview</h1></div><div class="topbar-actions"><div id="page-action"></div></div></div>
   <div id="page-content"></div>
+  <footer><div class="developer-credit"><img src="/assets/brand/bharat-rasve-white.png" alt="" width="30" height="30"><span><small>Designed &amp; developed by</small><strong>Bharat Rasve</strong></span><span class="developer-links">
+<a href="tel:+917218838122" aria-label="Call Bharat Rasve"><i class="fa-solid fa-phone" aria-hidden="true"></i></a>
+<a href="https://wa.me/917218838122" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Bharat Rasve"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+<a href="https://www.linkedin.com/in/bharatrasve" target="_blank" rel="noopener noreferrer" aria-label="Bharat Rasve on LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+<a href="https://www.instagram.com/bharat_rasve_?r=nametag" target="_blank" rel="noopener noreferrer" aria-label="Bharat Rasve on Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></span></div></footer>
  </main>
 </div>
 <div id="modal-root"></div>
@@ -396,13 +422,13 @@ async function dashboard(){
   Promise.all(enquiryStatuses.map(status=>count('enquiries',[['status',status]])))
  ]);
  const cards=overviewMetrics.map(([label,,page,icon],index)=>
-  '<div class="stat"><div class="muted"><i class="fa-solid fa-'+icon+' stat-icon" aria-hidden="true"></i>'+label+'</div><div class="value">'+counts[index]+'</div><button class="kpi-link" data-goto="'+page+'" aria-label="Open '+label+'">Open <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>'
+  '<div class="stat"><div class="muted"><i class="fa-solid fa-'+icon+' stat-icon" aria-hidden="true"></i>'+label+'</div><div class="value">'+counts[index]+'</div><button class="kpi-link" data-goto="'+page+'" aria-label="Open '+label+'"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></button></div>'
  ).join('');
  const pipeline=enquiryStatuses.map((status,index)=>{
   const label=status[0].toUpperCase()+status.slice(1);
-  return '<button class="pipeline-card" data-goto="enquiries" data-enquiry-filter="'+status+'"><span>'+label+'</span><strong>'+statusCounts[index]+'</strong></button>';
+  return '<button class="pipeline-card" data-status-tone="'+status+'" data-goto="enquiries" data-enquiry-filter="'+status+'"><span>'+label+'</span><strong>'+statusCounts[index]+'</strong></button>';
  }).join('');
- return '<div class="cards">'+cards+'</div>'+panel('Enquiry status','<div class="pipeline">'+pipeline+'</div>');
+ return '<div class="cards">'+cards+'</div>'+panel('<i class="fa-solid fa-inbox" aria-hidden="true"></i> Enquiry status','<div class="pipeline">'+pipeline+'</div>');
 }
 async function listProducts(){const {data,error}=await sb.from('products').select('id,name,slug,is_active,is_featured,created_at').order('created_at',{ascending:false});if(error)throw error;return '<div class="section-head"><button class="btn btn-primary page-action" data-add="product"><i class="fa-solid fa-plus" aria-hidden="true"></i> Add product</button></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Name</th><th>Slug</th><th>Status</th><th>Featured</th><th>Actions</th></tr></thead><tbody>'+data.map(p=>'<tr><td>'+esc(p.name)+'</td><td>'+esc(p.slug)+'</td><td><span class="pill">'+(p.is_active?'active':'hidden')+'</span></td><td>'+(p.is_featured?'Yes':'No')+'</td><td><button class="btn icon-action" aria-label="Edit product" title="Edit" data-edit-product="'+p.id+'"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button> <button class="btn icon-action" aria-label="Delete product" title="Delete" data-delete-product="'+p.id+'"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No products have been added yet.</div>')}
 async function listCategories(){const {data,error}=await sb.from('categories').select('*').order('sort_order');if(error)throw error;return '<div class="section-head"><button class="btn btn-primary page-action" data-add="category"><i class="fa-solid fa-plus" aria-hidden="true"></i> Add category</button></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Name</th><th>Slug</th><th>Active</th><th>Actions</th></tr></thead><tbody>'+data.map(c=>'<tr><td>'+esc(c.name)+'</td><td>'+esc(c.slug)+'</td><td>'+(c.is_active?'Yes':'No')+'</td><td><button class="btn icon-action" aria-label="Edit category" title="Edit" data-edit-category="'+c.id+'"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button> <button class="btn icon-action" aria-label="Delete category" title="Delete" data-delete-category="'+c.id+'"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No categories yet.</div>')}
@@ -417,13 +443,14 @@ async function listBrandAssets(){
  const {data,error}=await bucket.list('website');
  if(error)throw new Error('Brand assets could not be listed. Run the Supabase setup SQL and refresh. '+error.message);
  const files=new Set(data.map(file=>file.name));
- return '<p class="muted">PNG images up to 5 MB. Upload a replacement to update the website asset.</p>'+brandAssetSlots.map(([name,label,background])=>{
-  const url=bucket.getPublicUrl('website/'+name).data.publicUrl;
-  const uploaded=files.has(name);
-  return panel(label,
-   '<img src="'+esc(uploaded?url:'../assets/brand/'+name)+'" alt="'+esc(label)+'" width="160" style="height:70px;object-fit:contain;background:'+background+';border-radius:8px">'+
-   '<p class="muted">'+(uploaded?'Supabase · website/'+name:'Using the bundled brand kit image')+'</p>'+
-   '<form data-brand-upload="'+name+'"><label>Replacement PNG <input type="file" name="asset" accept="image/png,.png" required></label> <button class="btn btn-primary" type="submit">Upload</button></form>');
+ return brandAssetSlots.map(([name,label,background])=>{
+  const src=files.has(name)?bucket.getPublicUrl('website/'+name).data.publicUrl:'../assets/brand/'+name;
+  return '<section class="panel brand-row"><img class="brand-thumb" src="'+esc(src)+'" alt="" style="background:'+background+'">'+
+   '<div><h2><i class="fa-solid fa-image" aria-hidden="true"></i>'+esc(label)+'</h2>'+
+   '<form class="brand-upload" data-brand-upload="'+name+'"><label class="btn"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Choose PNG<input class="sr-only" type="file" name="asset" accept="image/png,.png"></label>'+
+   '<button class="btn btn-primary" type="submit"><i class="fa-solid fa-upload" aria-hidden="true"></i> Upload</button>'+
+   '<button class="btn" type="button" data-preview-asset="'+esc(src)+'" data-preview-label="'+esc(label)+'" aria-label="Preview '+esc(label)+'" title="Preview at actual size"><i class="fa-solid fa-expand" aria-hidden="true"></i></button>'+
+   '<small class="muted" data-filename></small></form></div></section>';
  }).join('');
 }
 async function uploadBrandAsset(event){
@@ -447,7 +474,120 @@ async function uploadBrandAsset(event){
  }
 }
 async function listBlog(){const {data,error}=await sb.from('blog_posts').select('id,title,slug,status,published_at,created_at').order('created_at',{ascending:false});if(error)throw error;return '<div class="section-head"><button class="btn btn-primary page-action" data-add="blog"><i class="fa-solid fa-plus" aria-hidden="true"></i> New article</button></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Title</th><th>Slug</th><th>Status</th><th>Published</th><th>Actions</th></tr></thead><tbody>'+data.map(b=>'<tr><td>'+esc(b.title)+'</td><td>'+esc(b.slug)+'</td><td><span class="pill">'+esc(b.status)+'</span></td><td>'+esc(b.published_at?new Date(b.published_at).toLocaleDateString():'—')+'</td><td><button class="btn icon-action" aria-label="Edit article" title="Edit" data-edit-blog="'+b.id+'"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button> <button class="btn icon-action" aria-label="Delete article" title="Delete" data-delete-blog="'+b.id+'"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No articles yet.</div>')}
-async function listEnquiries(){const status=enquiryStatus;let query=sb.from('enquiries').select('*').order('created_at',{ascending:false});if(status)query=query.eq('status',status);const {data,error}=await query;if(error)throw error;return '<div class="section-head"><button class="btn page-action" data-refresh-enquiries><i class="fa-solid fa-rotate" aria-hidden="true"></i> Refresh</button></div><div class="enquiry-filter"><label for="enquiry-status-filter">Status</label><select class="field" id="enquiry-status-filter" data-enquiry-status><option value="">All enquiries</option>'+enquiryStatuses.map(value=>'<option value="'+value+'" '+(value===status?'selected':'')+'>'+value[0].toUpperCase()+value.slice(1)+'</option>').join('')+'</select></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Received</th><th>Customer</th><th>Contact</th><th>Enquiry</th><th>Status</th><th>Update</th></tr></thead><tbody>'+data.map(q=>'<tr><td>'+new Date(q.created_at).toLocaleString()+'</td><td>'+esc(q.name)+'</td><td><a href="tel:'+esc(q.phone)+'">'+esc(q.phone)+'</a><div class="muted">'+esc(q.email||'')+'</div></td><td><strong>'+esc(q.subject||q.product_name||'Website enquiry')+'</strong><div class="muted" style="white-space:normal;max-width:360px;margin-top:5px">'+esc(q.message||'No additional details')+'</div></td><td><span class="pill">'+esc(q.status||'new')+'</span></td><td><select class="field" style="min-width:110px;padding:6px" data-status="'+q.id+'">'+['new','contacted','quoted','won','lost'].map(s=>'<option '+(s===(q.status||'new')?'selected':'')+'>'+s+'</option>').join('')+'</select></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No enquiries match this view.</div>')}const analyticsChannels={website:'Website',instagram:'Instagram',facebook:'Facebook',linkedin:'LinkedIn',youtube:'YouTube'};
+function iconButton(icon,label,attributes=''){
+ return '<button type="button" class="btn circle-action" aria-label="'+esc(label)+'" title="'+esc(label)+'" '+attributes+'><i class="fa-solid fa-'+icon+'" aria-hidden="true"></i></button>';
+}
+function openAdminDialog(title,html){
+ const dialog=document.createElement('dialog');
+ dialog.className='preview-dialog';
+ dialog.setAttribute('aria-label',title);
+ dialog.innerHTML='<div class="dialog-head"><h2>'+esc(title)+'</h2><form method="dialog">'+iconButton('xmark','Close').replace('type="button"','type="submit"')+'</form></div>'+html;
+ $('#modal-root').append(dialog);
+ dialog.addEventListener('close',()=>dialog.remove(),{once:true});
+ dialog.showModal();
+ return dialog;
+}
+function downloadAdminFile(blob,name){
+ const url=URL.createObjectURL(blob);
+ const link=document.createElement('a');link.href=url;link.download=name;link.click();
+ setTimeout(()=>URL.revokeObjectURL(url),30000);
+}
+async function getAdminRows(build){
+ const rows=[];
+ for(let offset=0;;offset+=500){
+  const {data,error}=await build().range(offset,offset+499);
+  if(error)throw error;
+  rows.push(...data);
+  if(data.length<500)return rows;
+ }
+}
+async function exportAnalytics(){
+ try{
+  const rows=await getAdminRows(()=>sb.from('admin_analytics_snapshots').select('day,channel,views,interactions,audience').order('day',{ascending:false}).order('channel'));
+  const headings='Date,Channel,Views or impressions,Interactions,Visitors or followers';
+  const csv=[headings,...rows.map(r=>[r.day,analyticsChannels[r.channel],r.views,r.interactions,r.audience].join(','))].join('\r\n');
+  downloadAdminFile(new Blob(['\uFEFF',csv],{type:'text/csv;charset=utf-8'}),'aakruti-analytics.csv');
+ }catch{toast('Analytics could not be exported.');}
+}
+const enquirySubject=row=>row.subject||row.product_name||'Website enquiry';
+const enquiryDate=row=>new Date(row.created_at).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
+function enquiryQuery(status){
+ let query=sb.from('enquiries').select('*').order('created_at',{ascending:false}).order('id');
+ return status?query.eq('status',status):query;
+}
+async function showEnquiry(row){
+ const tel=String(row.phone||'').replace(/[^+\d]/g,'');
+ const email=String(row.email||'');
+ const dialog=openAdminDialog(enquirySubject(row),'<p><strong>'+esc(row.name)+'</strong> · '+esc(enquiryDate(row))+'</p><p>'+esc([row.phone,email].filter(Boolean).join(' · '))+'</p><p class="enquiry-message">'+esc(row.message||'No additional details')+'</p>'+
+ '<form data-update-enquiry><label>Status <select name="status" class="field">'+enquiryStatuses.map(s=>'<option '+(s===(row.status||'new')?'selected':'')+'>'+s+'</option>').join('')+'</select></label><div class="detail-actions">'+
+ '<button class="btn btn-primary" type="submit"><i class="fa-solid fa-check" aria-hidden="true"></i> Update</button>'+
+ (tel?'<a class="btn" href="tel:'+esc(tel)+'"><i class="fa-solid fa-phone" aria-hidden="true"></i> Call</a>':'')+
+ (email?'<a class="btn" href="mailto:'+encodeURIComponent(email)+'"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Mail</a>':'')+
+ '<button class="btn" type="button" data-share-enquiry><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Share card</button></div></form>');
+ const form=dialog.querySelector('form[data-update-enquiry]');
+ form.onsubmit=async event=>{
+  event.preventDefault();
+  const button=form.querySelector('[type=submit]');
+  button.disabled=true;
+  try{
+   const {error}=await sb.from('enquiries').update({status:form.elements.status.value}).eq('id',row.id);
+   if(error)throw error;
+   dialog.close();toast('Enquiry status updated');loadPage('enquiries');
+  }catch{toast('Could not update enquiry status.');}finally{button.disabled=false;}
+ };
+ dialog.querySelector('[data-share-enquiry]').onclick=()=>shareEnquiry(row);
+}
+async function shareEnquiry(row){
+ const caption='Aakruti enquiry: '+enquirySubject(row)+' · '+(row.name||'');
+ const canvas=document.createElement('canvas');
+ const ctx=canvas.getContext('2d');
+ const sections=[enquirySubject(row),row.name,[row.phone,row.email].filter(Boolean).join(' · '),enquiryDate(row)+' · '+(row.status||'new'),row.message].filter(Boolean);
+ ctx.font='24px sans-serif';
+ const lines=[];
+ for(const section of sections){
+  let line='';
+  for(const character of String(section).slice(0,3000)){
+   if(character==='\n'||ctx.measureText(line+character).width>698){lines.push(line);line=character==='\n'?'':character;}
+   else line+=character;
+  }
+  lines.push(line,'');
+ }
+ canvas.width=800;canvas.height=140+lines.length*35;
+ ctx.fillStyle='#f7f4f1';ctx.fillRect(0,0,800,canvas.height);
+ ctx.fillStyle='#525266';ctx.fillRect(0,0,800,100);ctx.fillStyle='#fff';ctx.font='bold 31px sans-serif';ctx.fillText('Aakruti Enterprises · Enquiry',40,62);
+ ctx.fillStyle='#39384b';ctx.font='24px sans-serif';lines.forEach((line,index)=>ctx.fillText(line,40,137+index*35));
+ const png=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
+ if(!png)return toast('The enquiry card could not be created.');
+ const file=new File([png],'aakruti-enquiry.png',{type:'image/png'});
+ try{
+  if(navigator.canShare?.({files:[file]})){await navigator.share({files:[file],text:caption,title:'Aakruti enquiry'});return;}
+ }catch(error){if(error.name==='AbortError')return;}
+ downloadAdminFile(file,file.name);
+ const fallback=openAdminDialog('Card downloaded','<p>Attach the downloaded card to your WhatsApp message.</p><a class="btn" target="_blank" rel="noopener noreferrer" href="https://wa.me/?text='+encodeURIComponent(caption)+'"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Open WhatsApp with caption</a>');
+ fallback.querySelector('a').focus();
+}
+async function exportEnquiries(){
+ const status=enquiryStatus;
+ const printWindow=window.open('','_blank');
+ if(!printWindow)return toast('Allow pop-ups to open the PDF print view.');
+ try{
+  const rows=await getAdminRows(()=>enquiryQuery(status));
+  const doc=printWindow.document;
+  doc.write('<!doctype html><html lang="en"><meta charset="utf-8"><title>Aakruti enquiry report</title><style>@page{size:A4 landscape;margin:14mm}body{font:12px system-ui;color:#525266}header{border-bottom:3px solid #ff6666;margin-bottom:16px}table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:8px;text-align:left;border-bottom:1px solid #e5ded8;overflow-wrap:anywhere;white-space:pre-wrap}th{background:#ede8ee}tr{break-inside:avoid}thead{display:table-header-group}</style><header><h1>Aakruti Enterprises</h1><p>Enquiry report · '+esc(status||'All statuses')+' · '+rows.length+' records</p></header><table><thead><tr><th>Received</th><th>Customer</th><th>Contact</th><th>Enquiry</th><th>Status</th></tr></thead><tbody>'+rows.map(row=>'<tr>'+[enquiryDate(row),row.name,[row.phone,row.email].filter(Boolean).join('\n'),[enquirySubject(row),row.message].filter(Boolean).join('\n'),row.status||'new'].map(value=>'<td>'+esc(value)+'</td>').join('')+'</tr>').join('')+'</tbody></table></html>');
+  doc.close();printWindow.focus();printWindow.print();
+ }catch{printWindow.close();toast('Enquiries could not be exported.');}
+}
+async function listEnquiries(){
+ const status=enquiryStatus;
+ const {data,error}=await enquiryQuery(status);
+ if(error)throw error;
+ const refresh=iconButton('rotate','Refresh enquiries','data-refresh-enquiries');
+ const exportPdf=iconButton('file-pdf','Export enquiries as PDF','data-export-enquiries');
+ const filter='<div class="enquiry-filter"><label for="enquiry-status-filter">Status</label><select class="field" id="enquiry-status-filter" data-enquiry-status><option value="">All enquiries</option>'+enquiryStatuses.map(value=>'<option value="'+value+'" '+(value===status?'selected':'')+'>'+value+'</option>').join('')+'</select></div>';
+ const rows=data.map(row=>'<tr data-enquiry-id="'+esc(row.id)+'"><td>'+esc(enquiryDate(row))+'</td><td>'+esc(row.name)+'</td><td>'+esc(row.phone)+'<div class="muted">'+esc(row.email||'')+'</div></td><td><strong>'+esc(enquirySubject(row))+'</strong></td><td><span class="pill">'+esc(row.status||'new')+'</span></td><td>'+iconButton('arrow-up-right-from-square','View enquiry from '+(row.name||'customer'))+'</td></tr>').join('');
+ return {data,html:'<div class="section-head">'+refresh+exportPdf+'</div>'+filter+panel('',rows?'<div class="table-wrap enquiry-table" tabindex="0" role="region" aria-label="Enquiry records"><table><thead><tr><th>Received</th><th>Customer</th><th>Contact</th><th>Enquiry</th><th>Status</th><th>Details</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<div class="empty">No enquiries match this view.</div>')};
+}
+const analyticsChannels={website:'Website',instagram:'Instagram',facebook:'Facebook',linkedin:'LinkedIn',youtube:'YouTube'};
 async function listAnalytics(){
  const [{data,error},enquiries]=await Promise.all([
   sb.from('admin_analytics_snapshots').select('day,channel,views,interactions,audience').order('day',{ascending:false}).order('channel').limit(100),
@@ -456,7 +596,7 @@ async function listAnalytics(){
  if(error)throw error;
  const options=Object.entries(analyticsChannels).map(([value,label])=>'<option value="'+value+'">'+label+'</option>').join('');
  const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
- const form='<p class="muted">Enter figures for one reporting date from your website or social dashboard. Saving again for the same date and channel replaces that entry.</p>'+
+ const form=
   '<form class="analytics-form" data-analytics-form>'+
   '<label>Reporting date<input class="field" name="day" type="date" max="'+today+'" value="'+today+'" required></label>'+
   '<label><span>Channel</span><select class="field" name="channel" aria-label="Channel">'+options+'</select></label>'+
@@ -467,12 +607,12 @@ async function listAnalytics(){
   '<div data-analytics-error class="alert hidden" role="alert"></div></form>';
  const value=number=>number==null?'—':Number(number).toLocaleString('en-IN');
  const latestRows=[...new Set(data.map(row=>row.channel))].map(channel=>data.find(row=>row.channel===channel));
- const cards='<div class="cards"><div class="stat"><div class="muted">Website enquiries · all time</div><div class="value">'+value(enquiries)+'</div><button class="kpi-link" data-goto="enquiries">Open inbox <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>'+
-  latestRows.map(row=>'<div class="stat"><div class="muted">'+esc(analyticsChannels[row.channel])+' · '+esc(row.day)+'</div><div class="value">'+value(row.views)+'</div><div class="muted">Views or impressions</div></div>').join('')+'</div>';
+ const cards='<div class="cards"><div class="stat"><div class="muted"><i class="fa-solid fa-inbox stat-icon" aria-hidden="true"></i> Website enquiries · all time</div><div class="value">'+value(enquiries)+'</div><button class="kpi-link" data-goto="enquiries" aria-label="Open inbox"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></button></div>'+
+  latestRows.map(row=>'<div class="stat"><div class="muted"><i class="fa-solid fa-chart-simple stat-icon" aria-hidden="true"></i>'+esc(analyticsChannels[row.channel])+' · '+esc(row.day)+'</div><div class="value">'+value(row.views)+'</div><div class="muted">Views or impressions</div></div>').join('')+'</div>';
  const rows=data.map(row=>'<tr><td>'+esc(row.day)+'</td><td>'+esc(analyticsChannels[row.channel])+'</td><td>'+value(row.views)+'</td><td>'+value(row.interactions)+'</td><td>'+value(row.audience)+'</td></tr>').join('');
- const history=rows?'<div class="table-wrap" role="region" aria-label="Analytics history" tabindex="0"><table><thead><tr><th>Date</th><th>Channel</th><th>Views or impressions</th><th>Interactions</th><th>Visitors or followers</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<p class="muted">No figures recorded yet.</p>';
- const source='<div class="section-head"><a class="btn view-site" href="https://docs.google.com/spreadsheets/d/1JRgU4KQPCjVC9KisDO5bI6JuEtvNk_AUXCH4MqAhP3A/edit" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-table" aria-hidden="true"></i> Website analytics sheet</a></div>';
- return source+cards+panel('Record analytics',form)+panel('Reporting history',history);
+ const history=rows?'<div class="table-wrap analytics-history" role="region" aria-label="Analytics history" tabindex="0"><table><thead><tr><th>Date</th><th>Channel</th><th>Views or<br>impressions</th><th>Interactions</th><th>Visitors or<br>followers</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<p class="muted">No figures recorded yet.</p>';
+ const source='<div class="section-head"><a class="btn circle-action" aria-label="Website analytics sheet" title="Website analytics sheet" href="https://docs.google.com/spreadsheets/d/1JRgU4KQPCjVC9KisDO5bI6JuEtvNk_AUXCH4MqAhP3A/edit" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-table" aria-hidden="true"></i></a>'+iconButton('file-csv','Export analytics CSV','data-export-analytics')+'</div>';
+ return source+cards+panel('<i class="fa-solid fa-chart-column" aria-hidden="true"></i> Record analytics <button type="button" class="btn circle-action" data-analytics-info aria-label="About recording analytics"><i class="fa-solid fa-info" aria-hidden="true"></i></button>',form)+panel('<i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> Reporting history',history);
 }
 async function saveAnalytics(event){
  event.preventDefault();
@@ -498,13 +638,126 @@ async function saveAnalytics(event){
   button.disabled=false;
  }
 }
-async function loadPage(page){const request=++pageRequest;$('[data-home]').classList.toggle('hidden',page==='dashboard');$('#page-title').textContent=({dashboard:'Overview',products:'Products',categories:'Categories',brand:'Brand assets',blog:'Blog',enquiries:'Enquiries',analytics:'Analytics'})[page]||page;const root=$('#page-content');$('#page-action').replaceChildren();root.innerHTML='<div class="panel muted">Loading…</div>';try{const render=({dashboard,products:listProducts,categories:listCategories,brand:listBrandAssets,blog:listBlog,enquiries:listEnquiries,analytics:listAnalytics})[page];const html=await render();if(request!==pageRequest||page!==currentPage||!profile)return;root.innerHTML=html;root.querySelectorAll("[data-brand-upload]").forEach(form=>form.onsubmit=uploadBrandAsset);root.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>navigateAdmin(b.dataset.goto,b.dataset.enquiryFilter||''));const filter=root.querySelector('[data-enquiry-status]');if(filter)filter.onchange=()=>{enquiryStatus=filter.value;loadPage('enquiries');};const analyticsForm=root.querySelector('[data-analytics-form]');if(analyticsForm)analyticsForm.onsubmit=saveAnalytics;root.querySelectorAll('[data-refresh-enquiries]').forEach(b=>b.onclick=()=>loadPage('enquiries'));root.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>openForm(b.dataset.add));root.querySelectorAll('[data-edit-product]').forEach(b=>b.onclick=()=>openForm('product',b.dataset.editProduct));root.querySelectorAll('[data-edit-category]').forEach(b=>b.onclick=()=>openForm('category',b.dataset.editCategory));root.querySelectorAll('[data-edit-blog]').forEach(b=>b.onclick=()=>openForm('blog',b.dataset.editBlog));root.querySelectorAll('[data-delete-product]').forEach(b=>b.onclick=()=>del('products',b.dataset.deleteProduct));root.querySelectorAll('[data-delete-category]').forEach(b=>b.onclick=()=>del('categories',b.dataset.deleteCategory));root.querySelectorAll('[data-delete-blog]').forEach(b=>b.onclick=()=>del('blog_posts',b.dataset.deleteBlog));root.querySelectorAll('[data-status]').forEach(s=>s.onchange=async()=>{const {error}=await sb.from('enquiries').update({status:s.value}).eq('id',s.dataset.status);if(error)toast(error.message);else{toast('Enquiry status updated');if(enquiryStatus&&currentPage==='enquiries')loadPage('enquiries');}});const toolbar=root.querySelector('.section-head');if(toolbar){$('#page-action').append(...toolbar.children);toolbar.remove();}}catch(e){if(request===pageRequest&&page===currentPage&&profile)root.innerHTML='<div class="alert">'+esc(e.message)+'</div>'}}
+async function loadPage(page){const request=++pageRequest;$('[data-home]').classList.toggle('hidden',page==='dashboard');$('#page-title').textContent=({dashboard:'Overview',products:'Products',categories:'Categories',brand:'Brand assets',blog:'Blog',enquiries:'Enquiries',analytics:'Analytics'})[page]||page;const root=$('#page-content');$('#page-action').replaceChildren();root.innerHTML='<div class="panel muted">Loading…</div>';try{const render=({dashboard,products:listProducts,categories:listCategories,brand:listBrandAssets,blog:listBlog,enquiries:listEnquiries,analytics:listAnalytics})[page];const result=await render();if(request!==pageRequest||page!==currentPage||!profile)return;root.innerHTML=typeof result==='string'?result:result.html;root.querySelectorAll('[data-brand-upload]').forEach(form=>{
+ form.onsubmit=uploadBrandAsset;
+ form.elements.asset.onchange=()=>{form.querySelector('[data-filename]').textContent=form.elements.asset.files[0]?.name||'';};
+ });root.querySelectorAll('[data-preview-asset]').forEach(button=>button.onclick=()=>openAdminDialog(button.dataset.previewLabel,'<div class="asset-scroll"><img class="asset-large" alt="" src="'+esc(button.dataset.previewAsset)+'"></div>'));root.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>navigateAdmin(b.dataset.goto,b.dataset.enquiryFilter||''));if(page==='enquiries'){
+  const records=new Map(result.data.map(row=>[String(row.id),row]));
+  root.querySelectorAll('[data-enquiry-id]').forEach(tr=>tr.onclick=()=>showEnquiry(records.get(tr.dataset.enquiryId)));
+  root.querySelector('[data-export-enquiries]').onclick=exportEnquiries;
+ }
+ const exportButton=root.querySelector('[data-export-analytics]');
+ if(exportButton)exportButton.onclick=exportAnalytics;
+ const info=root.querySelector('[data-analytics-info]');
+ if(info)info.onclick=()=>openAdminDialog('Record analytics','<p>Enter figures for one reporting date from your website or social dashboard. Saving again for the same date and channel replaces that entry.</p>');
+ const filter=root.querySelector('[data-enquiry-status]');if(filter)filter.onchange=()=>{enquiryStatus=filter.value;loadPage('enquiries');};const analyticsForm=root.querySelector('[data-analytics-form]');if(analyticsForm)analyticsForm.onsubmit=saveAnalytics;root.querySelectorAll('[data-refresh-enquiries]').forEach(b=>b.onclick=()=>loadPage('enquiries'));root.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>openForm(b.dataset.add));root.querySelectorAll('[data-edit-product]').forEach(b=>b.onclick=()=>openForm('product',b.dataset.editProduct));root.querySelectorAll('[data-edit-category]').forEach(b=>b.onclick=()=>openForm('category',b.dataset.editCategory));root.querySelectorAll('[data-edit-blog]').forEach(b=>b.onclick=()=>openForm('blog',b.dataset.editBlog));root.querySelectorAll('[data-delete-product]').forEach(b=>b.onclick=()=>del('products',b.dataset.deleteProduct));root.querySelectorAll('[data-delete-category]').forEach(b=>b.onclick=()=>del('categories',b.dataset.deleteCategory));root.querySelectorAll('[data-delete-blog]').forEach(b=>b.onclick=()=>del('blog_posts',b.dataset.deleteBlog));const toolbar=root.querySelector('.section-head');if(toolbar){$('#page-action').append(...toolbar.children);toolbar.remove();}}catch(e){if(request===pageRequest&&page===currentPage&&profile)root.innerHTML='<div class="alert">'+esc(e.message)+'</div>'}}
 async function del(table,id){if(!confirm('Delete this record? This cannot be undone.'))return;const {error}=await sb.from(table).delete().eq('id',id);if(error)toast(error.message);else{toast('Deleted');loadPage(currentPage)}}
+function articleImageUrl(value){
+ if(!value)return '';
+ try{
+  const url=new URL(value,location.origin);
+  return url.protocol==='https:'||url.origin===location.origin?url.href:'';
+ }catch{return '';}
+}
+function initArticleEditor(form){
+ const preview=form.querySelector('[data-article-preview]');
+ const fileInput=form.elements.cover_file;
+ const dimensions=form.querySelector('[data-cover-dimensions]');
+ const stages=form.querySelectorAll('[data-stage]');
+ let objectUrl='';
+ let pendingImage='';
+ function render(){
+  preview.querySelector('h3').textContent=form.elements.title.value||'Article title';
+  preview.querySelector('[data-preview-excerpt]').textContent=form.elements.excerpt.value;
+  preview.querySelector('[data-preview-body]').textContent=form.elements.content.value||'Article content will appear here.';
+  for(const stage of stages){
+   if(stage.dataset.stage===form.elements.status.value)stage.setAttribute('aria-current','step');
+   else stage.removeAttribute('aria-current');
+  }
+  const image=preview.querySelector('img');
+  const src=objectUrl||articleImageUrl(form.elements.featured_image.value);
+  if(src===pendingImage)return;
+  pendingImage=src;
+  image.classList.add('hidden');
+  dimensions.textContent='';
+  if(src)image.src=src;
+  else image.removeAttribute('src');
+ }
+ const image=preview.querySelector('img');
+ image.onload=()=>{
+  image.classList.remove('hidden');
+  dimensions.textContent=image.naturalWidth+' × '+image.naturalHeight+' px';
+ };
+ image.onerror=()=>{
+  image.classList.add('hidden');
+  dimensions.textContent='Cover image could not be previewed.';
+ };
+ function releaseCover(){
+  if(objectUrl)URL.revokeObjectURL(objectUrl);
+  objectUrl='';
+ }
+ fileInput.onchange=()=>{
+  releaseCover();
+  const file=fileInput.files[0];
+  if(file&&(!['image/jpeg','image/png','image/webp','image/avif'].includes(file.type)||file.size>10*1024*1024)){
+   fileInput.value='';toast('Choose a JPEG, PNG, WebP or AVIF image up to 10 MB.');
+  }
+  if(fileInput.files[0])objectUrl=URL.createObjectURL(fileInput.files[0]);
+  render();
+ };
+ form.elements.article_import.onchange=async event=>{
+  const input=event.currentTarget;
+  const file=input.files[0];
+  if(!file)return;
+  try{
+   if(file.size>2*1024*1024)throw new Error('Use an article JSON file under 2 MB.');
+   const parsed=JSON.parse(await file.text());
+   const article=parsed?.article??(Array.isArray(parsed)&&parsed.length===1?parsed[0]:parsed);
+   if(!article||typeof article.title!=='string'||!article.title.trim()||typeof article.content!=='string'||!article.content.trim())throw new Error('The JSON must contain one article with a title and content.');
+   const fields=['title','slug','excerpt','content','featured_image','seo_title','seo_description','status','published_at'];
+   for(const key of fields){
+    if(article[key]!=null&&typeof article[key]!=='string')throw new Error(key+' must be text.');
+   }
+   if(article.featured_image&&!articleImageUrl(article.featured_image))throw new Error('The cover image must be an HTTPS or local website URL.');
+   if(article.status&&!['draft','published','archived'].includes(article.status))throw new Error('Use draft, published or archived for status.');
+   if(article.published_at&&!Number.isFinite(Date.parse(article.published_at)))throw new Error('Use a valid date for published_at.');
+   releaseCover();fileInput.value='';
+   for(const key of fields)form.elements[key].value=article[key]??(key==='status'?'draft':'');
+   render();toast('Article imported. Review it before saving.');
+  }catch(error){toast(error instanceof SyntaxError?'This file is not valid JSON.':error.message);}
+  finally{input.value='';}
+ };
+ form.addEventListener('input',render);
+ form.addEventListener('change',render);
+ const observer=new MutationObserver(()=>{if(!form.isConnected){releaseCover();observer.disconnect();}});
+ observer.observe($('#page-content'),{childList:true});
+ render();
+}
+async function articlePayload(fields,row){
+ let cover=fields.get('featured_image')||null;
+ let uploadedPath=null;
+ const file=fields.get('cover_file');
+ if(file?.size){
+  const ext={'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/avif':'avif'}[file.type];
+  if(!ext||file.size>10*1024*1024)throw new Error('Choose a JPEG, PNG, WebP or AVIF image up to 10 MB.');
+  const bucket=sb.storage.from('product-images');
+  const path='products/articles/'+crypto.randomUUID()+'.'+ext;
+  const {error}=await bucket.upload(path,file,{contentType:file.type,upsert:false});
+  if(error)throw error;
+  cover=bucket.getPublicUrl(path).data.publicUrl;
+  uploadedPath=path;
+ }
+ const title=fields.get('title').trim();
+ const status=fields.get('status');
+ return {uploadedPath,payload:{title,slug:slugify(fields.get('slug')||title),excerpt:fields.get('excerpt'),content:fields.get('content'),
+  featured_image:cover,seo_title:fields.get('seo_title'),seo_description:fields.get('seo_description'),status,
+  published_at:status==='published'?(fields.get('published_at')||row.published_at||new Date().toISOString()):null}};
+}
 async function openForm(type,id){const sourcePage=currentPage;let row={};if(id){const table={product:'products',category:'categories',blog:'blog_posts'}[type];const {data,error}=await sb.from(table).select('*').eq('id',id).single();if(error)return toast(error.message);row=data}let cats=[],galleryRows=[];if(type==='product'){const r=await sb.from('categories').select('id,name').order('name');cats=r.data||[];if(id){const g=await sb.from('product_images').select('id,image_url,alt_text,sort_order').eq('product_id',id).order('sort_order');galleryRows=g.data||[]}}
 const forms={
 category:'<label>Name *</label><input class="field" name="name" required value="'+esc(row.name||'')+'"><label>Description</label><textarea class="field" name="description">'+esc(row.description||'')+'</textarea><label>Sort order</label><input class="field" name="sort_order" type="number" value="'+(row.sort_order||0)+'"><label><input name="is_active" type="checkbox" '+(row.is_active!==false?'checked':'')+'> Active</label>',
 product:'<label>Name *</label><input class="field" name="name" required value="'+esc(row.name||'')+'"><label>Category</label><select class="field" name="category_id"><option value="">Uncategorized</option>'+cats.map(c=>'<option value="'+c.id+'" '+(row.category_id===c.id?'selected':'')+'>'+esc(c.name)+'</option>').join('')+'</select><label>Short description</label><input class="field" name="short_description" value="'+esc(row.short_description||'')+'"><label>Description</label><textarea class="field" name="description" rows="4">'+esc(row.description||'')+'</textarea><label>Price (optional)</label><input class="field" name="price" type="number" step="0.01" value="'+esc(row.price||'')+'"><label>Price label</label><input class="field" name="price_label" value="'+esc(row.price_label||'')+'" placeholder="Price on request"><label>Materials</label><input class="field" name="materials" value="'+esc(row.materials||'')+'"><label>Finishes</label><input class="field" name="finishes" value="'+esc(row.finishes||'')+'"><label>Featured image URL</label><input class="field" name="featured_image" value="'+esc(row.featured_image||'')+'"><label>Upload featured image to storage</label><input name="image_file" type="file" accept="image/jpeg,image/png,image/webp,image/avif" style="display:none"><button type="button" class="btn" data-select-featured>Choose featured photo</button><div class="full" id="featured-upload-preview" style="display:flex;align-items:center;gap:10px;margin:4px 0 12px"><img id="featured-preview-img" src="" style="width:100px;height:100px;object-fit:cover;border-radius:8px;border:1px solid var(--line);display:none" alt="Featured image preview"><span id="featured-upload-status" class="muted">Choose a file; the image preview and upload status will appear here.</span></div><label>Additional gallery photos (select multiple)</label><input name="gallery_files" type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple style="display:none"><button type="button" class="btn" data-select-gallery>Choose gallery photos</button><small class="muted full" data-gallery-selection>No gallery photos chosen.</small><div class="full"><small class="muted">Gallery photos are added to the product after saving. Existing gallery photos:</small><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">'+galleryRows.map(g=>'<img src="'+esc(g.image_url)+'" alt="" style="width:88px;height:88px;object-fit:cover;border-radius:8px;border:1px solid var(--line)">').join('')+'</div></div><label><input name="is_featured" type="checkbox" '+(row.is_featured?'checked':'')+'> Featured</label><label><input name="is_active" type="checkbox" '+(row.is_active!==false?'checked':'')+'> Published/active</label>',
-blog:'<div class="article-field full"><label for="article-title">Title *</label><input class="field" name="title" id="article-title" required value="'+esc(row.title||'')+'"></div><div class="article-field full"><label for="article-excerpt">Excerpt</label><textarea class="field" name="excerpt" id="article-excerpt" rows="2">'+esc(row.excerpt||'')+'</textarea></div><div class="article-field full"><label for="article-content">Article content *</label><textarea class="field" name="content" id="article-content" rows="8" required>'+esc(row.content||'')+'</textarea></div><div class="article-field"><label for="article-featured_image">Cover image URL</label><input class="field" name="featured_image" id="article-featured_image" value="'+esc(row.featured_image||'')+'"></div><div class="article-field"><label for="article-seo_title">SEO title</label><input class="field" name="seo_title" id="article-seo_title" value="'+esc(row.seo_title||'')+'"></div><div class="article-field"><label for="article-seo_description">SEO description</label><textarea class="field" name="seo_description" id="article-seo_description">'+esc(row.seo_description||'')+'</textarea></div><div class="article-field"><label for="article-status">Status</label><select class="field" name="status" id="article-status"><option '+(row.status==='draft'?'selected':'')+'>draft</option><option '+(row.status==='published'?'selected':'')+'>published</option><option '+(row.status==='archived'?'selected':'')+'>archived</option></select></div>'
+blog:'<div class="article-field full"><label for="article-import">Import article JSON</label><input class="field" type="file" id="article-import" name="article_import" accept=".json,application/json"><small class="muted">Include title and content, plus optional slug, excerpt, featured_image, seo_title, seo_description, status and published_at.</small></div><div class="article-field full"><label for="article-title">Title *</label><input class="field" name="title" id="article-title" required value="'+esc(row.title||'')+'"></div><div class="article-field full"><label for="article-excerpt">Excerpt</label><textarea class="field" name="excerpt" id="article-excerpt" rows="2">'+esc(row.excerpt||'')+'</textarea></div><div class="article-field full"><label for="article-content">Article content *</label><textarea class="field" name="content" id="article-content" rows="8" required>'+esc(row.content||'')+'</textarea></div><div class="article-field"><label for="article-cover">Cover image</label><input class="field" type="file" id="article-cover" name="cover_file" accept="image/jpeg,image/png,image/webp,image/avif"><small class="muted">Recommended: 1200 × 630 px · Max 10 MB</small><small class="muted" data-cover-dimensions role="status"></small><input type="hidden" name="featured_image" value="'+esc(row.featured_image||'')+'"><input type="hidden" name="published_at" value="'+esc(row.published_at||'')+'"></div><div class="article-field"><label for="article-slug">URL slug</label><input class="field" id="article-slug" name="slug" value="'+esc(row.slug||'')+'" placeholder="Generated from title"></div><div class="article-field"><label for="article-seo_title">SEO title</label><input class="field" name="seo_title" id="article-seo_title" value="'+esc(row.seo_title||'')+'"></div><div class="article-field"><label for="article-seo_description">SEO description</label><textarea class="field" name="seo_description" id="article-seo_description">'+esc(row.seo_description||'')+'</textarea></div><div class="article-field full"><label for="article-status">Status</label><div class="article-status"><div class="milestones">'+['draft','published','archived'].map(stage=>'<span data-stage="'+stage+'">'+stage[0].toUpperCase()+stage.slice(1)+'</span>').join('')+'</div><select class="field" name="status" id="article-status">'+['draft','published','archived'].map(stage=>'<option '+(row.status===stage?'selected':'')+'>'+stage+'</option>').join('')+'</select></div></div><div class="article-preview full" data-article-preview><div class="preview-bar"><i class="fa-solid fa-globe" aria-hidden="true"></i> Aakruti Enterprises · Article preview</div><article><img class="hidden" alt=""><h3></h3><p data-preview-excerpt></p><p data-preview-body></p></article></div>'
 };
 if(currentPage!==sourcePage||!profile)return;
 const isArticle=type==='blog';
@@ -519,6 +772,7 @@ if(isArticle){
  $('#page-action').replaceChildren();
  $('#page-content').replaceChildren(backdrop);
  backdrop.innerHTML=formMarkup;
+ initArticleEditor(backdrop.querySelector('form'));
  $('#page-title').focus();
  window.scrollTo(0,0);
 }else{
@@ -528,7 +782,24 @@ if(isArticle){
 }
 backdrop.querySelectorAll('[data-close]').forEach(button=>button.onclick=()=>{backdrop.remove();if(isArticle)loadPage('blog');});
 if(type==='product'){const featuredInput=backdrop.querySelector('[name=image_file]'),featuredPreview=backdrop.querySelector('#featured-preview-img'),featuredStatus=backdrop.querySelector('#featured-upload-status');backdrop.querySelector('[data-select-featured]').onclick=()=>featuredInput.click();backdrop.querySelector('[data-select-gallery]').onclick=()=>backdrop.querySelector('[name=gallery_files]').click();if(row.featured_image){featuredPreview.src=row.featured_image;featuredPreview.style.display='';featuredStatus.textContent='Current saved image preview. Select a new file to replace it.';}featuredInput.addEventListener('change',()=>{const file=featuredInput.files?.[0],preview=backdrop.querySelector('#featured-preview-img'),status=backdrop.querySelector('#featured-upload-status');if(!file){status.textContent=row.featured_image?'Current saved image remains.':'No new file selected.';return;}if(file.size>10*1024*1024){featuredInput.value='';status.textContent='File is too large. Maximum upload size is 10 MB.';toast('Image exceeds 10 MB limit');return;}preview.src=URL.createObjectURL(file);preview.style.display='';status.textContent='Selected file: '+file.name+' ('+(file.size/1024/1024).toFixed(2)+' MB). Upload occurs when you click Save.';});backdrop.querySelector('[name=gallery_files]').addEventListener('change',e=>{const files=Array.from(e.target.files||[]),info=backdrop.querySelector('[data-gallery-selection]');const tooLarge=files.find(x=>x.size>10*1024*1024);if(tooLarge){e.target.value='';if(info)info.textContent='One or more files exceed the 10 MB limit.';toast('Each gallery photo must be 10 MB or less');return;}if(info)info.textContent=files.length?'Selected '+files.length+' gallery photo(s): '+files.map(x=>x.name).join(', '):'No gallery photos chosen.';});}
-backdrop.querySelector('#record-form').onsubmit=async e=>{e.preventDefault();const f=e.currentTarget,fd=new FormData(f);let payload={};if(type==='category'){payload={name:fd.get('name').trim(),slug:slugify(fd.get('name')),description:fd.get('description'),sort_order:Number(fd.get('sort_order')||0),is_active:fd.has('is_active')}}if(type==='product'){payload={name:fd.get('name').trim(),slug:slugify(fd.get('name')),category_id:fd.get('category_id')||null,short_description:fd.get('short_description'),description:fd.get('description'),price:fd.get('price')?Number(fd.get('price')):null,price_label:fd.get('price_label'),materials:fd.get('materials'),finishes:fd.get('finishes'),featured_image:fd.get('featured_image')||null,is_featured:fd.has('is_featured'),is_active:fd.has('is_active')};const file=fd.get('image_file');if(file&&file.size){const path='products/'+Date.now()+'-'+slugify(file.name);const {error:upErr}=await sb.storage.from('product-images').upload(path,file,{upsert:false,contentType:file.type});if(upErr)return toast('Image upload: '+upErr.message);const {data:urlData}=sb.storage.from('product-images').getPublicUrl(path);payload.featured_image=urlData.publicUrl;const preview=backdrop.querySelector('#featured-preview-img');preview.src=urlData.publicUrl;preview.style.display='';backdrop.querySelector('#featured-upload-status').textContent='Upload successful. Image URL saved to product record.';backdrop.querySelector('[name=featured_image]').value=urlData.publicUrl}}if(type==='blog'){payload={title:fd.get('title').trim(),slug:slugify(fd.get('title')),excerpt:fd.get('excerpt'),content:fd.get('content'),featured_image:fd.get('featured_image')||null,seo_title:fd.get('seo_title'),seo_description:fd.get('seo_description'),status:fd.get('status'),published_at:fd.get('status')==='published'?(row.published_at||new Date().toISOString()):null}}const table={product:'products',category:'categories',blog:'blog_posts'}[type];const q=id?sb.from(table).update(payload).eq('id',id):sb.from(table).insert(payload);const {data:saved,error}=await q.select('id').single();if(error)return toast(error.message);if(type==='product'){const productId=id||saved.id;const galleryFiles=Array.from(fd.getAll('gallery_files')).filter(file=>file&&file.size);for(let i=0;i<galleryFiles.length;i++){const file=galleryFiles[i],path='products/gallery/'+productId+'/'+Date.now()+'-'+i+'-'+slugify(file.name);const {error:upErr}=await sb.storage.from('product-images').upload(path,file,{upsert:false,contentType:file.type});if(upErr)return toast('Gallery upload failed: '+upErr.message);const {data:urlData}=sb.storage.from('product-images').getPublicUrl(path);const {error:rowErr}=await sb.from('product_images').insert({product_id:productId,image_url:urlData.publicUrl,alt_text:payload.name+' photo '+(galleryRows.length+i+1),sort_order:galleryRows.length+i+1});if(rowErr)return toast('Gallery record failed: '+rowErr.message)}}backdrop.remove();toast('Saved successfully');loadPage(currentPage)}}
+backdrop.querySelector('#record-form').onsubmit=async e=>{e.preventDefault();const f=e.currentTarget,fd=new FormData(f);let payload={};if(type==='category'){payload={name:fd.get('name').trim(),slug:slugify(fd.get('name')),description:fd.get('description'),sort_order:Number(fd.get('sort_order')||0),is_active:fd.has('is_active')}}if(type==='product'){payload={name:fd.get('name').trim(),slug:slugify(fd.get('name')),category_id:fd.get('category_id')||null,short_description:fd.get('short_description'),description:fd.get('description'),price:fd.get('price')?Number(fd.get('price')):null,price_label:fd.get('price_label'),materials:fd.get('materials'),finishes:fd.get('finishes'),featured_image:fd.get('featured_image')||null,is_featured:fd.has('is_featured'),is_active:fd.has('is_active')};const file=fd.get('image_file');if(file&&file.size){const path='products/'+Date.now()+'-'+slugify(file.name);const {error:upErr}=await sb.storage.from('product-images').upload(path,file,{upsert:false,contentType:file.type});if(upErr)return toast('Image upload: '+upErr.message);const {data:urlData}=sb.storage.from('product-images').getPublicUrl(path);payload.featured_image=urlData.publicUrl;const preview=backdrop.querySelector('#featured-preview-img');preview.src=urlData.publicUrl;preview.style.display='';backdrop.querySelector('#featured-upload-status').textContent='Upload successful. Image URL saved to product record.';backdrop.querySelector('[name=featured_image]').value=urlData.publicUrl}}if(type==='blog'){
+ const button=f.querySelector('[type=submit]');
+ if(button.disabled)return;
+ button.disabled=true;
+ try{
+  const {payload:article,uploadedPath}=await articlePayload(fd,row);
+  const query=id?sb.from('blog_posts').update(article).eq('id',id):sb.from('blog_posts').insert(article);
+  const {error}=await query.select('id').single();
+  if(error){
+   if(uploadedPath)await sb.storage.from('product-images').remove([uploadedPath]);
+   throw error;
+  }
+  toast('Article saved');
+  if(f.isConnected)loadPage('blog');
+ }catch(error){toast(error.message||'The article could not be saved.');}
+ finally{button.disabled=false;}
+ return;
+}const table={product:'products',category:'categories',blog:'blog_posts'}[type];const q=id?sb.from(table).update(payload).eq('id',id):sb.from(table).insert(payload);const {data:saved,error}=await q.select('id').single();if(error)return toast(error.message);if(type==='product'){const productId=id||saved.id;const galleryFiles=Array.from(fd.getAll('gallery_files')).filter(file=>file&&file.size);for(let i=0;i<galleryFiles.length;i++){const file=galleryFiles[i],path='products/gallery/'+productId+'/'+Date.now()+'-'+i+'-'+slugify(file.name);const {error:upErr}=await sb.storage.from('product-images').upload(path,file,{upsert:false,contentType:file.type});if(upErr)return toast('Gallery upload failed: '+upErr.message);const {data:urlData}=sb.storage.from('product-images').getPublicUrl(path);const {error:rowErr}=await sb.from('product_images').insert({product_id:productId,image_url:urlData.publicUrl,alt_text:payload.name+' photo '+(galleryRows.length+i+1),sort_order:galleryRows.length+i+1});if(rowErr)return toast('Gallery record failed: '+rowErr.message)}}backdrop.remove();toast('Saved successfully');loadPage(currentPage)}}
 boot().catch(()=>{
  if(recoveryLanding){showRecovery('Password reset unavailable');recoveryError('Try again shortly or request a new reset link.');}
  else errorBox('The sign-in service is unavailable. Try again shortly.');
