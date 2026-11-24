@@ -1,7 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Aakruti Admin</title>
 <meta name="theme-color" content="#525266">
@@ -22,13 +24,32 @@
 <div id="login-view" class="login-wrap">
  <div class="login-card">
   <div class="brand"><img src="../assets/brand/aakruti-horizontal-light.png" data-brand-asset="aakruti-horizontal-light.png" alt="Aakruti Enterprises" width="180" style="height:auto;vertical-align:middle"> <span class="admin-label"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Admin</span></div>
-  <p class="muted">Sign in to manage the website</p>
+  <p id="login-caption" class="muted">Sign in to manage the website</p>
   <form id="login-form">
-   <label>Email</label><input class="field" id="login-email" type="email" autocomplete="username" required style="margin:7px 0 14px">
-   <label>Password</label><input class="field" id="login-password" type="password" autocomplete="current-password" required style="margin:7px 0 14px">
+   <label for="login-email">Email</label><input class="field" id="login-email" type="email" autocomplete="username" required style="margin:7px 0 14px">
+   <label for="login-password">Password</label><input class="field" id="login-password" type="password" autocomplete="current-password" required style="margin:7px 0 14px">
    <button class="btn btn-primary" style="width:100%" type="submit">Sign in</button>
   </form>
-  <div id="login-error" class="alert hidden"></div>
+  <button id="forgot-password" class="btn" type="button" style="margin-top:12px;width:100%">Forgot password?</button>
+  <section id="recovery-view" class="hidden" aria-labelledby="recovery-title">
+   <h2 id="recovery-title" tabindex="-1">Reset your password</h2>
+   <form id="recovery-request" class="hidden">
+    <label for="recovery-email">Email</label>
+    <input class="field" id="recovery-email" type="email" autocomplete="email" required style="margin:7px 0 14px">
+    <button class="btn btn-primary" type="submit" style="width:100%">Send reset link</button>
+   </form>
+   <form id="recovery-password" class="hidden">
+    <label for="new-password">New password</label>
+    <input class="field" id="new-password" type="password" autocomplete="new-password" minlength="8" required style="margin:7px 0 14px">
+    <label for="confirm-password">Confirm new password</label>
+    <input class="field" id="confirm-password" type="password" autocomplete="new-password" minlength="8" required style="margin:7px 0 14px">
+    <button class="btn btn-primary" type="submit" style="width:100%">Save new password</button>
+   </form>
+   <p id="recovery-status" class="muted" role="status"></p>
+   <div id="recovery-error" class="alert hidden" role="alert"></div>
+   <a class="btn" href="./" style="margin-top:12px">Back to sign in</a>
+  </section>
+  <div id="login-error" class="alert hidden" role="alert"></div>
   <p class="muted" style="font-size:12px;margin-top:16px">Private administrator area.</p>
  </div>
 </div>
@@ -68,11 +89,165 @@ const slugify=s=>String(s||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').r
 let currentPage='dashboard',profile=null;
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2800)}
 function errorBox(m){const e=$('#login-error');e.textContent=m;e.classList.remove('hidden')}
-function setLogin(){ $('#login-view').classList.remove('hidden');$('#app-view').classList.add('hidden');}
-function setApp(){ $('#login-view').classList.add('hidden');$('#app-view').classList.remove('hidden');$('#admin-email').textContent=profile?.email||'';loadPage(currentPage)}
-async function verifyAdmin(user){const {data,error}=await sb.from('admin_profiles').select('id,email,full_name,is_admin').eq('id',user.id).single();if(error){await sb.auth.signOut();throw new Error('Could not read administrator profile: '+error.message+' (code: '+error.code+').');}if(!data){await sb.auth.signOut();throw new Error('No administrator profile found for this signed-in user.');}if(data.is_admin!==true){await sb.auth.signOut();throw new Error('Administrator profile found, but is_admin is false.');}profile=data;}
-async function boot(){if(!sb)return;const {data:{session}}=await sb.auth.getSession();if(session){try{await verifyAdmin(session.user);setApp()}catch(e){setLogin();errorBox(e.message)}}sb.auth.onAuthStateChange(async(event,session)=>{if(event==='SIGNED_OUT'){profile=null;setLogin()}else if(session&&event==='SIGNED_IN'){try{await verifyAdmin(session.user);setApp()}catch(e){setLogin();errorBox(e.message)}}});}
-$('#login-form').addEventListener('submit',async e=>{e.preventDefault();if(!sb)return errorBox('Supabase configuration has not been completed.');$('#login-error').classList.add('hidden');const {error}=await sb.auth.signInWithPassword({email:$('#login-email').value.trim(),password:$('#login-password').value});if(error)errorBox(error.message)});
+function setLogin(){
+ $('#login-view').classList.remove('hidden');
+ $('#app-view').classList.add('hidden');
+}
+function setApp(){
+ $('#login-view').classList.add('hidden');
+ $('#app-view').classList.remove('hidden');
+ $('#admin-email').textContent=profile?.email||'';
+ loadPage(currentPage);
+}
+const recoveryUrl=new URL(location.href);
+const recoveryHash=new URLSearchParams(recoveryUrl.hash.slice(1));
+const recoveryLanding=recoveryUrl.searchParams.has('recovery')||
+ recoveryHash.get('type')==='recovery';
+let recoverySessionId=null;
+
+function showRecovery(title,form=null){
+ setLogin();
+ for(const id of ['login-caption','login-form','forgot-password','login-error']){
+  $('#'+id).classList.add('hidden');
+ }
+ $('#recovery-view').classList.remove('hidden');
+ $('#recovery-title').textContent=title;
+ $('#recovery-title').focus();
+ $('#recovery-request').classList.toggle('hidden',form!=='request');
+ $('#recovery-password').classList.toggle('hidden',form!=='password');
+ $('#recovery-status').textContent='';
+ $('#recovery-error').classList.add('hidden');
+}
+function recoveryError(message){
+ $('#recovery-error').textContent=message;
+ $('#recovery-error').classList.remove('hidden');
+}
+function invalidRecovery(){
+ recoverySessionId=null;
+ showRecovery('Reset link unavailable','request');
+ recoveryError('This reset link is invalid or has expired. Request a new link below.');
+}
+async function verifyAdmin(user){
+ const {data,error}=await sb.from('admin_profiles').select('id,email,full_name,is_admin').eq('id',user.id).maybeSingle();
+ if(error)throw new Error('We could not verify administrator access. Try again shortly.');
+ if(!data?.is_admin)throw new Error('No administrator access. Ask your Aakruti administrator to grant access.');
+ profile=data;
+}
+async function openAdmin(user){
+ try{
+  await verifyAdmin(user);
+  setApp();
+ }catch(error){
+  await sb.auth.signOut({scope:'local'});
+  profile=null;
+  setLogin();
+  errorBox(error.message);
+ }
+}
+async function boot(){
+ if(!sb){
+  if(recoveryLanding){showRecovery('Password reset unavailable');recoveryError('The admin sign-in service is unavailable. Try again later.');}
+  return;
+ }
+ // Subscribe before waiting for initialization so a recovery event cannot be missed.
+ let acceptRecovery;
+ const recoveryEvent=new Promise(resolve=>{acceptRecovery=resolve;});
+ sb.auth.onAuthStateChange((event,session)=>{
+  if(event==='PASSWORD_RECOVERY'&&recoveryLanding&&session?.user)acceptRecovery(session.user.id);
+  if(event==='SIGNED_OUT'){profile=null;setLogin();}
+ });
+ if(recoveryLanding)showRecovery('Checking your reset link');
+ const {data:{session}}=await sb.auth.getSession();
+ if(recoveryLanding){
+  history.replaceState(null,'',location.pathname+'?recovery=1');
+  if(session&&recoveryHash.get('type')==='recovery'&&recoveryHash.has('access_token')){
+   // The SDK may publish PASSWORD_RECOVERY just after getSession resolves.
+   let timeout;
+   recoverySessionId=await Promise.race([recoveryEvent,new Promise(resolve=>{timeout=setTimeout(()=>resolve(null),2000);})]);
+   clearTimeout(timeout);
+  }
+  if(!session||recoverySessionId!==session.user.id){
+   invalidRecovery();
+   return;
+  }
+  try{
+   await verifyAdmin(session.user);
+   showRecovery('Choose a new password','password');
+  }catch(error){
+   await sb.auth.signOut({scope:'local'});
+   recoverySessionId=null;
+   profile=null;
+   showRecovery('Administrator access unavailable');
+   recoveryError(error.message);
+  }
+  return;
+ }
+ if(session)await openAdmin(session.user);
+}
+$('#login-form').addEventListener('submit',async event=>{
+ event.preventDefault();
+ if(!sb)return errorBox('The admin sign-in service is unavailable.');
+ $('#login-error').classList.add('hidden');
+ const button=event.currentTarget.querySelector('button[type=submit]');
+ button.disabled=true;
+ try{
+  const {data,error}=await sb.auth.signInWithPassword({email:$('#login-email').value.trim(),password:$('#login-password').value});
+  if(error){errorBox(error.code==='email_not_confirmed'?'Confirm your email address before signing in.':'Sign-in failed. Check your email and password, or request a reset link.');return;}
+  $('#login-password').value='';
+  if(data.user)await openAdmin(data.user);
+ }catch{errorBox('The sign-in service is unavailable. Try again shortly.');}
+ finally{button.disabled=false;}
+});
+$('#forgot-password').addEventListener('click',()=>{
+ showRecovery('Reset your password','request');
+ $('#recovery-email').value=$('#login-email').value;
+ $('#recovery-email').focus();
+});
+$('#recovery-request').addEventListener('submit',async event=>{
+ event.preventDefault();
+ if(!sb)return recoveryError('The password reset service is unavailable. Try again later.');
+ const button=event.currentTarget.querySelector('button[type=submit]');
+ button.disabled=true;
+ $('#recovery-error').classList.add('hidden');
+ $('#recovery-status').textContent='';
+ try{
+  const redirectTo=new URL('/admin/?recovery=1',location.origin).href;
+  const {error}=await sb.auth.resetPasswordForEmail($('#recovery-email').value.trim(),{redirectTo});
+  if(error&&error.code!=='user_not_found'){
+   recoveryError('The reset request could not be sent. Wait a moment and try again.');
+   return;
+  }
+  $('#recovery-status').textContent='If the address is registered, you’ll receive a password reset link. Check your inbox and spam folder.';
+ }catch{recoveryError('The reset request could not be sent. Try again shortly.');}
+ finally{button.disabled=false;}
+});
+$('#recovery-password').addEventListener('submit',async event=>{
+ event.preventDefault();
+ const form=event.currentTarget;
+ const password=$('#new-password').value;
+ $('#recovery-error').classList.add('hidden');
+ if(password!==$('#confirm-password').value)return recoveryError('The passwords do not match.');
+ const button=form.querySelector('button[type=submit]');
+ button.disabled=true;
+ try{
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session||session.user.id!==recoverySessionId)return invalidRecovery();
+  const {error}=await sb.auth.updateUser({password});
+  if(error){
+   if(['session_not_found','session_expired','refresh_token_not_found'].includes(error.code))return invalidRecovery();
+   recoveryError(error.code==='weak_password'?'Choose a stronger password.':error.code==='same_password'?'Choose a password different from your previous one.':'The password could not be updated. Try again or request a new reset link.');
+   return;
+  }
+  recoverySessionId=null;
+  form.reset();
+  const {error:signOutError}=await sb.auth.signOut();
+  if(signOutError)await sb.auth.signOut({scope:'local'});
+  profile=null;
+  showRecovery('Password updated');
+  $('#recovery-status').textContent='Go back to sign in with your new password.';
+ }catch{recoveryError('The password reset service is unavailable. Try again shortly.');}
+ finally{button.disabled=false;}
+});
 $('#logout').addEventListener('click',()=>sb?.auth.signOut());
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x===b));currentPage=b.dataset.page;loadPage(currentPage)}));
 async function count(table,filters=[]){let q=sb.from(table).select('id',{count:'exact',head:true});filters.forEach(([k,v])=>q=q.eq(k,v));const {count,error}=await q;if(error)throw error;return count||0}
@@ -132,7 +307,10 @@ blog:'<label>Title *</label><input class="field" name="title" required value="'+
 const backdrop=document.createElement('div');backdrop.className='modal-backdrop';backdrop.innerHTML='<div class="modal"><div class="modal-head"><h2 style="margin:0">'+(id?'Edit ':'Add ')+({product:'product',category:'category',blog:'article'}[type])+'</h2><button class="btn" data-close>Close</button></div><form id="record-form" class="form-grid">'+forms[type]+'<div class="full" style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px"><button type="button" class="btn" data-close>Cancel</button><button class="btn btn-primary" type="submit">Save</button></div></form></div>';$('#modal-root').append(backdrop);backdrop.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>backdrop.remove());backdrop.addEventListener('click',e=>{if(e.target===backdrop)backdrop.remove()});
 if(type==='product'){const featuredInput=backdrop.querySelector('[name=image_file]'),featuredPreview=backdrop.querySelector('#featured-preview-img'),featuredStatus=backdrop.querySelector('#featured-upload-status');backdrop.querySelector('[data-select-featured]').onclick=()=>featuredInput.click();backdrop.querySelector('[data-select-gallery]').onclick=()=>backdrop.querySelector('[name=gallery_files]').click();if(row.featured_image){featuredPreview.src=row.featured_image;featuredPreview.style.display='';featuredStatus.textContent='Current saved image preview. Select a new file to replace it.';}featuredInput.addEventListener('change',()=>{const file=featuredInput.files?.[0],preview=backdrop.querySelector('#featured-preview-img'),status=backdrop.querySelector('#featured-upload-status');if(!file){status.textContent=row.featured_image?'Current saved image remains.':'No new file selected.';return;}if(file.size>10*1024*1024){featuredInput.value='';status.textContent='File is too large. Maximum upload size is 10 MB.';toast('Image exceeds 10 MB limit');return;}preview.src=URL.createObjectURL(file);preview.style.display='';status.textContent='Selected file: '+file.name+' ('+(file.size/1024/1024).toFixed(2)+' MB). Upload occurs when you click Save.';});backdrop.querySelector('[name=gallery_files]').addEventListener('change',e=>{const files=Array.from(e.target.files||[]),info=backdrop.querySelector('[data-gallery-selection]');const tooLarge=files.find(x=>x.size>10*1024*1024);if(tooLarge){e.target.value='';if(info)info.textContent='One or more files exceed the 10 MB limit.';toast('Each gallery photo must be 10 MB or less');return;}if(info)info.textContent=files.length?'Selected '+files.length+' gallery photo(s): '+files.map(x=>x.name).join(', '):'No gallery photos chosen.';});}
 backdrop.querySelector('#record-form').onsubmit=async e=>{e.preventDefault();const f=e.currentTarget,fd=new FormData(f);let payload={};if(type==='category'){payload={name:fd.get('name').trim(),slug:slugify(fd.get('name')),description:fd.get('description'),sort_order:Number(fd.get('sort_order')||0),is_active:fd.has('is_active')}}if(type==='product'){payload={name:fd.get('name').trim(),slug:slugify(fd.get('name')),category_id:fd.get('category_id')||null,short_description:fd.get('short_description'),description:fd.get('description'),price:fd.get('price')?Number(fd.get('price')):null,price_label:fd.get('price_label'),materials:fd.get('materials'),finishes:fd.get('finishes'),featured_image:fd.get('featured_image')||null,is_featured:fd.has('is_featured'),is_active:fd.has('is_active')};const file=fd.get('image_file');if(file&&file.size){const path='products/'+Date.now()+'-'+slugify(file.name);const {error:upErr}=await sb.storage.from('product-images').upload(path,file,{upsert:false,contentType:file.type});if(upErr)return toast('Image upload: '+upErr.message);const {data:urlData}=sb.storage.from('product-images').getPublicUrl(path);payload.featured_image=urlData.publicUrl;const preview=backdrop.querySelector('#featured-preview-img');preview.src=urlData.publicUrl;preview.style.display='';backdrop.querySelector('#featured-upload-status').textContent='Upload successful. Image URL saved to product record.';backdrop.querySelector('[name=featured_image]').value=urlData.publicUrl}}if(type==='blog'){payload={title:fd.get('title').trim(),slug:slugify(fd.get('title')),excerpt:fd.get('excerpt'),content:fd.get('content'),featured_image:fd.get('featured_image')||null,seo_title:fd.get('seo_title'),seo_description:fd.get('seo_description'),status:fd.get('status'),published_at:fd.get('status')==='published'?(row.published_at||new Date().toISOString()):null}}const table={product:'products',category:'categories',blog:'blog_posts'}[type];const q=id?sb.from(table).update(payload).eq('id',id):sb.from(table).insert(payload);const {data:saved,error}=await q.select('id').single();if(error)return toast(error.message);if(type==='product'){const productId=id||saved.id;const galleryFiles=Array.from(fd.getAll('gallery_files')).filter(file=>file&&file.size);for(let i=0;i<galleryFiles.length;i++){const file=galleryFiles[i],path='products/gallery/'+productId+'/'+Date.now()+'-'+i+'-'+slugify(file.name);const {error:upErr}=await sb.storage.from('product-images').upload(path,file,{upsert:false,contentType:file.type});if(upErr)return toast('Gallery upload failed: '+upErr.message);const {data:urlData}=sb.storage.from('product-images').getPublicUrl(path);const {error:rowErr}=await sb.from('product_images').insert({product_id:productId,image_url:urlData.publicUrl,alt_text:payload.name+' photo '+(galleryRows.length+i+1),sort_order:galleryRows.length+i+1});if(rowErr)return toast('Gallery record failed: '+rowErr.message)}}backdrop.remove();toast('Saved successfully');loadPage(currentPage)}}
-boot();
+boot().catch(()=>{
+ if(recoveryLanding){showRecovery('Password reset unavailable');recoveryError('Try again shortly or request a new reset link.');}
+ else errorBox('The sign-in service is unavailable. Try again shortly.');
+});
 })();
 </script>
 </body>
