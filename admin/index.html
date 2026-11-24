@@ -6,9 +6,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Aakruti Admin</title>
-<meta name="theme-color" content="#525266">
-<link rel="icon" type="image/png" href="./icons/icon-192.png">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<meta name="theme-color" content="#ff6666">
+<link rel="icon" type="image/png" href="./icons/aakruti-192.png">
+<link rel="apple-touch-icon" href="./icons/aakruti-192.png">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,6 +78,21 @@ td:last-child:has(.icon-action){white-space:nowrap}
  .login-card{padding:24px}
  .icon-action{width:40px;height:40px;min-height:40px}
 }
+
+.page-heading{display:flex;align-items:center;gap:10px}
+.home-back{width:40px;padding:0}
+.kpi-link{display:inline-flex;align-items:center;gap:6px;justify-self:start;min-height:32px;font-size:12px;font-weight:700;color:#a33c42;background:none;border:0;padding:0;text-align:left}
+.kpi-link:hover{text-decoration:underline}
+.pipeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,110px),1fr));gap:8px}
+.pipeline-card{display:grid;gap:6px;min-width:0;padding:11px;text-align:left;background:#f7f4f1;border:1px solid var(--line);border-radius:9px;color:var(--slate)}
+.pipeline-card:hover,.pipeline-card:focus-visible{background:#f9e8e8;border-color:#a33c42}
+.pipeline-card strong{font-size:22px}
+.enquiry-filter{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.enquiry-filter select{width:auto}
+.analytics-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr));gap:12px;align-items:end}
+.analytics-form label{display:grid;gap:6px;min-width:0}
+.analytics-form button{justify-self:start}
+.analytics-form .field{min-width:0}
 </style>
 </head>
 <body>
@@ -133,13 +148,14 @@ td:last-child:has(.icon-action){white-space:nowrap}
    <button data-page="categories"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Categories</button>
    <button data-page="brand"><i class="fa-solid fa-palette" aria-hidden="true"></i> Brand assets</button>
    <button data-page="blog"><i class="fa-solid fa-newspaper" aria-hidden="true"></i> Blog</button>
+   <button data-page="analytics"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Analytics</button>
    <button data-page="enquiries"><i class="fa-solid fa-inbox" aria-hidden="true"></i> Enquiries</button>
   </nav>
   <div class="menu-footer"><button id="logout" class="btn"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign out</button></div>
   </div>
  </dialog>
  <main class="main">
-  <div class="topbar"><h1 id="page-title" tabindex="-1">Overview</h1><div class="topbar-actions"><div id="page-action"></div><a class="btn view-site" href="/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> View website</a></div></div>
+  <div class="topbar"><div class="page-heading"><button class="btn home-back hidden" data-home type="button" aria-label="Back to overview" title="Back to overview"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button><h1 id="page-title" tabindex="-1">Overview</h1></div><div class="topbar-actions"><div id="page-action"></div><a class="btn view-site" href="/" target="_blank" rel="noopener"><i class="fa-solid fa-globe" aria-hidden="true"></i> View website</a></div></div>
   <div id="page-content"></div>
  </main>
 </div>
@@ -346,7 +362,11 @@ $('#logout').addEventListener('click',()=>{
  closeAdminMenu();
  return sb?.auth.signOut();
 });
-function navigateAdmin(page){
+const enquiryStatuses=['new','contacted','quoted','won','lost'];
+let enquiryStatus='';
+let pageRequest=0;
+function navigateAdmin(page,status=''){
+ enquiryStatus=page==='enquiries'?status:'';
  currentPage=page;
  document.querySelectorAll('[data-page]').forEach(button=>{
   const active=button.dataset.page===page;
@@ -358,12 +378,32 @@ function navigateAdmin(page){
  loadPage(page);
  $('#page-title').focus();
 }
+$('[data-home]').addEventListener('click',()=>navigateAdmin('dashboard'));
 document.querySelectorAll('[data-page]').forEach(button=>{
  button.addEventListener('click',()=>navigateAdmin(button.dataset.page));
 });
 async function count(table,filters=[]){let q=sb.from(table).select('id',{count:'exact',head:true});filters.forEach(([k,v])=>q=q.eq(k,v));const {count,error}=await q;if(error)throw error;return count||0}
 function panel(title,body){return '<section class="panel'+(title?'':' table-panel')+'">'+(title?'<h2>'+title+'</h2>':'')+body+'</section>'}
-async function dashboard(){const [p,c,b,e,n]=await Promise.all([count('products'),count('categories'),count('blog_posts'),count('enquiries'),count('enquiries',[['status','new']])]);return '<div class="cards">'+[['Products',p,'box'],['Categories',c,'layer-group'],['Blog articles',b,'newspaper'],['Enquiries',e,'inbox']].map(([t,v,icon])=>'<div class="stat"><div class="muted"><i class="fa-solid fa-'+icon+' stat-icon" aria-hidden="true"></i>'+t+'</div><div class="value">'+v+'</div></div>').join('')+'</div>'+panel('New enquiries','<div style="font-size:24px;font-weight:700">'+n+'</div><p class="muted">Awaiting first response</p><button class="btn small" data-goto="enquiries"><i class="fa-solid fa-inbox" aria-hidden="true"></i> Open inbox</button>') }
+const overviewMetrics=[
+ ['Products','products','products','box'],
+ ['Categories','categories','categories','layer-group'],
+ ['Blog articles','blog_posts','blog','newspaper'],
+ ['Enquiries','enquiries','enquiries','inbox']
+];
+async function dashboard(){
+ const [counts,statusCounts]=await Promise.all([
+  Promise.all(overviewMetrics.map(([,table])=>count(table))),
+  Promise.all(enquiryStatuses.map(status=>count('enquiries',[['status',status]])))
+ ]);
+ const cards=overviewMetrics.map(([label,,page,icon],index)=>
+  '<div class="stat"><div class="muted"><i class="fa-solid fa-'+icon+' stat-icon" aria-hidden="true"></i>'+label+'</div><div class="value">'+counts[index]+'</div><button class="kpi-link" data-goto="'+page+'" aria-label="Open '+label+'">Open <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>'
+ ).join('');
+ const pipeline=enquiryStatuses.map((status,index)=>{
+  const label=status[0].toUpperCase()+status.slice(1);
+  return '<button class="pipeline-card" data-goto="enquiries" data-enquiry-filter="'+status+'"><span>'+label+'</span><strong>'+statusCounts[index]+'</strong></button>';
+ }).join('');
+ return '<div class="cards">'+cards+'</div>'+panel('Enquiry status','<div class="pipeline">'+pipeline+'</div>');
+}
 async function listProducts(){const {data,error}=await sb.from('products').select('id,name,slug,is_active,is_featured,created_at').order('created_at',{ascending:false});if(error)throw error;return '<div class="section-head"><button class="btn btn-primary page-action" data-add="product"><i class="fa-solid fa-plus" aria-hidden="true"></i> Add product</button></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Name</th><th>Slug</th><th>Status</th><th>Featured</th><th>Actions</th></tr></thead><tbody>'+data.map(p=>'<tr><td>'+esc(p.name)+'</td><td>'+esc(p.slug)+'</td><td><span class="pill">'+(p.is_active?'active':'hidden')+'</span></td><td>'+(p.is_featured?'Yes':'No')+'</td><td><button class="btn icon-action" aria-label="Edit product" title="Edit" data-edit-product="'+p.id+'"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button> <button class="btn icon-action" aria-label="Delete product" title="Delete" data-delete-product="'+p.id+'"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No products have been added yet.</div>')}
 async function listCategories(){const {data,error}=await sb.from('categories').select('*').order('sort_order');if(error)throw error;return '<div class="section-head"><button class="btn btn-primary page-action" data-add="category"><i class="fa-solid fa-plus" aria-hidden="true"></i> Add category</button></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Name</th><th>Slug</th><th>Active</th><th>Actions</th></tr></thead><tbody>'+data.map(c=>'<tr><td>'+esc(c.name)+'</td><td>'+esc(c.slug)+'</td><td>'+(c.is_active?'Yes':'No')+'</td><td><button class="btn icon-action" aria-label="Edit category" title="Edit" data-edit-category="'+c.id+'"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button> <button class="btn icon-action" aria-label="Delete category" title="Delete" data-delete-category="'+c.id+'"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No categories yet.</div>')}
 const brandAssetSlots = [
@@ -407,7 +447,58 @@ async function uploadBrandAsset(event){
  }
 }
 async function listBlog(){const {data,error}=await sb.from('blog_posts').select('id,title,slug,status,published_at,created_at').order('created_at',{ascending:false});if(error)throw error;return '<div class="section-head"><button class="btn btn-primary page-action" data-add="blog"><i class="fa-solid fa-plus" aria-hidden="true"></i> New article</button></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Title</th><th>Slug</th><th>Status</th><th>Published</th><th>Actions</th></tr></thead><tbody>'+data.map(b=>'<tr><td>'+esc(b.title)+'</td><td>'+esc(b.slug)+'</td><td><span class="pill">'+esc(b.status)+'</span></td><td>'+esc(b.published_at?new Date(b.published_at).toLocaleDateString():'—')+'</td><td><button class="btn icon-action" aria-label="Edit article" title="Edit" data-edit-blog="'+b.id+'"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button> <button class="btn icon-action" aria-label="Delete article" title="Delete" data-delete-blog="'+b.id+'"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No articles yet.</div>')}
-async function listEnquiries(){const {data,error}=await sb.from('enquiries').select('*').order('created_at',{ascending:false});if(error)throw error;return '<div class="section-head"><button class="btn page-action" data-refresh-enquiries><i class="fa-solid fa-rotate" aria-hidden="true"></i> Refresh</button></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Received</th><th>Customer</th><th>Contact</th><th>Enquiry</th><th>Status</th><th>Update</th></tr></thead><tbody>'+data.map(q=>'<tr><td>'+new Date(q.created_at).toLocaleString()+'</td><td>'+esc(q.name)+'</td><td><a href="tel:'+esc(q.phone)+'">'+esc(q.phone)+'</a><div class="muted">'+esc(q.email||'')+'</div></td><td><strong>'+esc(q.subject||q.product_name||'Website enquiry')+'</strong><div class="muted" style="white-space:normal;max-width:360px;margin-top:5px">'+esc(q.message||'No additional details')+'</div></td><td><span class="pill">'+esc(q.status||'new')+'</span></td><td><select class="field" style="min-width:110px;padding:6px" data-status="'+q.id+'">'+['new','contacted','quoted','won','lost'].map(s=>'<option '+(s===(q.status||'new')?'selected':'')+'>'+s+'</option>').join('')+'</select></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No enquiries received yet.</div>')}async function loadPage(page){$('#page-title').textContent=({dashboard:'Overview',products:'Products',categories:'Categories',brand:'Brand assets',blog:'Blog',enquiries:'Enquiries'})[page]||page;const root=$('#page-content');$('#page-action').replaceChildren();root.innerHTML='<div class="panel muted">Loading…</div>';try{const render=({dashboard,products:listProducts,categories:listCategories,brand:listBrandAssets,blog:listBlog,enquiries:listEnquiries})[page];const html=await render();if(page!==currentPage||!profile)return;root.innerHTML=html;root.querySelectorAll("[data-brand-upload]").forEach(form=>form.onsubmit=uploadBrandAsset);root.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>navigateAdmin(b.dataset.goto));root.querySelectorAll('[data-refresh-enquiries]').forEach(b=>b.onclick=()=>loadPage('enquiries'));root.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>openForm(b.dataset.add));root.querySelectorAll('[data-edit-product]').forEach(b=>b.onclick=()=>openForm('product',b.dataset.editProduct));root.querySelectorAll('[data-edit-category]').forEach(b=>b.onclick=()=>openForm('category',b.dataset.editCategory));root.querySelectorAll('[data-edit-blog]').forEach(b=>b.onclick=()=>openForm('blog',b.dataset.editBlog));root.querySelectorAll('[data-delete-product]').forEach(b=>b.onclick=()=>del('products',b.dataset.deleteProduct));root.querySelectorAll('[data-delete-category]').forEach(b=>b.onclick=()=>del('categories',b.dataset.deleteCategory));root.querySelectorAll('[data-delete-blog]').forEach(b=>b.onclick=()=>del('blog_posts',b.dataset.deleteBlog));root.querySelectorAll('[data-status]').forEach(s=>s.onchange=async()=>{const {error}=await sb.from('enquiries').update({status:s.value}).eq('id',s.dataset.status);if(error)toast(error.message);else toast('Enquiry status updated')});const toolbar=root.querySelector('.section-head');if(toolbar){$('#page-action').append(...toolbar.children);toolbar.remove();}}catch(e){if(page===currentPage&&profile)root.innerHTML='<div class="alert">'+esc(e.message)+'</div>'}}
+async function listEnquiries(){const status=enquiryStatus;let query=sb.from('enquiries').select('*').order('created_at',{ascending:false});if(status)query=query.eq('status',status);const {data,error}=await query;if(error)throw error;return '<div class="section-head"><button class="btn page-action" data-refresh-enquiries><i class="fa-solid fa-rotate" aria-hidden="true"></i> Refresh</button></div><div class="enquiry-filter"><label for="enquiry-status-filter">Status</label><select class="field" id="enquiry-status-filter" data-enquiry-status><option value="">All enquiries</option>'+enquiryStatuses.map(value=>'<option value="'+value+'" '+(value===status?'selected':'')+'>'+value[0].toUpperCase()+value.slice(1)+'</option>').join('')+'</select></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Received</th><th>Customer</th><th>Contact</th><th>Enquiry</th><th>Status</th><th>Update</th></tr></thead><tbody>'+data.map(q=>'<tr><td>'+new Date(q.created_at).toLocaleString()+'</td><td>'+esc(q.name)+'</td><td><a href="tel:'+esc(q.phone)+'">'+esc(q.phone)+'</a><div class="muted">'+esc(q.email||'')+'</div></td><td><strong>'+esc(q.subject||q.product_name||'Website enquiry')+'</strong><div class="muted" style="white-space:normal;max-width:360px;margin-top:5px">'+esc(q.message||'No additional details')+'</div></td><td><span class="pill">'+esc(q.status||'new')+'</span></td><td><select class="field" style="min-width:110px;padding:6px" data-status="'+q.id+'">'+['new','contacted','quoted','won','lost'].map(s=>'<option '+(s===(q.status||'new')?'selected':'')+'>'+s+'</option>').join('')+'</select></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No enquiries match this view.</div>')}const analyticsChannels={website:'Website',instagram:'Instagram',facebook:'Facebook',linkedin:'LinkedIn',youtube:'YouTube'};
+async function listAnalytics(){
+ const [{data,error},enquiries]=await Promise.all([
+  sb.from('admin_analytics_snapshots').select('day,channel,views,interactions,audience').order('day',{ascending:false}).order('channel').limit(100),
+  count('enquiries')
+ ]);
+ if(error)throw error;
+ const options=Object.entries(analyticsChannels).map(([value,label])=>'<option value="'+value+'">'+label+'</option>').join('');
+ const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+ const form='<p class="muted">Enter figures for one reporting date from your website or social dashboard. Saving again for the same date and channel replaces that entry.</p>'+
+  '<form class="analytics-form" data-analytics-form>'+
+  '<label>Reporting date<input class="field" name="day" type="date" max="'+today+'" value="'+today+'" required></label>'+
+  '<label><span>Channel</span><select class="field" name="channel" aria-label="Channel">'+options+'</select></label>'+
+  '<label>Views or impressions<input class="field" name="views" type="number" min="0" max="2147483647" step="1" required></label>'+
+  '<label>Interactions<input class="field" name="interactions" type="number" min="0" max="2147483647" step="1"></label>'+
+  '<label>Visitors or followers<input class="field" name="audience" type="number" min="0" max="2147483647" step="1"></label>'+
+  '<button class="btn btn-primary" type="submit"><i class="fa-solid fa-check" aria-hidden="true"></i> Save figures</button>'+
+  '<div data-analytics-error class="alert hidden" role="alert"></div></form>';
+ const value=number=>number==null?'—':Number(number).toLocaleString('en-IN');
+ const latestRows=[...new Set(data.map(row=>row.channel))].map(channel=>data.find(row=>row.channel===channel));
+ const cards='<div class="cards"><div class="stat"><div class="muted">Website enquiries · all time</div><div class="value">'+value(enquiries)+'</div><button class="kpi-link" data-goto="enquiries">Open inbox <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>'+
+  latestRows.map(row=>'<div class="stat"><div class="muted">'+esc(analyticsChannels[row.channel])+' · '+esc(row.day)+'</div><div class="value">'+value(row.views)+'</div><div class="muted">Views or impressions</div></div>').join('')+'</div>';
+ const rows=data.map(row=>'<tr><td>'+esc(row.day)+'</td><td>'+esc(analyticsChannels[row.channel])+'</td><td>'+value(row.views)+'</td><td>'+value(row.interactions)+'</td><td>'+value(row.audience)+'</td></tr>').join('');
+ const history=rows?'<div class="table-wrap" role="region" aria-label="Analytics history" tabindex="0"><table><thead><tr><th>Date</th><th>Channel</th><th>Views or impressions</th><th>Interactions</th><th>Visitors or followers</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<p class="muted">No figures recorded yet.</p>';
+ const source='<div class="section-head"><a class="btn view-site" href="https://docs.google.com/spreadsheets/d/1JRgU4KQPCjVC9KisDO5bI6JuEtvNk_AUXCH4MqAhP3A/edit" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-table" aria-hidden="true"></i> Website analytics sheet</a></div>';
+ return source+cards+panel('Record analytics',form)+panel('Reporting history',history);
+}
+async function saveAnalytics(event){
+ event.preventDefault();
+ const form=event.currentTarget;
+ const fields=new FormData(form);
+ const number=name=>fields.get(name)===''?null:Number(fields.get(name));
+ const button=form.querySelector('button[type=submit]');
+ const alert=form.querySelector('[data-analytics-error]');
+ button.disabled=true;
+ alert.classList.add('hidden');
+ try{
+  const {error}=await sb.from('admin_analytics_snapshots').upsert({
+   day:fields.get('day'),channel:fields.get('channel'),views:number('views'),
+   interactions:number('interactions'),audience:number('audience'),updated_at:new Date().toISOString()
+  },{onConflict:'day,channel'});
+  if(error)throw error;
+  toast('Analytics saved');
+  if(currentPage==='analytics'&&form.isConnected)await loadPage('analytics');
+ }catch{
+  alert.textContent='The figures could not be saved. Try again.';
+  alert.classList.remove('hidden');
+ }finally{
+  button.disabled=false;
+ }
+}
+async function loadPage(page){const request=++pageRequest;$('[data-home]').classList.toggle('hidden',page==='dashboard');$('#page-title').textContent=({dashboard:'Overview',products:'Products',categories:'Categories',brand:'Brand assets',blog:'Blog',enquiries:'Enquiries',analytics:'Analytics'})[page]||page;const root=$('#page-content');$('#page-action').replaceChildren();root.innerHTML='<div class="panel muted">Loading…</div>';try{const render=({dashboard,products:listProducts,categories:listCategories,brand:listBrandAssets,blog:listBlog,enquiries:listEnquiries,analytics:listAnalytics})[page];const html=await render();if(request!==pageRequest||page!==currentPage||!profile)return;root.innerHTML=html;root.querySelectorAll("[data-brand-upload]").forEach(form=>form.onsubmit=uploadBrandAsset);root.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>navigateAdmin(b.dataset.goto,b.dataset.enquiryFilter||''));const filter=root.querySelector('[data-enquiry-status]');if(filter)filter.onchange=()=>{enquiryStatus=filter.value;loadPage('enquiries');};const analyticsForm=root.querySelector('[data-analytics-form]');if(analyticsForm)analyticsForm.onsubmit=saveAnalytics;root.querySelectorAll('[data-refresh-enquiries]').forEach(b=>b.onclick=()=>loadPage('enquiries'));root.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>openForm(b.dataset.add));root.querySelectorAll('[data-edit-product]').forEach(b=>b.onclick=()=>openForm('product',b.dataset.editProduct));root.querySelectorAll('[data-edit-category]').forEach(b=>b.onclick=()=>openForm('category',b.dataset.editCategory));root.querySelectorAll('[data-edit-blog]').forEach(b=>b.onclick=()=>openForm('blog',b.dataset.editBlog));root.querySelectorAll('[data-delete-product]').forEach(b=>b.onclick=()=>del('products',b.dataset.deleteProduct));root.querySelectorAll('[data-delete-category]').forEach(b=>b.onclick=()=>del('categories',b.dataset.deleteCategory));root.querySelectorAll('[data-delete-blog]').forEach(b=>b.onclick=()=>del('blog_posts',b.dataset.deleteBlog));root.querySelectorAll('[data-status]').forEach(s=>s.onchange=async()=>{const {error}=await sb.from('enquiries').update({status:s.value}).eq('id',s.dataset.status);if(error)toast(error.message);else{toast('Enquiry status updated');if(enquiryStatus&&currentPage==='enquiries')loadPage('enquiries');}});const toolbar=root.querySelector('.section-head');if(toolbar){$('#page-action').append(...toolbar.children);toolbar.remove();}}catch(e){if(request===pageRequest&&page===currentPage&&profile)root.innerHTML='<div class="alert">'+esc(e.message)+'</div>'}}
 async function del(table,id){if(!confirm('Delete this record? This cannot be undone.'))return;const {error}=await sb.from(table).delete().eq('id',id);if(error)toast(error.message);else{toast('Deleted');loadPage(currentPage)}}
 async function openForm(type,id){const sourcePage=currentPage;let row={};if(id){const table={product:'products',category:'categories',blog:'blog_posts'}[type];const {data,error}=await sb.from(table).select('*').eq('id',id).single();if(error)return toast(error.message);row=data}let cats=[],galleryRows=[];if(type==='product'){const r=await sb.from('categories').select('id,name').order('name');cats=r.data||[];if(id){const g=await sb.from('product_images').select('id,image_url,alt_text,sort_order').eq('product_id',id).order('sort_order');galleryRows=g.data||[]}}
 const forms={
