@@ -16,22 +16,27 @@
 <style>
 :root{--coral:#ff6666;--slate:#525266;--paper:#f7f4f1;--white:#fff;--line:#e5ded8;--muted:#817d87}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--slate);font:14px 'Plus Jakarta Sans',sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
-.login-wrap{min-height:100vh;display:grid;place-items:center;padding:20px}.login-card{width:min(440px,100%);background:#fff;border:1px solid var(--line);padding:34px;border-radius:18px}.brand{font-size:22px;font-weight:700;letter-spacing:.02em}.brand span{color:var(--coral)}.muted{color:var(--muted)}.field{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:white;color:var(--slate)}.field:focus{outline:2px solid #ff666633;border-color:var(--coral)}.btn{padding:10px 14px;border:1px solid var(--line);border-radius:9px;background:white;color:var(--slate);font-weight:600}.btn-primary{background:var(--coral);border-color:var(--coral);color:white}.btn:hover{filter:brightness(.98)}.alert{padding:10px 12px;border-radius:8px;background:#fff0ee;color:#a33c42;margin:12px 0}.layout{min-height:100vh;display:grid;grid-template-columns:235px 1fr}.sidebar{background:#fff;border-right:1px solid var(--line);padding:22px 14px;position:sticky;top:0;height:100vh}.nav{margin-top:28px;display:grid;gap:5px}.nav button{text-align:left;border:0;background:transparent;padding:11px 13px;border-radius:8px;color:var(--slate)}.nav button.active,.nav button:hover{background:#ff666615;color:#d94c55}.main{padding:28px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.stat{padding:18px;border:1px solid var(--line);background:#fff;border-radius:12px}.stat .value{font-size:26px;font-weight:700;margin-top:8px}.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:16px}.panel h2{margin:0 0 14px;font-size:17px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:620px}th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #eee;font-size:13px}th{color:var(--muted);font-weight:600}.pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#f0ece8;font-size:11px;text-transform:capitalize}.actions{display:flex;gap:6px;flex-wrap:wrap}.small{padding:6px 9px;font-size:12px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-grid .full{grid-column:1/-1}.modal-backdrop{position:fixed;inset:0;background:#3338;display:grid;place-items:center;padding:16px;z-index:10}.modal{background:#fff;width:min(640px,100%);max-height:90vh;overflow:auto;padding:22px;border-radius:14px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.toast{position:fixed;bottom:20px;right:20px;background:#525266;color:white;padding:12px 16px;border-radius:9px;z-index:20}.empty{padding:30px;text-align:center;color:var(--muted)}
+.login-wrap{min-height:100vh;display:grid;place-items:center;padding:20px}.login-card{width:min(440px,100%);background:#fff;border:1px solid var(--line);padding:34px;border-radius:18px}.brand{font-size:22px;font-weight:700;letter-spacing:.02em}.brand span{color:var(--coral)}.muted{color:var(--muted)}.field{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:white;color:var(--slate)}.field:focus{outline:2px solid #ff666633;border-color:var(--coral)}.btn{padding:10px 14px;border:1px solid var(--line);border-radius:9px;background:white;color:var(--slate);font-weight:600}.btn-primary{background:var(--coral);border-color:var(--coral);color:white}.btn:hover{filter:brightness(.98)}.alert{padding:10px 12px;border-radius:8px;background:#fff0ee;color:#a33c42;margin:12px 0}.layout{min-height:100vh}.nav{display:grid;gap:5px}.nav button{text-align:left;border:0;background:transparent;padding:11px 13px;border-radius:8px;color:var(--slate)}.nav button.active,.nav button:hover{background:#ff666615;color:#d94c55}.main{padding:28px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.stat{padding:18px;border:1px solid var(--line);background:#fff;border-radius:12px}.stat .value{font-size:26px;font-weight:700;margin-top:8px}.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:16px}.panel h2{margin:0 0 14px;font-size:17px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:620px}th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #eee;font-size:13px}th{color:var(--muted);font-weight:600}.pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#f0ece8;font-size:11px;text-transform:capitalize}.actions{display:flex;gap:6px;flex-wrap:wrap}.small{padding:6px 9px;font-size:12px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-grid .full{grid-column:1/-1}.modal-backdrop{position:fixed;inset:0;background:#3338;display:grid;place-items:center;padding:16px;z-index:10}.modal{background:#fff;width:min(640px,100%);max-height:90vh;overflow:auto;padding:22px;border-radius:14px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.toast{position:fixed;bottom:20px;right:20px;background:#525266;color:white;padding:12px 16px;border-radius:9px;z-index:20}.empty{padding:30px;text-align:center;color:var(--muted)}
 .admin-label{display:block;font-size:11px;margin-top:5px;text-transform:uppercase}.admin-account{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:11px;overflow-wrap:anywhere}.nav i{width:1.35em;text-align:center;margin-right:4px}
 
-.layout{grid-template-columns:245px minmax(0,1fr)}
-.sidebar{display:flex;flex-direction:column;min-width:0;height:100dvh;gap:18px}
-.sidebar-identity{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
-.sidebar-logo{display:block;width:102px;max-width:44%;height:auto}
+.admin-header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px clamp(14px,3vw,32px);background:#fff;border-bottom:1px solid var(--line)}
+.admin-logo{display:block;width:145px;max-width:44%;height:auto}
+.header-controls{display:flex;align-items:center;gap:12px;min-width:0}
 .admin-account{min-width:0;display:grid;gap:3px;justify-items:end;text-align:right;margin:0;font-size:12px;color:var(--slate)}
 .admin-account .admin-label{margin:0;color:#a33c42;font-size:10px;letter-spacing:.05em}
 #admin-name{max-width:100%;font-weight:700;overflow-wrap:anywhere}
-.nav{margin:0}
-.nav button{display:flex;align-items:center;gap:6px;min-width:0;font-weight:600}
+.btn.menu-toggle,.btn.menu-close{width:44px;height:44px;padding:0;font-size:18px}
+.admin-menu{position:fixed;inset:0 0 0 auto;margin:0;width:min(320px,90vw);max-width:none;height:100dvh;max-height:none;padding:0;border:0;border-left:1px solid var(--line);background:#fff;color:var(--slate);box-shadow:-14px 0 44px #24203426}
+.admin-menu::backdrop{background:#23213170}
+.menu-content{display:flex;flex-direction:column;gap:16px;min-height:100%;padding:18px}
+.menu-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.menu-heading h2{margin:0;font-size:20px}
+.nav button{display:flex;align-items:center;gap:10px;min-height:44px;font-weight:600}
 .nav button.active{color:#a33c42}
 .nav i{flex:none;margin:0}
-.sidebar-footer{margin-top:auto}
+.menu-footer{margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}
 #logout{width:110px}
+body:has(.admin-menu[open]){overflow:hidden}
 .btn{display:inline-flex;justify-content:center;align-items:center;gap:7px;min-height:40px;text-decoration:none;white-space:nowrap;flex:none}
 .btn-primary{background:#a93744;border-color:#a93744}
 .btn:focus-visible,.nav button:focus-visible{outline:2px solid #a93744;outline-offset:2px}
@@ -61,13 +66,6 @@ td:last-child:has(.icon-action){white-space:nowrap}
 .article-field textarea{resize:vertical}
 .record-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:12px}
 @media(max-width:900px){
- .layout{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr}
- .sidebar{height:auto;position:static;padding:14px 16px;gap:13px;border-right:0;border-bottom:1px solid var(--line)}
- .sidebar-logo{width:145px}
- .admin-account{font-size:13px}
- .nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
- .nav button{justify-content:center;min-height:44px;padding:6px 4px;font-size:12px;text-align:center}
- .sidebar-footer{display:flex;justify-content:flex-end}
  .main{padding:18px 14px}
  .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
  .stat{padding:14px}
@@ -116,24 +114,30 @@ td:last-child:has(.icon-action){white-space:nowrap}
  </div>
 </div>
 <div id="app-view" class="layout hidden">
- <aside class="sidebar">
-  <div class="sidebar-identity">
-   <img class="sidebar-logo" src="../assets/brand/aakruti-horizontal-light.png" data-brand-asset="aakruti-horizontal-light.png" alt="Aakruti Enterprises" width="145">
+ <header class="admin-header">
+  <img class="admin-logo" src="../assets/brand/aakruti-horizontal-light.png" data-brand-asset="aakruti-horizontal-light.png" alt="Aakruti Enterprises" width="145">
+  <div class="header-controls">
    <div class="admin-account">
     <span class="admin-label"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Admin</span>
     <span id="admin-name"></span>
    </div>
+   <button id="admin-menu-toggle" class="btn menu-toggle" type="button" aria-label="Open admin menu" aria-haspopup="dialog" aria-controls="admin-menu" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
   </div>
-  <nav class="nav">
-   <button data-page="dashboard" class="active"><i class="fa-solid fa-gauge" aria-hidden="true"></i> Overview</button>
+ </header>
+ <dialog id="admin-menu" class="admin-menu" aria-labelledby="admin-menu-title">
+  <div class="menu-content">
+   <div class="menu-heading"><h2 id="admin-menu-title">Menu</h2><button id="admin-menu-close" class="btn menu-close" type="button" aria-label="Close admin menu" autofocus><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>
+  <nav class="nav" aria-label="Admin navigation">
+   <button data-page="dashboard" class="active" aria-current="page"><i class="fa-solid fa-gauge" aria-hidden="true"></i> Overview</button>
    <button data-page="products"><i class="fa-solid fa-couch" aria-hidden="true"></i> Products</button>
    <button data-page="categories"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Categories</button>
    <button data-page="brand"><i class="fa-solid fa-palette" aria-hidden="true"></i> Brand assets</button>
    <button data-page="blog"><i class="fa-solid fa-newspaper" aria-hidden="true"></i> Blog</button>
    <button data-page="enquiries"><i class="fa-solid fa-inbox" aria-hidden="true"></i> Enquiries</button>
   </nav>
-  <div class="sidebar-footer"><button id="logout" class="btn"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign out</button></div>
- </aside>
+  <div class="menu-footer"><button id="logout" class="btn"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Sign out</button></div>
+  </div>
+ </dialog>
  <main class="main">
   <div class="topbar"><h1 id="page-title" tabindex="-1">Overview</h1><div class="topbar-actions"><div id="page-action"></div><a class="btn view-site" href="/" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> View website</a></div></div>
   <div id="page-content"></div>
@@ -157,6 +161,7 @@ let currentPage='dashboard',profile=null;
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2800)}
 function errorBox(m){const e=$('#login-error');e.textContent=m;e.classList.remove('hidden')}
 function setLogin(){
+ closeAdminMenu();
  $('#login-view').classList.remove('hidden');
  $('#app-view').classList.add('hidden');
 }
@@ -318,8 +323,44 @@ $('#recovery-password').addEventListener('submit',async event=>{
  }catch{recoveryError('The password reset service is unavailable. Try again shortly.');}
  finally{button.disabled=false;}
 });
-$('#logout').addEventListener('click',()=>sb?.auth.signOut());
-document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x===b));currentPage=b.dataset.page;loadPage(currentPage)}));
+const adminMenu=$('#admin-menu');
+const menuToggle=$('#admin-menu-toggle');
+function closeAdminMenu(){
+ if(adminMenu.open)adminMenu.close();
+ menuToggle.setAttribute('aria-expanded','false');
+}
+menuToggle.addEventListener('click',()=>{
+ adminMenu.showModal();
+ menuToggle.setAttribute('aria-expanded','true');
+});
+$('#admin-menu-close').addEventListener('click',closeAdminMenu);
+adminMenu.addEventListener('cancel',event=>{
+ event.preventDefault();
+ closeAdminMenu();
+});
+adminMenu.addEventListener('close',()=>menuToggle.setAttribute('aria-expanded','false'));
+adminMenu.addEventListener('click',event=>{
+ if(event.target===adminMenu)closeAdminMenu();
+});
+$('#logout').addEventListener('click',()=>{
+ closeAdminMenu();
+ return sb?.auth.signOut();
+});
+function navigateAdmin(page){
+ currentPage=page;
+ document.querySelectorAll('[data-page]').forEach(button=>{
+  const active=button.dataset.page===page;
+  button.classList.toggle('active',active);
+  if(active)button.setAttribute('aria-current','page');
+  else button.removeAttribute('aria-current');
+ });
+ closeAdminMenu();
+ loadPage(page);
+ $('#page-title').focus();
+}
+document.querySelectorAll('[data-page]').forEach(button=>{
+ button.addEventListener('click',()=>navigateAdmin(button.dataset.page));
+});
 async function count(table,filters=[]){let q=sb.from(table).select('id',{count:'exact',head:true});filters.forEach(([k,v])=>q=q.eq(k,v));const {count,error}=await q;if(error)throw error;return count||0}
 function panel(title,body){return '<section class="panel'+(title?'':' table-panel')+'">'+(title?'<h2>'+title+'</h2>':'')+body+'</section>'}
 async function dashboard(){const [p,c,b,e,n]=await Promise.all([count('products'),count('categories'),count('blog_posts'),count('enquiries'),count('enquiries',[['status','new']])]);return '<div class="cards">'+[['Products',p,'box'],['Categories',c,'layer-group'],['Blog articles',b,'newspaper'],['Enquiries',e,'inbox']].map(([t,v,icon])=>'<div class="stat"><div class="muted"><i class="fa-solid fa-'+icon+' stat-icon" aria-hidden="true"></i>'+t+'</div><div class="value">'+v+'</div></div>').join('')+'</div>'+panel('New enquiries','<div style="font-size:24px;font-weight:700">'+n+'</div><p class="muted">Awaiting first response</p><button class="btn small" data-goto="enquiries"><i class="fa-solid fa-inbox" aria-hidden="true"></i> Open inbox</button>') }
@@ -366,7 +407,7 @@ async function uploadBrandAsset(event){
  }
 }
 async function listBlog(){const {data,error}=await sb.from('blog_posts').select('id,title,slug,status,published_at,created_at').order('created_at',{ascending:false});if(error)throw error;return '<div class="section-head"><button class="btn btn-primary page-action" data-add="blog"><i class="fa-solid fa-plus" aria-hidden="true"></i> New article</button></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Title</th><th>Slug</th><th>Status</th><th>Published</th><th>Actions</th></tr></thead><tbody>'+data.map(b=>'<tr><td>'+esc(b.title)+'</td><td>'+esc(b.slug)+'</td><td><span class="pill">'+esc(b.status)+'</span></td><td>'+esc(b.published_at?new Date(b.published_at).toLocaleDateString():'—')+'</td><td><button class="btn icon-action" aria-label="Edit article" title="Edit" data-edit-blog="'+b.id+'"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button> <button class="btn icon-action" aria-label="Delete article" title="Delete" data-delete-blog="'+b.id+'"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No articles yet.</div>')}
-async function listEnquiries(){const {data,error}=await sb.from('enquiries').select('*').order('created_at',{ascending:false});if(error)throw error;return '<div class="section-head"><button class="btn page-action" data-refresh-enquiries><i class="fa-solid fa-rotate" aria-hidden="true"></i> Refresh</button></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Received</th><th>Customer</th><th>Contact</th><th>Enquiry</th><th>Status</th><th>Update</th></tr></thead><tbody>'+data.map(q=>'<tr><td>'+new Date(q.created_at).toLocaleString()+'</td><td>'+esc(q.name)+'</td><td><a href="tel:'+esc(q.phone)+'">'+esc(q.phone)+'</a><div class="muted">'+esc(q.email||'')+'</div></td><td><strong>'+esc(q.subject||q.product_name||'Website enquiry')+'</strong><div class="muted" style="white-space:normal;max-width:360px;margin-top:5px">'+esc(q.message||'No additional details')+'</div></td><td><span class="pill">'+esc(q.status||'new')+'</span></td><td><select class="field" style="min-width:110px;padding:6px" data-status="'+q.id+'">'+['new','contacted','quoted','won','lost'].map(s=>'<option '+(s===(q.status||'new')?'selected':'')+'>'+s+'</option>').join('')+'</select></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No enquiries received yet.</div>')}async function loadPage(page){$('#page-title').textContent=({dashboard:'Overview',products:'Products',categories:'Categories',brand:'Brand assets',blog:'Blog',enquiries:'Enquiries'})[page]||page;const root=$('#page-content');$('#page-action').replaceChildren();root.innerHTML='<div class="panel muted">Loading…</div>';try{const render=({dashboard,products:listProducts,categories:listCategories,brand:listBrandAssets,blog:listBlog,enquiries:listEnquiries})[page];const html=await render();if(page!==currentPage||!profile)return;root.innerHTML=html;root.querySelectorAll("[data-brand-upload]").forEach(form=>form.onsubmit=uploadBrandAsset);root.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>{currentPage=b.dataset.goto;document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===currentPage));loadPage(currentPage)});root.querySelectorAll('[data-refresh-enquiries]').forEach(b=>b.onclick=()=>loadPage('enquiries'));root.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>openForm(b.dataset.add));root.querySelectorAll('[data-edit-product]').forEach(b=>b.onclick=()=>openForm('product',b.dataset.editProduct));root.querySelectorAll('[data-edit-category]').forEach(b=>b.onclick=()=>openForm('category',b.dataset.editCategory));root.querySelectorAll('[data-edit-blog]').forEach(b=>b.onclick=()=>openForm('blog',b.dataset.editBlog));root.querySelectorAll('[data-delete-product]').forEach(b=>b.onclick=()=>del('products',b.dataset.deleteProduct));root.querySelectorAll('[data-delete-category]').forEach(b=>b.onclick=()=>del('categories',b.dataset.deleteCategory));root.querySelectorAll('[data-delete-blog]').forEach(b=>b.onclick=()=>del('blog_posts',b.dataset.deleteBlog));root.querySelectorAll('[data-status]').forEach(s=>s.onchange=async()=>{const {error}=await sb.from('enquiries').update({status:s.value}).eq('id',s.dataset.status);if(error)toast(error.message);else toast('Enquiry status updated')});const toolbar=root.querySelector('.section-head');if(toolbar){$('#page-action').append(...toolbar.children);toolbar.remove();}}catch(e){if(page===currentPage&&profile)root.innerHTML='<div class="alert">'+esc(e.message)+'</div>'}}
+async function listEnquiries(){const {data,error}=await sb.from('enquiries').select('*').order('created_at',{ascending:false});if(error)throw error;return '<div class="section-head"><button class="btn page-action" data-refresh-enquiries><i class="fa-solid fa-rotate" aria-hidden="true"></i> Refresh</button></div>'+panel('',data.length?'<div class="table-wrap" tabindex="0" role="region" aria-label="Scrollable records"><table><thead><tr><th>Received</th><th>Customer</th><th>Contact</th><th>Enquiry</th><th>Status</th><th>Update</th></tr></thead><tbody>'+data.map(q=>'<tr><td>'+new Date(q.created_at).toLocaleString()+'</td><td>'+esc(q.name)+'</td><td><a href="tel:'+esc(q.phone)+'">'+esc(q.phone)+'</a><div class="muted">'+esc(q.email||'')+'</div></td><td><strong>'+esc(q.subject||q.product_name||'Website enquiry')+'</strong><div class="muted" style="white-space:normal;max-width:360px;margin-top:5px">'+esc(q.message||'No additional details')+'</div></td><td><span class="pill">'+esc(q.status||'new')+'</span></td><td><select class="field" style="min-width:110px;padding:6px" data-status="'+q.id+'">'+['new','contacted','quoted','won','lost'].map(s=>'<option '+(s===(q.status||'new')?'selected':'')+'>'+s+'</option>').join('')+'</select></td></tr>').join('')+'</tbody></table></div>':'<div class="empty">No enquiries received yet.</div>')}async function loadPage(page){$('#page-title').textContent=({dashboard:'Overview',products:'Products',categories:'Categories',brand:'Brand assets',blog:'Blog',enquiries:'Enquiries'})[page]||page;const root=$('#page-content');$('#page-action').replaceChildren();root.innerHTML='<div class="panel muted">Loading…</div>';try{const render=({dashboard,products:listProducts,categories:listCategories,brand:listBrandAssets,blog:listBlog,enquiries:listEnquiries})[page];const html=await render();if(page!==currentPage||!profile)return;root.innerHTML=html;root.querySelectorAll("[data-brand-upload]").forEach(form=>form.onsubmit=uploadBrandAsset);root.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>navigateAdmin(b.dataset.goto));root.querySelectorAll('[data-refresh-enquiries]').forEach(b=>b.onclick=()=>loadPage('enquiries'));root.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>openForm(b.dataset.add));root.querySelectorAll('[data-edit-product]').forEach(b=>b.onclick=()=>openForm('product',b.dataset.editProduct));root.querySelectorAll('[data-edit-category]').forEach(b=>b.onclick=()=>openForm('category',b.dataset.editCategory));root.querySelectorAll('[data-edit-blog]').forEach(b=>b.onclick=()=>openForm('blog',b.dataset.editBlog));root.querySelectorAll('[data-delete-product]').forEach(b=>b.onclick=()=>del('products',b.dataset.deleteProduct));root.querySelectorAll('[data-delete-category]').forEach(b=>b.onclick=()=>del('categories',b.dataset.deleteCategory));root.querySelectorAll('[data-delete-blog]').forEach(b=>b.onclick=()=>del('blog_posts',b.dataset.deleteBlog));root.querySelectorAll('[data-status]').forEach(s=>s.onchange=async()=>{const {error}=await sb.from('enquiries').update({status:s.value}).eq('id',s.dataset.status);if(error)toast(error.message);else toast('Enquiry status updated')});const toolbar=root.querySelector('.section-head');if(toolbar){$('#page-action').append(...toolbar.children);toolbar.remove();}}catch(e){if(page===currentPage&&profile)root.innerHTML='<div class="alert">'+esc(e.message)+'</div>'}}
 async function del(table,id){if(!confirm('Delete this record? This cannot be undone.'))return;const {error}=await sb.from(table).delete().eq('id',id);if(error)toast(error.message);else{toast('Deleted');loadPage(currentPage)}}
 async function openForm(type,id){const sourcePage=currentPage;let row={};if(id){const table={product:'products',category:'categories',blog:'blog_posts'}[type];const {data,error}=await sb.from(table).select('*').eq('id',id).single();if(error)return toast(error.message);row=data}let cats=[],galleryRows=[];if(type==='product'){const r=await sb.from('categories').select('id,name').order('name');cats=r.data||[];if(id){const g=await sb.from('product_images').select('id,image_url,alt_text,sort_order').eq('product_id',id).order('sort_order');galleryRows=g.data||[]}}
 const forms={
