@@ -1301,6 +1301,37 @@ function closeAakrutiStory(){
 const storyDialog=document.getElementById('aakruti-story-dialog');
 if(storyDialog){storyDialog.addEventListener('close',()=>{const video=document.getElementById('aakruti-story-video');if(video){video.pause();video.currentTime=0}})}
 </script>
+
+<script>
+function emailContact(){
+ const form=document.getElementById('contact-form');
+ if(!form||!form.reportValidity())return;
+ const data=new FormData(form);
+ const name=String(data.get('name')||'').trim();
+ const phone=String(data.get('phone')||'').trim();
+ const email=String(data.get('email')||'').trim()||'Not provided';
+ const interest=String(data.get('interest')||'Furniture enquiry');
+ const details=String(data.get('details')||'').trim()||'Not provided';
+ const subject='New enquiry for Aakruti — '+name;
+ const recipient='support@aakruti-enterprises.com';
+ const body='New enquiry for Aakruti Enterprises\n\nName: '+name+'\nPhone: '+phone+'\nEmail: '+email+'\nEnquiry: '+interest+'\nProject details: '+details;
+ const mailto='mailto:'+recipient+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+ const gmail='https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(recipient)+'&su='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+ const status=document.getElementById('enquiry-status');
+ if(status){
+  status.replaceChildren(document.createTextNode('If your email app did not open, '));
+  const fallback=document.createElement('a');
+  fallback.href=gmail;
+  fallback.target='_blank';
+  fallback.rel='noopener noreferrer';
+  fallback.textContent='open this enquiry in Gmail';
+  fallback.style.cssText='color:#525266;text-decoration:underline;font-weight:700';
+  status.append(fallback);
+  status.style.color='#525266';
+ }
+ window.location.href=mailto;
+}
+</script>
 <script>
 (async function(){
  const cfg=window.AAKRUTI_SUPABASE_CONFIG||{};
